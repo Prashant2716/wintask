@@ -1,5 +1,4 @@
-FROM eclipse-temurin:17-jdk-alpine
-WORKDIR /app
-COPY . .
+FROM tomcat:9.0-jdk17
+COPY . /usr/local/tomcat/webapps/ROOT/
 EXPOSE 8080
-CMD ["java", "-jar", "your-app.jar"]
+CMD ["catalina.sh", "run"]
