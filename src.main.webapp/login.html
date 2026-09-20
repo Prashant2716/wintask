@@ -114,7 +114,7 @@
                 return null;
             }
         }
-        // युजरने यशस्वीपणे लॉग इन केल्यावर हे फंक्शन कॉल होईल आणि डॅशबोर्डवर पाठवेल
+        // युजरने यशस्वीपणे लॉग इन केल्यावर हे फंक्शन कॉल होईल आणि थेट myprofile.html वर पाठवेल
         function handleCredentialResponse(response) {
             console.log("Encoded JWT ID token: " + response.credential);
             
@@ -131,8 +131,8 @@
             
             localStorage.setItem("isLoggedIn", "true");
             
-            // थेट dashboard.html वर रीडायरेक्ट करा
-            window.location.href = "dashboard.html";
+            // थेट myprofile.html वर रीडायरेक्ट करा
+            window.location.href = "myprofile.html";
         }
     </script>
 </body>
