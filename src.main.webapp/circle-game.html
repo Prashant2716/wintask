@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wintask.in - Perfect Circle Game</title>
+    <style>
+        body { 
+            margin: 0; 
+            background: #0b0c10; 
+            color: #fff; 
+            text-align: center; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            overflow: hidden; 
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* 1. इन्फॉर्मेशन पेज (पहिला स्क्रीन) */
+        #infoScreen {
+            background: rgba(20, 20, 35, 0.95);
+            border: 2px solid #00ffcc;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.3);
+            text-align: left;
+            z-index: 10;
+        }
+        #infoScreen h1 {
+            color: #00ffcc;
+            font-size: 26px;
+            margin-top: 0;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(0,255,204,0.4);
+        }
+        #infoScreen ul {
+            padding-left: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #e0e0e0;
+            margin-bottom: 25px;
+        }
+        #infoScreen li {
+            margin-bottom: 8px;
+        }
+
+        /* 2. गेम कॅनव्हास स्क्रीन (दुसरा स्क्रीन - सुरुवातीला लपलेला असेल) */
+        #gameScreen {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        #canvas { 
+            display: block; 
+            background: #1a1a2e; 
+            cursor: crosshair; 
+            touch-action: none; 
+            width: 100vw; 
+            height: 100vh; 
+        }
+        
+        .ui { 
+            position: absolute; 
+            top: 15px; 
+            width: 100%; 
+            pointer-events: none; 
+            padding: 0 20px; 
+            box-sizing: border-box; 
+        }
+        
+        .score { 
+            font-size: 26px; 
+            font-weight: bold; 
+            color: #ff007f; 
+            margin: 5px 0; 
+            text-shadow: 0 0 8px rgba(255,0,127,0.4); 
+        }
+
+        /* बटन्सची डिझाईन */
+        .btn { 
+            display: block;
+            width: 100%;
+            max-width: 250px;
+            margin: 0 auto;
+            padding: 12px 25px; 
+            background: linear-gradient(45deg, #ff007f, #7928ca); 
+            color: #fff; 
+            font-size: 18px; 
+            font-weight: bold; 
+            border: none; 
+            border-radius: 30px; 
+            cursor: pointer; 
+            box-shadow: 0 0 15px rgba(255,0,127,0.5);
+            transition: 0.3s;
+            text-align: center;
+        }
+        .btn:hover { 
+            transform: scale(1.05); 
+        }
+
+        .game-btn-group {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            pointer-events: auto;
+            display: flex;
+            gap: 15px;
+        }
+        .small-btn {
+            padding: 8px 18px;
+            font-size: 14px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. इन्फॉर्मेशन स्क्रीन (सर्वात आधी ही दिसेल) -->
+    <div id="infoScreen">
+        <h1>⭕ Welcome to Perfect Circle Challenge</h1>
+        <ul>
+            <li><b>Objective:</b> Draw a shape as close to a mathematical geometric circle as possible on the canvas.</li>
+            <li><b>How to Play:</b> Click and hold your computer mouse or place and drag your finger continuously across your mobile screen to form a closed loop.</li>
+            <li><b>Scoring System:</b> Our algorithm calculates the central radius consistency from all drawn points. Scores above 95% are considered expert level!</li>
+            <li><b>Pro Tips:</b> Try drawing with a smooth, fluid wrist or arm motion. Avoid stopping midway or lifting your pointer/finger before completing the full circle.</li>
+        </ul>
+        <button class="btn" onclick="startGame()">Play Now 🚀</button>
+    </div>
+
+    <!-- 2. गेम स्क्रीन (Play Now दाबल्यानंतर ही ओपन होईल) -->
+    <div id="gameScreen">
+        <div class="ui">
+            <div class="score" id="score">Accuracy: 0%</div>
+            <div class="game-btn-group">
+                <button class="btn small-btn" onclick="resetGame()">Clear Canvas</button>
+                <button class="btn small-btn" style="background: rgba(255,255,255,0.2); border:1px solid #00ffcc;" onclick="goBackToInfo()">Back</button>
+            </div>
+        </div>
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <script>
+        const infoScreen = document.getElementById('infoScreen');
+        const gameScreen = document.getElementById('gameScreen');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        let drawing = false;
+        let points = [];
+        let hue = 0;
+
+        // "Play Now" बटण दाबल्यावर इन्फॉर्मेशन लपेल आणि गेम सुरू होईल
+        function startGame() {
+            infoScreen.style.display = 'none';
+            gameScreen.style.display = 'block';
+            resizeCanvas();
+            resetGame();
+        }
+
+        // पुन्हा इन्फॉर्मेशन पेजवर जाण्यासाठी
+        function goBackToInfo() {
+            gameScreen.style.display = 'none';
+            infoScreen.style.display = 'block';
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+
+        canvas.addEventListener('touchstart', (e) => startDrawing(e.touches[0]));
+        canvas.addEventListener('touchmove', (e) => draw(e.touches[0]));
+        canvas.addEventListener('touchend', stopDrawing);
+
+        function startDrawing(e) {
+            drawing = true;
+            points = [];
+            resetGame();
+            ctx.beginPath();
+            ctx.moveTo(e.clientX, e.clientY);
+        }
+
+        function draw(e) {
+            if (!drawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            points.push({x, y});
+            
+            ctx.lineWidth = 6;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+            hue += 2;
+            
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function stopDrawing() {
+            if (!drawing) return;
+            drawing = false;
+            calculateAccuracy();
+        }
+
+        function calculateAccuracy() {
+            if (points.length < 20) return;
+
+            let centerX = points.reduce((sum, p) => sum + p.x, 0) / points.length;
+            let centerY = points.reduce((sum, p) => sum + p.y, 0) / points.length;
+            let avgRadius = points.reduce((sum, p) => sum + Math.hypot(p.x - centerX, p.y - centerY), 0) / points.length;
+
+            let error = points.reduce((sum, p) => sum + Math.abs(Math.hypot(p.x - centerX, p.y - centerY) - avgRadius), 0);
+            let avgError = error / points.length;
+            let accuracy = Math.max(0, 100 - (avgError / avgRadius * 100));
+            
+            scoreEl.innerText = `Accuracy: ${Math.round(accuracy)}%`;
+        }
+
+        function resetGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            scoreEl.innerText = "Accuracy: 0%";
+            hue = Math.random() * 360;
+        }
+    </script>
+</body>
+</html>

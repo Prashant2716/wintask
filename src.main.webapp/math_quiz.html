@@ -1,0 +1,212 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Math Mega Quiz - wintask.in</title> 
+    <style> 
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; } 
+        body { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); color: #ffffff; min-height: 100vh; padding: 20px; } 
+        .container { max-width: 700px; margin: 40px auto; background: rgba(20, 20, 35, 0.95); border: 1px solid rgba(0, 255, 204, 0.3); border-radius: 20px; padding: 30px; box-shadow: 0 0 25px rgba(0, 255, 204, 0.2); text-align: center; } 
+        .question-box { font-size: 28px; margin-bottom: 20px; font-weight: 600; color: #00ffcc; } 
+        .math-input { padding: 12px; width: 60%; font-size: 20px; border-radius: 10px; border: 2px solid #00ffcc; background: rgba(255,255,255,0.05); color: #fff; outline: none; text-align: center; margin-bottom: 15px; transition: 0.3s; } 
+        .action-btn { background: linear-gradient(45deg, #ff007f, #7928ca); color: #fff; border: none; padding: 12px 30px; border-radius: 20px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 15px; transition: 0.3s; display: inline-block; } 
+        .action-btn:hover { transform: scale(1.05); } 
+        .nav-buttons-container { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        .progress-text { font-size: 14px; color: #aaa; margin-bottom: 15px; text-align: left; } 
+        .home-link { display: inline-block; margin-bottom: 15px; color: #00ffcc; text-decoration: none; font-weight: bold; float: left; } 
+        .home-link:hover { text-decoration: underline; }
+        .msg-box { font-size: 18px; font-weight: bold; margin-top: 15px; min-height: 30px; }
+        
+        /* Instructions screen styling */
+        .instruction-box { text-align: left; line-height: 1.6; margin-bottom: 20px; }
+        .instruction-box h2 { color: #00ffcc; text-align: center; margin-bottom: 20px; font-size: 26px; }
+        .instruction-box p { margin-bottom: 12px; font-size: 16px; color: #ddd; }
+        .instruction-box ul { margin-left: 20px; margin-bottom: 15px; color: #ccc; }
+        .instruction-box li { margin-bottom: 8px; font-size: 15px; }
+    </style> 
+</head> 
+<body> 
+<div class="container"> 
+    <a href="games.html" class="home-link">← Back to Games</a>
+    <div style="clear: both;"></div>
+    
+    <!-- Instruction Screen -->
+    <div id="instructionScreen">
+        <div class="instruction-box">
+            <h2>Welcome to Math Mega Quiz! 🔢</h2>
+            <p>Please read the following rules and instructions carefully before you start the game to avoid mistakes:</p>
+            <ul>
+                <li><strong>Total Questions:</strong> There are a total of 100 questions covering Addition (+), Subtraction (-), Multiplication (*), and Division (÷).</li>
+                <li><strong>Answering:</strong> Type your exact numerical answer into the input box and click the <strong>"Submit Answer"</strong> button.</li>
+                <li><strong>Instant Feedback:</strong> If your answer is correct, the box will highlight in <strong>Green</strong>. If it is wrong, it will highlight in <strong>Red</strong> and show the correct answer.</li>
+                <li><strong>Navigation:</strong> Once you submit an answer, the <strong>"Next"</strong> button will appear on the right side. You can also use the <strong>"Previous"</strong> button on the left to review or check your previous answers.</li>
+                <li><strong>Patience:</strong> Take your time, calculate carefully, and try to complete all 100 questions accurately!</li>
+            </ul>
+        </div>
+        <button class="action-btn" onclick="startQuizGame()">Play Now 🚀</button>
+    </div>
+
+    <!-- Quiz Game Screen (Hidden initially) -->
+    <div id="quizGameScreen" style="display:none;">
+        <div class="progress-text" id="progressText">Question 1 / 100</div> 
+        <div id="quizBox"> 
+            <div class="question-box" id="mathQuestion">Loading question...</div> 
+            <input type="number" id="mathAnswerInput" class="math-input" placeholder="Type your answer here..."> 
+            <br> 
+            <div id="submitContainer">
+                <button class="action-btn" id="submitBtn" onclick="checkMathAnswer()">Submit Answer</button> 
+            </div>
+            
+            <div class="nav-buttons-container">
+                <button class="action-btn" id="prevBtn" onclick="prevMathQuestion()" style="display:none;">⬅ Previous</button> 
+                <button class="action-btn" id="nextBtn" onclick="nextMathQuestion()" style="display:none; margin-left: auto;">Next ➔</button> 
+            </div>
+            <div class="msg-box" id="mathMsg"></div>
+        </div> 
+    </div>
+
+</div> 
+<script> 
+// Generate 100 math questions (Addition, Subtraction, Multiplication, Division)
+const mathQuestions = [];
+const userAnswers = {}; // Store user inputs and statuses
+const operators = ['+', '-', '*', '/'];
+
+for (let i = 1; i <= 100; i++) {
+    let op = operators[Math.floor(Math.random() * operators.length)];
+    let num1, num2, ans;
+    if (op === '+') {
+        num1 = Math.floor(Math.random() * 90) + 10;
+        num2 = Math.floor(Math.random() * 90) + 10;
+        ans = num1 + num2;
+    } else if (op === '-') {
+        num1 = Math.floor(Math.random() * 90) + 10;
+        num2 = Math.floor(Math.random() * 50) + 1;
+        if (num1 < num2) { let temp = num1; num1 = num2; num2 = temp; }
+        ans = num1 - num2;
+    } else if (op === '*') {
+        num1 = Math.floor(Math.random() * 12) + 2;
+        num2 = Math.floor(Math.random() * 12) + 2;
+        ans = num1 * num2;
+    } else {
+        // Division logic to keep answers as whole numbers
+        num2 = Math.floor(Math.random() * 10) + 2;
+        let multiplier = Math.floor(Math.random() * 10) + 1;
+        num1 = num2 * multiplier;
+        ans = multiplier;
+        op = '÷';
+    }
+    mathQuestions.push({ q: `${i}. ${num1} ${op} ${num2} = ?`, correct: ans });
+}
+
+let mathIndex = 0; 
+
+function startQuizGame() {
+    document.getElementById("instructionScreen").style.display = "none";
+    document.getElementById("quizGameScreen").style.display = "block";
+    loadMathQuestion();
+}
+
+function loadMathQuestion() { 
+    if (mathIndex < mathQuestions.length) {
+        const data = mathQuestions[mathIndex]; 
+        document.getElementById("progressText").innerText = `Question ${mathIndex + 1} / ${mathQuestions.length}`;
+        document.getElementById("mathQuestion").innerText = data.q; 
+        
+        const inputField = document.getElementById("mathAnswerInput");
+        const msgBox = document.getElementById("mathMsg");
+        
+        // Restore previous answer if already answered/visited
+        if (userAnswers[mathIndex] !== undefined) {
+            inputField.value = userAnswers[mathIndex].val;
+            inputField.disabled = true;
+            if (userAnswers[mathIndex].isCorrect) {
+                inputField.style.borderColor = "#00ffcc";
+                inputField.style.background = "rgba(0, 255, 204, 0.2)";
+                msgBox.style.color = "#00ffcc";
+                msgBox.innerText = "Correct Answer! 🎉";
+            } else {
+                inputField.style.borderColor = "#ff007f";
+                inputField.style.background = "rgba(255, 0, 127, 0.2)";
+                msgBox.style.color = "#ff007f";
+                msgBox.innerText = `Wrong Answer! Correct Answer: ${data.correct} ❌`;
+            }
+            document.getElementById("submitBtn").style.display = "none";
+        } else {
+            inputField.value = ""; 
+            inputField.disabled = false;
+            inputField.style.borderColor = "#00ffcc";
+            inputField.style.background = "rgba(255,255,255,0.05)";
+            msgBox.innerText = ""; 
+            document.getElementById("submitBtn").style.display = "inline-block";
+        }
+        
+        // Show/Hide Previous Button
+        if (mathIndex > 0) {
+            document.getElementById("prevBtn").style.display = "inline-block";
+        } else {
+            document.getElementById("prevBtn").style.display = "none";
+        }
+        // Show Next Button if already answered, hide if not
+        if (userAnswers[mathIndex] !== undefined && mathIndex < mathQuestions.length - 1) {
+            document.getElementById("nextBtn").style.display = "inline-block";
+        } else {
+            document.getElementById("nextBtn").style.display = "none";
+        }
+    } else { 
+        document.getElementById("quizBox").innerHTML = `<h2 style="color:#00ffcc; text-align:center;">Congratulations! You have completed all 100 math questions! 🎉</h2>`; 
+        document.getElementById("progressText").style.display = "none";
+    }
+} 
+
+function checkMathAnswer() { 
+    const userInputValue = document.getElementById("mathAnswerInput").value.trim();
+    if (userInputValue === "") {
+        alert("Please write an answer first!");
+        return;
+    }
+    const userAns = parseFloat(userInputValue);
+    const currentData = mathQuestions[mathIndex];
+    const inputField = document.getElementById("mathAnswerInput");
+    const msgBox = document.getElementById("mathMsg");
+    
+    inputField.disabled = true;
+    let isCorrect = (userAns === currentData.correct);
+    
+    // Save answer state
+    userAnswers[mathIndex] = { val: userInputValue, isCorrect: isCorrect };
+
+    if (isCorrect) { 
+        inputField.style.borderColor = "#00ffcc";
+        inputField.style.background = "rgba(0, 255, 204, 0.2)";
+        msgBox.style.color = "#00ffcc";
+        msgBox.innerText = "Correct Answer! 🎉";
+    } else { 
+        inputField.style.borderColor = "#ff007f";
+        inputField.style.background = "rgba(255, 0, 127, 0.2)";
+        msgBox.style.color = "#ff007f";
+        msgBox.innerText = `Wrong Answer! Correct Answer: ${currentData.correct} ❌`;
+    } 
+    document.getElementById("submitBtn").style.display = "none";
+    if (mathIndex < mathQuestions.length - 1) {
+        document.getElementById("nextBtn").style.display = "inline-block";
+    }
+} 
+
+function nextMathQuestion() { 
+    if (mathIndex < mathQuestions.length - 1) {
+        mathIndex++; 
+        loadMathQuestion(); 
+    }
+} 
+
+function prevMathQuestion() {
+    if (mathIndex > 0) {
+        mathIndex--;
+        loadMathQuestion();
+    }
+}
+</script> 
+</body> 
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Page - wintask.in</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+        }
+        body {
+            background: linear-gradient(rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.95)),
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .story-container {
+            text-align: center;
+            background: rgba(18, 18, 32, 0.85);
+            border: 2px solid #00ffcc;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+            max-width: 850px;
+            width: 95%;
+        }
+        h1 {
+            font-size: 42px;
+            color: #00ffcc;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 18px;
+            color: #c0c5d0;
+            margin-bottom: 15px;
+        }
+        .translation-note {
+            font-size: 14px;
+            color: #ff9900;
+            background: rgba(255, 153, 0, 0.1);
+            border: 1px dashed rgba(255, 153, 0, 0.4);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .stories-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        .story-card-btn {
+            display: inline-block;
+            background: rgba(20, 22, 35, 0.9);
+            border: 2px solid #ff007f;
+            border-radius: 16px;
+            padding: 15px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
+            width: calc(33.333% - 14px);
+            min-width: 230px;
+            max-width: 270px;
+        }
+        .story-card-btn:hover {
+            transform: scale(1.05);
+            border-color: #00ffcc;
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.6);
+        }
+        .story-poster {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .story-title-text {
+            font-size: 16px;
+            font-weight: 800;
+            color: #00ffcc;
+            text-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .back-btn {
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            color: #000;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: 800;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+            transition: transform 0.3s;
+        }
+        .back-btn:hover {
+            transform: scale(1.05);
+        }
+        /* Google Translate Custom Styling for Dark Theme */
+        #google_translate_element {
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .goog-te-combo {
+            background: #141623;
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+        .goog-te-combo:hover {
+            background: #00ffcc;
+            color: #000;
+        }
+        /* Hide Google top banner and tooltip */
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+        .goog-logo-link { display: none !important; }
+        .goog-te-gadget { color: transparent !important; }
+        
+        @media (max-width: 768px) {
+            .story-card-btn {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="story-container">
+        <h1 id="welcomeMsg"></h1>
+        <p>Explore all your favorite stories and lists right here!</p>
+        
+        <!-- Note added here with class 'notranslate' so it always stays in English -->
+        <div class="translation-note notranslate" translate="no">
+            Note: You can read these stories in any language. Use the translate option below to change the language.
+        </div>
+        
+        <div class="stories-grid">
+            <!-- Story 1 -->
+            <a href="story1.html" class="story-card-btn">
+                <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=600&auto=format&fit=crop" alt="School Story Poster" class="story-poster">
+                <div class="story-title-text">📖 Beautiful School Story (Story 1)</div>
+            </a>
+            <!-- Story 2 -->
+            <a href="story2.html" class="story-card-btn">
+                <img src="https://i.ibb.co/pjJCRqQ8/Chat-GPT-Image-Sep-4-2026-01-12-01-PM.png" alt="Village Story Poster" class="story-poster">
+                <div class="story-title-text">🌾 Fragrance of Soil and Village Fair (Story 2)</div>
+            </a>
+            <!-- Love Story -->
+            <a href="love_story.html" class="story-card-btn">
+                <img src="https://i.ibb.co/7dgDng6X/marathi-village-sugarcane-harvest.jpg" alt="marathi-village-sugarcane-harvest" class="story-poster">
+                <div class="story-title-text">❤️ The Harvest Love Story (Love Story)</div>
+            </a>
+            <!-- Story 4 (Miller Family Wedding) -->
+            <a href="story4.html" class="story-card-btn">
+                <img src="https://i.ibb.co/zTDKjy55/backyard-wedding-chaos.jpg" alt="Miller Family Wedding Poster" class="story-poster">
+                <div class="story-title-text">🎉 Miller Family Wedding (Story 4)</div>
+            </a>
+            <!-- Story 5 (Family Vacation Adventure) -->
+            <a href="story5.html" class="story-card-btn">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=600&auto=format&fit=crop" alt="Family Vacation Poster" class="story-poster">
+                <div class="story-title-text">🏕️ Miller Family Vacation Adventure (Story 5)</div>
+            </a>
+            <!-- Story 6 (The Thirsty Crow) -->
+            <a href="story6.html" class="story-card-btn">
+                <img src="https://i.ibb.co/WW7L5g6X/crow-dropping-pebble.jpg" alt="crow-dropping-pebble" class="story-poster">
+                <div class="story-title-text">🐦 The Thirsty Crow (Story 6)</div>
+            </a>
+            <!-- Story 7 (The Mystery of the Space Needle Secret) -->
+            <a href="story7.html" class="story-card-btn">
+                <img src="https://i.ibb.co/23sLqP1T/space-needle-adventure-poster.jpg" alt="Space Needle Secret Poster" class="story-poster">
+                <div class="story-title-text">🗼 The Mystery of the Space Needle Secret (Story 7)</div>
+            </a>
+        </div>
+        
+        <div class="btn-group">
+            <a href="index.html" class="back-btn">Back to Home</a>
+        </div>
+        <!-- Google Translate Widget Option with all Indian languages -->
+        <div id="google_translate_element"></div>
+    </div>
+    
+    <script>
+        window.onload = function() {
+            const titleElement = document.getElementById("welcomeMsg");
+            titleElement.innerText = "Welcome to Story";
+        };
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,mr,hi,bn,gu,ta,te,kn,ml,pa,ur,or,as',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Color Drop - wintask.in</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:"Segoe UI",Arial,sans-serif;
+    background:
+        radial-gradient(circle at 90% 10%,#21184f,transparent 30%),
+        linear-gradient(135deg,#050816,#0b1224);
+    color:white;
+    min-height:100vh;
+}
+
+.navbar{
+    height:75px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 45px;
+    background:rgba(3,7,18,.95);
+    border-bottom:1px solid #263451;
+}
+
+.logo{
+    color:#00ffcc;
+    font-size:26px;
+    font-weight:800;
+    text-decoration:none;
+}
+
+.nav-buttons{
+    display:flex;
+    gap:12px;
+}
+
+.nav-btn{
+    text-decoration:none;
+    color:white;
+    background:#111a30;
+    border:1px solid #33456b;
+    padding:10px 20px;
+    border-radius:20px;
+    font-weight:700;
+}
+
+.nav-btn:hover{
+    background:#1b2948;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    padding:20px;
+}
+
+/* =========================
+   GAME INFORMATION
+========================= */
+
+.game-info{
+    background:#111a30;
+    border:1px solid #293858;
+    border-radius:20px;
+    padding:25px 28px;
+    margin-bottom:25px;
+}
+
+.game-info h1{
+    color:#00ffcc;
+    font-size:32px;
+    margin-bottom:18px;
+}
+
+.game-info p{
+    color:#aab7d1;
+    font-size:16px;
+    line-height:1.7;
+    margin-bottom:12px;
+}
+
+.game-info p:last-child{
+    margin-bottom:0;
+}
+
+.game-info strong{
+    color:white;
+}
+
+/* =========================
+   PLAY BUTTON
+========================= */
+
+.play-now-area{
+    text-align:center;
+    margin-bottom:28px;
+}
+
+.play-now-btn{
+    border:none;
+    background:linear-gradient(135deg,#6675ff,#9b5cff);
+    color:white;
+    padding:15px 35px;
+    border-radius:14px;
+    font-size:17px;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:0 0 20px rgba(102,117,255,.2);
+    transition:.2s;
+}
+
+.play-now-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 28px rgba(102,117,255,.35);
+}
+
+/* =========================
+   GAME AREA
+========================= */
+
+.game-content{
+    display:none;
+}
+
+.game-content.active{
+    display:block;
+}
+
+.title-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.title-row h1{
+    font-size:38px;
+}
+
+.stats{
+    display:flex;
+    gap:10px;
+}
+
+.stat{
+    background:#111a30;
+    border:1px solid #33456b;
+    border-radius:12px;
+    padding:10px 16px;
+    text-align:center;
+}
+
+.stat span{
+    display:block;
+    color:#9caac5;
+    font-size:12px;
+}
+
+.stat strong{
+    font-size:19px;
+}
+
+.game-box{
+    background:#091122;
+    border:1px solid #293858;
+    border-radius:20px;
+    padding:20px;
+}
+
+.game-area{
+    width:350px;
+    max-width:100%;
+    margin:auto;
+}
+
+.next-title{
+    text-align:center;
+    color:#9caac5;
+    margin-bottom:10px;
+    font-size:14px;
+}
+
+#nextBlock{
+    width:45px;
+    height:45px;
+    border-radius:10px;
+    margin:0 auto 15px;
+}
+
+#playArea{
+    width:350px;
+    max-width:100%;
+    height:600px;
+    background:
+        linear-gradient(
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        ),
+        #070d1c;
+    background-size:50px 50px;
+    border:2px solid #293858;
+    border-radius:14px;
+    position:relative;
+    overflow:hidden;
+    touch-action:none;
+}
+
+#fallingBlock{
+    width:44px;
+    height:44px;
+    position:absolute;
+    left:153px;
+    top:5px;
+    border-radius:9px;
+    z-index:5;
+    box-shadow:0 0 18px currentColor;
+    cursor:grab;
+}
+
+.cell{
+    width:50px;
+    height:50px;
+    position:absolute;
+    border-radius:9px;
+    border:2px solid rgba(255,255,255,.08);
+}
+
+.controls{
+    text-align:center;
+    color:#9caac5;
+    margin-top:15px;
+    line-height:1.6;
+}
+
+.message{
+    text-align:center;
+    font-size:20px;
+    font-weight:800;
+    min-height:30px;
+    margin-top:15px;
+}
+
+.restart{
+    display:none;
+    margin:12px auto 0;
+    padding:12px 25px;
+    border:0;
+    border-radius:20px;
+    background:linear-gradient(135deg,#6675ff,#9b5cff);
+    color:white;
+    font-weight:800;
+    cursor:pointer;
+}
+
+@media(max-width:600px){
+
+    .navbar{
+        padding:0 15px;
+    }
+
+    .logo{
+        font-size:21px;
+    }
+
+    .nav-btn{
+        padding:8px 12px;
+        font-size:13px;
+    }
+
+    .container{
+        margin:20px auto;
+        padding:12px;
+    }
+
+    .game-info{
+        padding:20px;
+    }
+
+    .game-info h1{
+        font-size:27px;
+    }
+
+    .game-info p{
+        font-size:15px;
+    }
+
+    .title-row{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .title-row h1{
+        font-size:30px;
+    }
+
+    #playArea{
+        height:600px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<header class="navbar">
+
+    <a href="games.html" class="logo">
+        🎮 wintask.in
+    </a>
+
+    <div class="nav-buttons">
+
+        <a href="games.html" class="nav-btn">
+            ← Games
+        </a>
+
+        <a href="index.html" class="nav-btn">
+            Home
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <!-- =========================
+         GAME INFORMATION
+    ========================= -->
+
+    <div class="game-info">
+
+        <h1>
+            🎨 Color Drop
+        </h1>
+
+        <p>
+            <strong>Rules:</strong>
+            Color Drop is a simple block-matching puzzle game. A colored block appears from the top of the board and you need to place it in an empty column. Try to create three or more blocks of the same color in a horizontal or vertical line. Matching blocks will disappear and give you points and coins.
+        </p>
+
+        <p>
+            <strong>Controls:</strong>
+            On desktop, use the mouse to drag the falling block left or right. You can also use the Left and Right Arrow keys to move the block. Press Space to drop the block immediately. On mobile, touch and drag the block to the position where you want to place it.
+        </p>
+
+        <p>
+            <strong>Tips:</strong>
+            Plan your moves carefully and keep the board as clear as possible. Try to build matching colors instead of filling random columns. Making more matches helps you increase your score and earn coins while keeping the game going for longer.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         PLAY NOW
+    ========================= -->
+
+    <div
+        class="play-now-area"
+        id="playNowArea"
+    >
+
+        <button
+            class="play-now-btn"
+            onclick="startGameFromButton()"
+        >
+            ▶ PLAY NOW
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         ACTUAL GAME
+    ========================= -->
+
+    <div
+        class="game-content"
+        id="gameContent"
+    >
+
+        <div class="title-row">
+
+            <h1>
+                🎨 Color Drop
+            </h1>
+
+            <div class="stats">
+
+                <div class="stat">
+
+                    <span>
+                        Score
+                    </span>
+
+                    <strong id="score">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span>
+                        Best
+                    </span>
+
+                    <strong id="best">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span>
+                        Coins
+                    </span>
+
+                    <strong id="coins">
+                        0 🪙
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="game-box">
+
+            <div class="game-area">
+
+                <div class="next-title">
+                    NEXT BLOCK
+                </div>
+
+
+                <div id="nextBlock"></div>
+
+
+                <div id="playArea">
+
+                    <div id="fallingBlock"></div>
+
+                </div>
+
+
+                <div class="controls">
+
+                    🖱️ Mouse: Click anywhere to instantly drop the block there.<br>
+
+                    📱 Mobile: Touch anywhere to instantly drop the block there.<br>
+
+                    ⌨️ Keyboard: Use ← → or Space.
+
+                </div>
+
+
+                <div
+                    id="message"
+                    class="message"
+                >
+                </div>
+
+
+                <button
+                    id="restart"
+                    class="restart"
+                    onclick="restartGame()"
+                >
+                    PLAY AGAIN
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =================================
+   SETTINGS
+================================= */
+
+const COLS = 7;
+const ROWS = 12;
+
+const COLORS = [
+    "#ff3864",
+    "#3985ff",
+    "#20d879",
+    "#ffd21f",
+    "#a855f7"
+];
+
+let board = [];
+
+let falling = null;
+
+let nextColor = null;
+
+let score = 0;
+
+let coins =
+    Number(
+        localStorage.getItem("colorDropCoins")
+    ) || 0;
+
+let best =
+    Number(
+        localStorage.getItem("colorDropBest")
+    ) || 0;
+
+let gameOver = false;
+
+let timer = null;
+
+let dragging = false;
+
+
+/* =================================
+   ELEMENTS
+================================= */
+
+const playArea =
+    document.getElementById("playArea");
+
+const fallingBlock =
+    document.getElementById("fallingBlock");
+
+const nextBlock =
+    document.getElementById("nextBlock");
+
+const scoreBox =
+    document.getElementById("score");
+
+const bestBox =
+    document.getElementById("best");
+
+const coinsBox =
+    document.getElementById("coins");
+
+const message =
+    document.getElementById("message");
+
+const restart =
+    document.getElementById("restart");
+
+
+/* =================================
+   RANDOM COLOR
+================================= */
+
+function randomColor(){
+
+    return COLORS[
+        Math.floor(
+            Math.random() *
+            COLORS.length
+        )
+    ];
+
+}
+
+
+/* =================================
+   CREATE BOARD
+================================= */
+
+function createBoard(){
+
+    board = [];
+
+    for(let r=0;r<ROWS;r++){
+
+        board[r] = [];
+
+        for(let c=0;c<COLS;c++){
+
+            board[r][c] = null;
+
+        }
+
+    }
+
+}
+
+
+/* =================================
+   DRAW BOARD
+================================= */
+
+function drawBoard(){
+
+    document
+        .querySelectorAll(".cell")
+        .forEach(
+            el => el.remove()
+        );
+
+
+    for(let r=0;r<ROWS;r++){
+
+        for(let c=0;c<COLS;c++){
+
+            if(board[r][c]){
+
+                const cell =
+                    document.createElement("div");
+
+                cell.className =
+                    "cell";
+
+                cell.style.left =
+                    (c * 50) + "px";
+
+                cell.style.top =
+                    (r * 50) + "px";
+
+                cell.style.background =
+                    board[r][c];
+
+                cell.style.boxShadow =
+                    "0 0 14px " +
+                    board[r][c];
+
+                playArea.appendChild(
+                    cell
+                );
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* =================================
+   UPDATE UI
+================================= */
+
+function updateUI(){
+
+    scoreBox.innerText =
+        score;
+
+    bestBox.innerText =
+        best;
+
+    coinsBox.innerText =
+        coins + " 🪙";
+
+}
+
+
+/* =================================
+   START GAME FROM BUTTON
+================================= */
+
+function startGameFromButton(){
+
+    document.getElementById(
+        "playNowArea"
+    ).style.display = "none";
+
+    document.getElementById(
+        "gameContent"
+    ).classList.add("active");
+
+    startGame();
+
+}
+
+
+/* =================================
+   START GAME
+================================= */
+
+function startGame(){
+
+    createBoard();
+
+    score = 0;
+
+    gameOver = false;
+
+    message.innerText = "";
+
+    restart.style.display =
+        "none";
+
+    nextColor =
+        randomColor();
+
+    showNext();
+
+    spawnBlock();
+
+    drawBoard();
+
+}
+
+
+/* =================================
+   SHOW NEXT
+================================= */
+
+function showNext(){
+
+    nextBlock.style.background =
+        nextColor;
+
+    nextBlock.style.boxShadow =
+        "0 0 18px " +
+        nextColor;
+
+}
+
+
+/* =================================
+   SPAWN
+================================= */
+
+function spawnBlock(){
+
+    falling = {
+
+        x:3,
+
+        y:0,
+
+        color:nextColor
+
+    };
+
+
+    nextColor =
+        randomColor();
+
+    showNext();
+
+
+    fallingBlock.style.display =
+        "block";
+
+    fallingBlock.style.background =
+        falling.color;
+
+    fallingBlock.style.color =
+        falling.color;
+
+    updateFallingPosition();
+
+
+    if(
+        board[0][3] !== null
+    ){
+
+        endGame();
+
+        return;
+
+    }
+
+
+    startFalling();
+
+}
+
+
+/* =================================
+   POSITION FALLING BLOCK
+================================= */
+
+function updateFallingPosition(){
+
+    if(!falling)
+        return;
+
+
+    fallingBlock.style.left =
+        (falling.x * 50 + 3) + "px";
+
+    fallingBlock.style.top =
+        (falling.y * 50 + 3) + "px";
+
+}
+
+
+/* =================================
+   FALL
+================================= */
+
+function startFalling(){
+
+    clearInterval(timer);
+
+    timer =
+        setInterval(
+            function(){
+
+                if(gameOver)
+                    return;
+
+
+                if(canMoveDown()){
+
+                    falling.y++;
+
+                    updateFallingPosition();
+
+                }
+                else{
+
+                    placeBlock();
+
+                }
+
+            },
+            650
+        );
+
+}
+
+
+/* =================================
+   CAN MOVE DOWN
+================================= */
+
+function canMoveDown(){
+
+    const newY =
+        falling.y + 1;
+
+
+    if(newY >= ROWS)
+        return false;
+
+
+    if(
+        board[newY][
+            falling.x
+        ] !== null
+    ){
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =================================
+   PLACE BLOCK
+================================= */
+
+function placeBlock(){
+
+    clearInterval(timer);
+
+
+    board[
+        falling.y
+    ][
+        falling.x
+    ] =
+        falling.color;
+
+
+    falling = null;
+
+    fallingBlock.style.display =
+        "none";
+
+
+    checkMatches();
+
+    drawBoard();
+
+
+    if(isFull()){
+
+        endGame();
+
+        return;
+
+    }
+
+
+    score++;
+
+    updateUI();
+
+
+    setTimeout(
+        spawnBlock,
+        250
+    );
+
+}
+
+
+/* =================================
+   MATCH
+================================= */
+
+function checkMatches(){
+
+    let remove = [];
+
+
+    /* Horizontal */
+
+    for(let r=0;r<ROWS;r++){
+
+        for(let c=0;c<COLS-2;c++){
+
+            let color =
+                board[r][c];
+
+            if(!color)
+                continue;
+
+
+            if(
+                board[r][c+1] === color &&
+                board[r][c+2] === color
+            ){
+
+                remove.push(
+                    [r,c],
+                    [r,c+1],
+                    [r,c+2]
+                );
+
+            }
+
+        }
+
+    }
+
+
+    /* Vertical */
+
+    for(let c=0;c<COLS;c++){
+
+        for(let r=0;r<ROWS-2;r++){
+
+            let color =
+                board[r][c];
+
+            if(!color)
+                continue;
+
+
+            if(
+                board[r+1][c] === color &&
+                board[r+2][c] === color
+            ){
+
+                remove.push(
+                    [r,c],
+                    [r+1,c],
+                    [r+2,c]
+                );
+
+            }
+
+        }
+
+    }
+
+
+    /* Remove duplicates */
+
+    const unique = [];
+
+    const seen = new Set();
+
+
+    remove.forEach(
+        item => {
+
+            const key =
+                item[0] +
+                "-" +
+                item[1];
+
+
+            if(!seen.has(key)){
+
+                seen.add(key);
+
+                unique.push(item);
+
+            }
+
+        }
+    );
+
+
+    if(unique.length === 0)
+        return;
+
+
+    /* Remove */
+
+    unique.forEach(
+        item => {
+
+            board[
+                item[0]
+            ][
+                item[1]
+            ] = null;
+
+        }
+    );
+
+
+    /* Reward */
+
+    score +=
+        unique.length * 10;
+
+    coins += 5;
+
+
+    localStorage.setItem(
+        "colorDropCoins",
+        coins
+    );
+
+
+    /* Gravity */
+
+    gravity();
+
+
+    updateUI();
+
+    drawBoard();
+
+}
+
+
+/* =================================
+   GRAVITY
+================================= */
+
+function gravity(){
+
+    for(let c=0;c<COLS;c++){
+
+        let colors = [];
+
+
+        for(
+            let r=ROWS-1;
+            r>=0;
+            r--
+        ){
+
+            if(
+                board[r][c]
+            ){
+
+                colors.push(
+                    board[r][c]
+                );
+
+            }
+
+        }
+
+
+        for(let r=0;r<ROWS;r++){
+
+            board[r][c] =
+                null;
+
+        }
+
+
+        for(
+            let i=0;
+            i<colors.length;
+            i++
+        ){
+
+            board[
+                ROWS-1-i
+            ][c] =
+                colors[i];
+
+        }
+
+    }
+
+}
+
+
+/* =================================
+   FULL CHECK
+================================= */
+
+function isFull(){
+
+    for(let c=0;c<COLS;c++){
+
+        if(
+            board[0][c] === null
+        ){
+
+            return false;
+
+        }
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =================================
+   END GAME
+================================= */
+
+function endGame(){
+
+    gameOver = true;
+
+    clearInterval(timer);
+
+    fallingBlock.style.display =
+        "none";
+
+
+    if(score > best){
+
+        best = score;
+
+        localStorage.setItem(
+            "colorDropBest",
+            best
+        );
+
+    }
+
+
+    message.innerText =
+        "GAME OVER 🎮";
+
+    message.style.color =
+        "#ff3864";
+
+
+    restart.style.display =
+        "block";
+
+
+    updateUI();
+
+}
+
+
+/* =================================
+   RESTART
+================================= */
+
+function restartGame(){
+
+    startGame();
+
+}
+
+
+/* =================================
+   MOVE LEFT
+================================= */
+
+function moveLeft(){
+
+    if(!falling || gameOver)
+        return;
+
+
+    if(
+        falling.x > 0 &&
+        board[
+            falling.y
+        ][
+            falling.x - 1
+        ] === null
+    ){
+
+        falling.x--;
+
+        updateFallingPosition();
+
+    }
+
+}
+
+
+/* =================================
+   MOVE RIGHT
+================================= */
+
+function moveRight(){
+
+    if(!falling || gameOver)
+        return;
+
+
+    if(
+        falling.x < COLS-1 &&
+        board[
+            falling.y
+        ][
+            falling.x + 1
+        ] === null
+    ){
+
+        falling.x++;
+
+        updateFallingPosition();
+
+    }
+
+}
+
+
+/* =================================
+   DROP FAST
+================================= */
+
+function dropBlock(){
+
+    if(!falling || gameOver)
+        return;
+
+
+    while(
+        canMoveDown()
+    ){
+
+        falling.y++;
+
+    }
+
+
+    updateFallingPosition();
+
+    placeBlock();
+
+}
+
+
+/* =================================
+   CLICK TO DROP
+================================= */
+
+playArea.addEventListener(
+    "click",
+    function(e){
+
+        if(gameOver || !falling)
+            return;
+
+
+        /*
+           Get the exact column
+           where the user clicked.
+        */
+
+        const rect =
+            playArea.getBoundingClientRect();
+
+
+        const clickX =
+            e.clientX -
+            rect.left;
+
+
+        let column =
+            Math.floor(
+                clickX / 50
+            );
+
+
+        /*
+           Keep column inside board.
+        */
+
+        if(column < 0)
+            column = 0;
+
+        if(column >= COLS)
+            column = COLS - 1;
+
+
+        /*
+           Move the block to the
+           clicked column.
+        */
+
+        if(
+            board[
+                falling.y
+            ][column] === null
+        ){
+
+            falling.x =
+                column;
+
+            updateFallingPosition();
+
+            /*
+               Immediately drop
+               the block.
+            */
+
+            dropBlock();
+
+        }
+
+    }
+);
+
+
+/* =================================
+   MOUSE DRAG
+================================= */
+
+function getColumn(clientX){
+
+    const rect =
+        playArea.getBoundingClientRect();
+
+
+    let x =
+        clientX - rect.left;
+
+
+    let column =
+        Math.floor(
+            x / 50
+        );
+
+
+    if(column < 0)
+        column = 0;
+
+
+    if(column >= COLS)
+        column = COLS-1;
+
+
+    return column;
+
+}
+
+
+playArea.addEventListener(
+    "mousedown",
+    function(e){
+
+        if(gameOver)
+            return;
+
+        dragging = true;
+
+
+        if(falling){
+
+            let col =
+                getColumn(
+                    e.clientX
+                );
+
+
+            if(
+                board[
+                    falling.y
+                ][col] === null
+            ){
+
+                falling.x =
+                    col;
+
+                updateFallingPosition();
+
+            }
+
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    "mousemove",
+    function(e){
+
+        if(!dragging)
+            return;
+
+        if(!falling)
+            return;
+
+
+        let col =
+            getColumn(
+                e.clientX
+            );
+
+
+        if(
+            board[
+                falling.y
+            ][col] === null
+        ){
+
+            falling.x =
+                col;
+
+            updateFallingPosition();
+
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    "mouseup",
+    function(){
+
+        if(dragging){
+
+            dragging = false;
+
+        }
+
+    }
+);
+
+
+/* =================================
+   TOUCH
+================================= */
+
+playArea.addEventListener(
+    "touchstart",
+    function(e){
+
+        if(gameOver)
+            return;
+
+        e.preventDefault();
+
+        dragging = true;
+
+
+        let touch =
+            e.touches[0];
+
+
+        let col =
+            getColumn(
+                touch.clientX
+            );
+
+
+        if(falling){
+
+            if(
+                board[
+                    falling.y
+                ][col] === null
+            ){
+
+                falling.x =
+                    col;
+
+                updateFallingPosition();
+
+            }
+
+        }
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+playArea.addEventListener(
+    "touchmove",
+    function(e){
+
+        if(!dragging)
+            return;
+
+        if(!falling)
+            return;
+
+        e.preventDefault();
+
+
+        let touch =
+            e.touches[0];
+
+
+        let col =
+            getColumn(
+                touch.clientX
+            );
+
+
+        if(
+            board[
+                falling.y
+            ][col] === null
+        ){
+
+            falling.x =
+                col;
+
+            updateFallingPosition();
+
+        }
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+playArea.addEventListener(
+    "touchend",
+    function(){
+
+        dragging = false;
+
+    }
+);
+
+
+/* =================================
+   KEYBOARD
+================================= */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(gameOver)
+            return;
+
+
+        if(e.key === "ArrowLeft"){
+
+            e.preventDefault();
+
+            moveLeft();
+
+        }
+
+
+        if(e.key === "ArrowRight"){
+
+            e.preventDefault();
+
+            moveRight();
+
+        }
+
+
+        if(e.code === "Space"){
+
+            e.preventDefault();
+
+            dropBlock();
+
+        }
+
+    }
+);
+
+
+/* =================================
+   INITIALIZE
+================================= */
+
+updateUI();
+
+</script>
+
+</body>
+</html>

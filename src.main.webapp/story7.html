@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mystery of the Space Needle Secret</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #004d80;
+            text-align: center;
+        }
+        h3 {
+            color: #555;
+            text-align: center;
+            font-style: italic;
+        }
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .story-poster-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .story-poster-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .mcq-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .options {
+            margin: 15px 0;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #submitAns {
+            background-color: #004d80;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #nextBtn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 15px;
+            border-radius: 5px;
+            cursor: not-allowed;
+            margin-left: 10px;
+        }
+        #nextBtn:not(:disabled) {
+            cursor: pointer;
+        }
+        #resultMsg {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .nav-btn-container {
+            margin-top: 25px;
+            text-align: left;
+        }
+        .back-btn {
+            background: transparent;
+            color: #004d80;
+            border: 2px solid #004d80;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: rgba(0, 77, 128, 0.1);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <h1>The Mystery of the Space Needle Secret</h1>
+    <h3>By Prashant</h3>
+    <!-- Story Poster Added Here -->
+    <div class="story-poster-container">
+        <a href="https://ibb.co/k29rK0st" target="_blank"><img src="https://i.ibb.co/23sLqP1T/space-needle-adventure-poster.jpg" alt="space-needle-adventure-poster" border="0"></a>
+    </div>
+    <p>It was a crisp autumn afternoon in <strong>Seattle</strong>, Washington. The leaves were turning shades of golden-orange, and a light mist hung over Elliott Bay. Lucas and his best friend Harper, two eighth-graders at Washington Middle School, were walking home past the iconic Space Needle. They loved exploring the city after classes, but today felt different. Something unexpected was about to happen.</p>
+    <p>While taking a shortcut through Seattle Center park, Lucas’s sneaker scraped against something metallic buried under a pile of wet leaves. Curious, he knelt and brushed the dirt away. It was an old, heavy brass box with a curious engraving of a compass and a riddle carved on the lid: <em>"Where the needles touch the sky, look below to find what money cannot buy."</em></p>
+    <p>"Harper, look at this!" Lucas whispered, his eyes wide with excitement. "Do you think it’s a time capsule or a hidden treasure?" Harper, who was the smartest coder in their school's robotics club, adjusted her glasses and examined the lock. It wasn't a normal keyhole; it had a small digital keypad powered by an old-school kinetic battery.</p>
+    <p>"The riddle says 'Where the needles touch the sky,'" Harper muttered, thinking out loud. "That definitely means the Space Needle! But what about the combination?" She remembered a local history project they did last week about Seattle’s 1962 World's Fair. "Wait! The fair opened in 1962, and the architect’s favorite number was seven!"</p>
+    <p>With trembling fingers, Harper typed **1-9-6-2-7** into the tiny brass keypad. With a satisfying mechanical click, the heavy lid popped open. Inside weren't gold coins or expensive gadgets, but something much cooler. It was a pristine, vintage Polaroid camera, a notebook filled with adventurous hand-written notes from students dating back to 1985, and a final instruction card addressed to the next finders.</p>
+    <p>The card read: <em>"You have found the Seattle Time Keepers Club legacy. To keep the tradition alive, you must take a photo of the Space Needle at sunset, write your dream for the future in this notebook, and re-hide it for the next curious minds."</em></p>
+    <p>Lucas and Harper looked at each other and smiled. The sun was just beginning to set behind the snow-capped Olympic Mountains, painting the sky in brilliant shades of pink and purple. Lucas grabbed the vintage camera, pointed it toward the towering Seattle skyline, and clicked the shutter button. As the square photo slowly developed in his hands, they both realized that some mysteries are better lived than solved—and their adventure in Seattle had only just begun.</p>
+    
+    <!-- MCQ Section -->
+    <div class="mcq-container">
+        <h3>Story Quiz</h3>
+        <p><strong>Q: What is the name of this story?</strong></p>
+        <div class="options">
+            <label><input type="radio" name="quiz" value="wrong"> The Lost City of Gold</label>
+            <label><input type="radio" name="quiz" value="right"> The Mystery of the Space Needle Secret</label>
+            <label><input type="radio" name="quiz" value="wrong"> The Seattle Robotics Club</label>
+        </div>
+        <button id="submitAns" onclick="checkAnswer()">Submit Answer</button>
+        <button id="nextBtn" disabled onclick="goToNextPage()">Next ➡️</button>
+        <p id="resultMsg"></p>
+    </div>
+
+    <!-- Back Button Section -->
+    <div class="nav-btn-container">
+        <a href="storypage.html" class="back-btn">← Back</a>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            let options = document.getElementsByName('quiz');
+            let selected = "";
+            for (let opt of options) {
+                if (opt.checked) {
+                    selected = opt.value;
+                    break;
+                }
+            }
+            let resultMsg = document.getElementById('resultMsg');
+            let nextBtn = document.getElementById('nextBtn');
+            if (selected === "") {
+                resultMsg.style.color = "orange";
+                resultMsg.innerText = "कृपया आधी कोणताही एक पर्याय निवडा!";
+                return;
+            }
+            if (selected === "right") {
+                resultMsg.style.color = "green";
+                resultMsg.innerText = "बरोबर उत्तर! आता 'Next' बटण चालू झाले आहे.";
+                nextBtn.disabled = false; // Next बटन ऍक्टिव्ह करणे
+            } else {
+                resultMsg.style.color = "red";
+                resultMsg.innerText = "चूक उत्तर! कृपया पुन्हा प्रयत्न करा.";
+                nextBtn.disabled = true;
+            }
+        }
+        function goToNextPage() {
+            window.location.href = "storymcq7.html";
+        }
+    </script>
+</body>
+</html>

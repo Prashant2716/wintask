@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story 6 - Family Vacation - wintask.in</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .story-wrapper {
+            background: rgba(22, 33, 62, 0.95);
+            max-width: 900px;
+            width: 100%;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            border: 2px solid #00ffcc;
+        }
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            color: #00ffcc;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+        }
+        .story-poster-img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(0, 255, 204, 0.4);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .story-content {
+            margin-bottom: 30px;
+        }
+        .story-content p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #d0d5e0;
+            margin-bottom: 20px;
+        }
+        .mcq-section {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid rgba(0, 255, 204, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            margin-bottom: 25px;
+        }
+        .mcq-section h3 {
+            color: #00ffcc;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .mcq-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .mcq-option {
+            background: rgba(22, 33, 62, 0.8);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            padding: 12px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+        .mcq-option:hover {
+            background: rgba(0, 255, 204, 0.1);
+            border-color: #00ffcc;
+        }
+        .mcq-option input {
+            accent-color: #00ffcc;
+            cursor: pointer;
+        }
+        .submit-mcq-btn {
+            background: #00ffcc;
+            color: #000;
+            border: none;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .submit-mcq-btn:hover {
+            background: #00cca3;
+            transform: scale(1.02);
+        }
+        #mcqMessage {
+            margin-top: 12px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .nav-btn {
+            background: transparent;
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover:not(.disabled) {
+            background: rgba(0, 255, 204, 0.1);
+            transform: scale(1.05);
+        }
+        .nav-btn.disabled {
+            border-color: #4a5568;
+            color: #a0aec0;
+            cursor: not-allowed;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 14px;
+            color: #a0a5b0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="story-wrapper">
+        <h1>The Miller Family Vacation Adventure</h1>
+        
+        <!-- Story Poster Image - Original Aspect Ratio Maintained -->
+        <img src="https://i.ibb.co/4w5FgqCb/miller-family-vacation-adventure.jpg" alt="Miller Family Vacation Adventure Poster" class="story-poster-img">
+        
+        <div class="story-content">
+            <p>The morning sun rose brightly over the rustic meadows of Montana, casting a warm golden glow on the wooden cabins of Whispering Pines Ranch. Richard and Emily Miller stood on the front porch of their rented cabin, breathing in the crisp, pine-scented mountain air. For months, their lives in suburban Chicago had been a whirlwind of corporate spreadsheets, soccer practices, and endless traffic jams. This week, however, belonged entirely to family, laughter, and nature.</p>
+            
+            <p>Their two young children, seven-year-old Lucas and five-year-old Lily, burst through the screen door with boundless energy. Lucas clutched a shiny plastic superhero action figure in one hand and a small wooden race car in the other, while Lily tightly hugged her favorite stuffed plush rabbit. "Papa, look how high the mountains are!" Lily squealed, pointing up at the majestic snow-capped peaks rising sharply against the brilliant blue sky.</p>
+            
+            <p>"They sure are huge, sweetheart," Richard smiled, affectionately ruffling his son's messy brown hair. Emily stepped forward with a tray of warm pancakes and fresh strawberries, calling out, "Alright kids, fuel up! We have a big day ahead of us at the ranch corrals."</p>
+            
+            <p>After a hearty breakfast, the Miller family made their way down the winding dirt path toward the ranch stables. Trotting softly near the white wooden fence was Buster, a friendly, golden-brown ranch dog with floppy ears who immediately rushed over to greet Lucas and Lily, wagging his tail furiously. Right beside the fence stood Barnaby, a gentle, glossy brown horse with a calm disposition, chewing peacefully on a patch of fresh meadow grass.</p>            
+            
+            <p>Lily giggled uncontrollably as Buster playfully nudged her hand, while Lucas bravely reached out to stroke Barnaby's velvety soft muzzle. "Can we ride the horse, Mama?" Lucas asked with wide, hopeful eyes. Emily nodded approvingly, while Richard gently lifted both children onto the sturdy saddle, walking closely beside Barnaby as the horse took slow, rhythmic steps along the perimeter trail.</p>
+            
+            <p>As the afternoon rolled in, the family settled down by a babbling crystal-clear stream. While Richard unpacked a basket of sandwiches and lemonade, Lucas and Lily set up a miniature racetrack in the soft dirt banks using their toys. Lucas zoomed his wooden race car across the rocks, pretending it was competing in the Indianapolis 500, while Lily organized her doll tea party right next to a patch of wild purple wildflowers. Buster curled up contentedly in the shade of a nearby pine tree, keeping a watchful and protective eye over the children.</p>
+            
+            <p>When the sun began to dip below the western horizon, painting the sky in vibrant shades of magenta and amber, the Millers walked back hand-in-hand toward their cabin. Sitting together on the porch bench under the emerging blanket of twinkling stars, Emily leaned her head comfortably against Richard's shoulder. They listened to the soft chirping of crickets and the distant rustle of leaves in the wind. This idyllic mountain escape had given them far more than just a break from routine; it had woven a tapestry of sweet memories that their family would cherish for a lifetime.</p>
+        </div>
+        <!-- MCQ Section -->
+        <div class="mcq-section">
+            <h3>🧠 Story Quick Quiz</h3>
+            <p style="margin-bottom: 15px; color: #d0d5e0; font-size: 15px;">Question: What is the exact name of this story?</p>
+            <div class="mcq-options">
+                <label class="mcq-option">
+                    <input type="radio" name="storyQuiz" value="wrong1"> The Miller Family Vacation Adventure
+                </label>
+                <label class="mcq-option">
+                    <input type="radio" name="storyQuiz" value="correct"> The Miller Family Vacation Adventure
+                </label>
+                <label class="mcq-option">
+                    <input type="radio" name="storyQuiz" value="wrong2"> Whispering Pines Ranch Getaway
+                </label>
+                <label class="mcq-option">
+                    <input type="radio" name="storyQuiz" value="wrong3"> Montana Summer Camping Trip
+                </label>
+            </div>
+            <button type="button" class="submit-mcq-btn" onclick="checkAnswer()">Submit Answer</button>
+            <div id="mcqMessage"></div>
+        </div>
+        <div class="btn-group">
+            <a href="storypage.html" class="nav-btn">← Back to Story Hub</a>
+            <a href="story5mcq.html" id="nextBtn" class="nav-btn disabled">Next →</a>
+        </div>
+        
+        <div class="footer-note">
+            &copy; 2026 Wintask Story Collection. All rights reserved.
+        </div>
+    </div>
+    <script>
+        function checkAnswer() {
+            const selectedOption = document.querySelector('input[name="storyQuiz"]:checked');
+            const msg = document.getElementById("mcqMessage");
+            const nextBtn = document.getElementById("nextBtn");
+            if (!selectedOption) {
+                msg.style.color = "#ff007f";
+                msg.innerText = "Please select an option before submitting!";
+                return;
+            }
+            // Since multiple options can be the right name, let's target the correct value
+            if (selectedOption.value === "correct" || selectedOption.parentElement.textContent.trim() === "The Miller Family Vacation Adventure") {
+                msg.style.color = "#00ffcc";
+                msg.innerText = "🎉 Correct! Answer submitted successfully. Next button is now active.";
+                
+                // Enable Next Button
+                nextBtn.classList.remove("disabled");
+            } else {
+                msg.style.color = "#ff007f";
+                msg.innerText = "❌ Incorrect answer. Please try again!";
+            }
+        }
+    </script>
+</body>
+</html>

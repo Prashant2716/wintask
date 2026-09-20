@@ -1,0 +1,101 @@
+<!DOCTYPE html> 
+<html lang="mr"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>wintask.in - Games Zone</title> 
+ 
+    <style> 
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; } 
+        body { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); color: #ffffff; min-height: 100vh; } 
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: rgba(0,0,0,0.6); border-bottom: 1px solid rgba(0, 255, 204, 0.2); } 
+        .logo { font-size: 28px; font-weight: bold; color: #00ffcc; text-decoration: none; } 
+        .back-btn { border: 2px solid #00ffcc; color: #00ffcc; padding: 8px 18px; border-radius: 20px; text-decoration: none; font-weight: bold; transition: 0.3s; } 
+        .back-btn:hover { background: #00ffcc; color: #000; } 
+        .container { max-width: 650px; margin: 30px auto; padding: 20px; text-align: center; } 
+        .tab-buttons { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; } 
+        .tab-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid #00ffcc; color: #fff; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s; text-decoration: none; display: inline-block; } 
+        .tab-btn.active, .tab-btn:hover { background: #00ffcc; color: #000; box-shadow: 0 0 15px #00ffcc; } 
+        .game-card { background: rgba(20, 20, 35, 0.9); border: 1px solid rgba(0, 255, 204, 0.3); border-radius: 20px; padding: 30px; box-shadow: 0 0 25px rgba(0, 255, 204, 0.2); display: none; } 
+        .game-card.active { display: block; } 
+        .score-board { color: #ff007f; font-size: 18px; font-weight: bold; margin-bottom: 15px; } 
+        .option-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(0, 255, 204, 0.4); color: #fff; width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; cursor: pointer; text-align: left; font-size: 16px; transition: 0.3s; } 
+        .option-btn:hover { background: rgba(0, 255, 204, 0.2); } 
+        .scrambled-word { font-size: 32px; letter-spacing: 5px; color: #00ffcc; margin: 15px 0; font-weight: bold; } 
+        .puzzle-input { padding: 10px; width: 80%; font-size: 18px; border-radius: 10px; border: 1px solid #00ffcc; outline: none; text-align: center; margin-bottom: 15px; } 
+        .action-btn { background: linear-gradient(45deg, #ff007f, #7928ca); color: #fff; border: none; padding: 10px 25px; border-radius: 20px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; } 
+        .action-btn:hover { transform: scale(1.05); } 
+    </style> 
+</head> 
+ 
+<body> 
+ 
+<header class="navbar"> 
+    <a href="index.html" class="logo">🎮 wintask.in</a> 
+    <a href="index.html" class="back-btn">← Back to Home</a> 
+</header> 
+ 
+<div class="container"> 
+    <div class="tab-buttons"> 
+        <button class="tab-btn active" onclick="switchGame('mcq', this)">🧠 MCQ Quiz</button> 
+        <button class="tab-btn" onclick="switchGame('puzzle', this)">🧩 Word Puzzle</button> 
+        <a href="stackrush.html" class="tab-btn">🎮 Stack Rush</a> 
+        <a href="alienshooter.html" class="tab-btn">👾 Alien Shooter</a> 
+        <a href="cardswipe.html" class="tab-btn">🐾 Card Swipe</a> 
+        <a href="colordrop.html" class="tab-btn">🎨 Color Drop</a>
+        <a href="circle-game.html" class="tab-btn">⭕ Circle Game</a> 
+        <a href="connectdots.html" class="tab-btn">🔗 Connect Dots</a> 
+        <a href="mpsc_upsc_quiz.html" class="tab-btn">📚 MPSC & UPSC Quiz</a> 
+        <a href="math_quiz.html" class="tab-btn">🔢 Math Quiz</a> 
+        <!-- BIKE RACE BUTTON ADDED -->
+        <a href="bike_race.html" class="tab-btn">🏍 Bike Race</a> 
+        <!-- MELA GAME BUTTON ADDED -->
+        <a href="mela.html" class="tab-btn">🎪 Shivapur Mela</a> 
+    </div> 
+ 
+    <div class="score-board">Coins: <span id="totalScore">0</span> 🪙</div> 
+ 
+    <div id="mcqGame" class="game-card active"> 
+        <h2 style="color:#00ffcc; margin-bottom:15px;">MCQ Quiz</h2> 
+        <div id="mcqBox"> 
+            <div id="mcqQuestion" style="font-size:20px; margin-bottom:15px;"></div> 
+            <div id="mcqOptions"></div> 
+            <button class="action-btn" id="mcqNextBtn" onclick="nextMcq()" style="display:none;">पुढील प्रश्न ➔</button> 
+        </div> 
+    </div> 
+ 
+    <div id="puzzleGame" class="game-card"> 
+        <h2 style="color:#00ffcc; margin-bottom:10px;">Word Scramble Puzzle</h2> 
+        <p style="color:#ccc; font-size:14px;">उलट-पुलट केलेले शब्द ओळखा आणि बरोबर शब्द टाईप करा!</p> 
+        <div class="scrambled-word" id="scrambledWord">LOAD</div> 
+        <input type="text" id="puzzleAnswer" class="puzzle-input" placeholder="उत्तर येथे टाईप करा..."> 
+        <br> 
+        <button class="action-btn" onclick="checkPuzzleAnswer()">Submit Answer</button> 
+        <div id="puzzleMsg" style="margin-top:15px; font-weight:bold;"></div> 
+    </div> 
+</div> 
+ 
+<script> 
+let totalCoins = parseInt(localStorage.getItem('wintask_coins') || 0); 
+ 
+function updateScore(points) { 
+    totalCoins += points; 
+    localStorage.setItem('wintask_coins', totalCoins);
+    document.getElementById("totalScore").innerText = totalCoins; 
+} 
+ 
+let gameTimeInSeconds = 0;
+function startGameTimer() {
+    setInterval(() => {
+        gameTimeInSeconds++;
+        if (gameTimeInSeconds === 300) {
+            updateScore(25); 
+            alert("अभिनंदन! तुम्ही ५ मिनिटे खेळलात आणि तुम्हाला २५ कॉइन्स मिळाले! 🎉");
+            gameTimeInSeconds = 0;
+        }
+    }, 1000);
+}
+ 
+function switchGame(gameType, clickedButton) { 
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active')); 
+    document

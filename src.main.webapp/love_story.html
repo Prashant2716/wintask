@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Harvest Love Story</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #e94560;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .story-container {
+            background: rgba(22, 33, 62, 0.95);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 2px solid #e94560;
+        }
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            color: #ff2e63;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 46, 99, 0.5);
+        }
+        .story-image-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .story-image {
+            width: 100%;
+            max-height: 350px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid rgba(233, 69, 96, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+        .story-image:hover {
+            transform: scale(1.02);
+        }
+        .story-content {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #ffffff;
+            text-align: justify;
+        }
+        .story-content p {
+            margin-bottom: 20px;
+        }
+        .highlight {
+            color: #ff2e63;
+            font-weight: bold;
+        }
+        .mcq-section {
+            background: rgba(20, 22, 35, 0.8);
+            border: 1px dashed #ff2e63;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        .mcq-question {
+            font-size: 17px;
+            font-weight: bold;
+            color: #00ffcc;
+            margin-bottom: 15px;
+        }
+        .mcq-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .mcq-option-label {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: #c0c5d0;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .mcq-option-label:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(0, 255, 204, 0.3);
+        }
+        .mcq-option-label input {
+            accent-color: #00ffcc;
+            cursor: pointer;
+        }
+        .submit-mcq-btn {
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            color: #000;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 800;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+            transition: transform 0.2s;
+        }
+        .submit-mcq-btn:hover {
+            transform: scale(1.03);
+        }
+        #mcqResult {
+            margin-top: 10px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+        .back-btn, .next-btn {
+            color: #ffffff;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: 800;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .back-btn {
+            background: linear-gradient(45deg, #ff2e63, #e94560);
+            box-shadow: 0 0 15px rgba(255, 46, 99, 0.5);
+        }
+        .back-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 46, 99, 0.8);
+        }
+        .next-btn {
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .next-btn.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .next-btn.active:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.8);
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #a0a0a0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="story-container">
+        <h1>The Harvest Love Story</h1>
+        
+        <div class="story-image-container">
+            <a href="https://ibb.co/zT8gX80r" target="_blank">
+                <img src="https://i.ibb.co/7dgDng6X/marathi-village-sugarcane-harvest.jpg" alt="marathi-village-sugarcane-harvest" class="story-image" border="0">
+            </a>
+        </div>
+        <div class="story-content">
+            <p>It was the height of summer, and the sugarcane harvesting season was in full swing across the sun-drenched fields of rural America. In these vast agricultural lands, the tall green stalks were not merely a crop—they were the lifeblood of hundreds of families who traveled from afar. Amidst these sprawling fields and rustling leaves blossomed a unique and powerful romance between <span class="highlight">Ethan</span> and <span class="highlight">Chloe</span>.</p>
+            
+            <p>Ethan was a hard-working young man who arrived every season with his family to help with the heavy farm labor. Possessing incredible strength and an unyielding work ethic, Ethan worked tirelessly day and night under the open sky. On the other side of the fields was <span class="highlight">Chloe</span>, a bright and spirited young woman from a neighboring farming family. With expressive eyes and a smile that could light up the entire field, she naturally captured the admiration of everyone around her.</p>
+            
+            <p>Their paths crossed one afternoon right in the middle of the sugarcane rows. While Ethan was tying up heavy bundles of cane, a sharp leaf grazed his hand, causing it to bleed. Chloe saw this from a distance. Without a moment's hesitation, she hurried over, tore a strip of fabric from the hem of her bandana, and gently wrapped it around Ethan's hand. There was magic in that touch. Ethan looked up into Chloe's eyes and instantly saw his entire future reflected there. In that single moment, a brand-new dawn of love awoke in both of their hearts.</p>
+            
+            <p>As the days passed, working alongside each other turned into a silent language of shared glances and quiet smiles. When evening fell and the camps grew still under the starlit sky, they would steal away for quiet moments near the edge of the fields. The rustling of the tall sugarcane leaves whispered like a soft melody dedicated to their bond. Ethan would gather wild wildflowers with his calloused hands and tuck them into Chloe's hair. Chloe would laugh softly, resting her head on Ethan's shoulder as they talked for hours.</p>
+            
+            <p>Yet, true love always faces its tests. The end of the harvesting season was drawing near, and with it came the bitter reality that everyone would soon have to pack up and return to their respective towns. A quiet fear gripped Ethan and Chloe's hearts. One evening, gathering his courage, Ethan asked, "Chloe, when the harvest ends and we have to leave, will we drift apart? Will your love for me remain the same?" Chloe took his rough hands in hers and replied with unwavering faith, "Ethan, just as these crops grow back from the soil every single year, our love is deeply rooted in this earth. We will stay together no matter what."</p>
+            
+            <p>On the final day of the season, departure day arrived. The trucks rolled out, but before leaving, Ethan sent his elders to speak with Chloe's father to propose marriage. Chloe's family had long admired Ethan's sincerity and strong dedication, and they accepted the proposal without hesitation.</p>
+            
+            <p>A few months later, when the new sugarcane harvesting season began once again, Ethan and Chloe returned to those very same fields—this time as life partners. Their love proved that building a life together requires not wealth, but purity of heart. Like the natural sweetness of the sugarcane harvest, their lives together became wonderfully sweet forever.</p>
+        </div>
+        
+        <div class="mcq-section">
+            <div class="mcq-question">Q: What crop was being harvested in the fields where Ethan and Chloe met?</div>
+            <div class="mcq-options">
+                <label class="mcq-option-label"><input type="radio" name="mcq" value="A"> A) Wheat</label>
+                <label class="mcq-option-label"><input type="radio" name="mcq" value="B"> B) Sugarcane</label>
+                <label class="mcq-option-label"><input type="radio" name="mcq" value="C"> C) Corn</label>
+                <label class="mcq-option-label"><input type="radio" name="mcq" value="D"> D) Rice</label>
+            </div>
+            <button type="button" class="submit-mcq-btn" onclick="checkAnswer()">Submit Answer</button>
+            <div id="mcqResult"></div>
+        </div>
+        <div class="btn-group">
+            <a href="storypage.html" class="back-btn">Back to Story</a>
+            <a href="love1.html" id="nextBtn" class="next-btn">Next</a>
+        </div>
+        <div class="footer-note">
+            &copy; 2026 Wintask Story Collection. All rights reserved.
+        </div>
+    </div>
+    <script>
+        function checkAnswer() {
+            const selected = document.querySelector('input[name="mcq"]:checked');
+            const resultDiv = document.getElementById('mcqResult');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            if (!selected) {
+                resultDiv.style.color = "#ff9900";
+                resultDiv.innerText = "Please select an option first!";
+                nextBtn.classList.remove('active');
+                return;
+            }
+            if (selected.value === "B") {
+                resultDiv.style.color = "#00ffcc";
+                resultDiv.innerText = "Correct! Well done.";
+                nextBtn.classList.add('active');
+            } else {
+                resultDiv.style.color = "#ff2e63";
+                resultDiv.innerText = "Incorrect! Try again.";
+                nextBtn.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>शाळेची गोष्ट - Shikvan - wintask.in</title>
+    
+    <!-- १. Firebase SDK Scripts (हे असणे बंधनकारक आहे) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+        }
+        body {
+            background: linear-gradient(rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.95)),
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        .quiz-container {
+            background: rgba(18, 18, 32, 0.85);
+            border: 2px solid #00ffcc;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+            max-width: 800px;
+            width: 100%;
+            backdrop-filter: blur(12px);
+        }
+        h1 {
+            font-size: 38px;
+            color: #00ffcc;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #ff007f;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .question-card {
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 204, 0.2);
+        }
+        .question-card p {
+            font-size: 18px;
+            color: #d0d5e0;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        .submit-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .claim-btn {
+            background: linear-gradient(45deg, #ff007f, #ff9900);
+            color: #fff;
+            padding: 14px 35px;
+            font-size: 17px;
+            font-weight: 800;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+            transition: transform 0.3s;
+            margin: 10px;
+            display: inline-block;
+        }
+        .claim-btn:hover {
+            transform: scale(1.05);
+        }
+        .claim-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            background: #555;
+            color: #888;
+            box-shadow: none;
+        }
+        #resultMsg {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 15px;
+            font-weight: bold;
+            white-space: pre-line;
+        }
+        .back-btn-container {
+            text-align: center;
+            margin-top: 25px;
+        }
+        .back-btn {
+            background: transparent;
+            color: #00ffcc;
+            padding: 10px 25px;
+            font-size: 15px;
+            border: 2px solid #00ffcc;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            background: #00ffcc;
+            color: #000;
+        }
+        /* Google Translate Styling */
+        #google_translate_element {
+            text-align: center;
+            margin-top: 25px;
+        }
+        .goog-te-combo {
+            background: #141623;
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+        .goog-te-combo:hover {
+            background: #00ffcc;
+            color: #000;
+        }
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+        .goog-logo-link { display: none !important; }
+        .goog-te-gadget { color: transparent !important; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>कथेची शिकवण (Moral of the Story)</h1>
+        <div class="subtitle">गोष्ट: शाळेची सुंदर गोष्ट</div>
+        
+        <div class="question-card">
+            <p><strong>या कथेतून आपल्याला काय शिकायला मिळते?</strong><br><br>
+            ही गोष्ट आपल्याला शिक्षण, सहकार्य आणि शालेय जीवनातील मूल्यांचे महत्त्व शिकवते. राहुल आणि प्रियाच्या उदाहरणातून हे समजते कि एकोप्याने राहून, नवीन कल्पनांचा (जसे की 'स्मार्ट व्हिलेज' प्रोजेक्ट) वापर करून आपण आपल्या परिसरात सकारात्मक बदल घडवून आणू शकतो. तसेच शाळेतील शिस्त, प्रार्थना आणि एकमेकांना मदत करण्याची भावना आपल्या संपूर्ण आयुष्याला योग्य दिशा देते.</p>
+        </div>
+        <div class="submit-section">
+            <button type="button" class="claim-btn" id="claimBtn" onclick="claimScore()">🎉 Claim 5 Score</button>
+            <p id="resultMsg"></p>
+        </div>
+        
+        <!-- Back Button -->
+        <div class="back-btn-container">
+            <a href="story1.html" class="back-btn">गोष्टीकडे माघारी जा (Back to Story)</a>
+        </div>
+        <!-- Google Translate Widget -->
+        <div id="google_translate_element"></div>
+    </div>
+    
+    <script>
+        // २. Firebase कॉन्फिगरेशन आणि इनिशिलायझेशन
+        const firebaseConfig = {
+            apiKey: "AIzaSyCXUoDQtDlj4bcvfRkKZ_wK5TGoZmVsn7Y",
+            authDomain: "wintask-app.firebaseapp.com",
+            databaseURL: "https://wintask-app-default-rtdb.firebaseio.com",
+            projectId: "wintask-app",
+            storageBucket: "wintask-app.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcde"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        function setGoogleTranslateCookie() {
+            if (!document.cookie.match(/googtrans=/)) {
+                document.cookie = "googtrans=/auto/en; path=/";
+            }
+        }
+        setGoogleTranslateCookie();
+
+        // ३. पेज लोड झाल्यावर १ मिनिटाचा कुडाउन तपासायचे लॉजिक
+        window.onload = function() {
+            const lastClaimTime = localStorage.getItem('story1_last_claim');
+            if (lastClaimTime) {
+                const currentTime = new Date().getTime();
+                const timeDifference = currentTime - parseInt(lastClaimTime);
+                const oneMinute = 60 * 1000; // १ मिनिट
+                
+                if (timeDifference < oneMinute) {
+                    const remainingSeconds = Math.ceil((oneMinute - timeDifference) / 1000);
+                    lockQuiz(remainingSeconds);
+                } else {
+                    localStorage.removeItem('story1_last_claim');
+                }
+            }
+        };
+
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'mr',
+                includedLanguages: 'en,mr,hi,bn,gu,ta,te,kn,ml,pa,ur,or,as',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+
+        // ४. स्कोअर क्लेम करून लोकल स्टोरेज आणि Firebase मध्ये सेव्ह करण्याचे मुख्य फंक्शन
+        function claimScore() {
+            const currentTime = new Date().getTime();
+            localStorage.setItem('story1_last_claim', currentTime);
+            
+            // Update userScore and user_profile_score
+            let currentScore = parseInt(localStorage.getItem("userScore") || localStorage.getItem("user_profile_score") || "0");
+            currentScore += 5;
+            localStorage.setItem("userScore", currentScore);
+            localStorage.setItem("user_profile_score", currentScore);
+            
+            // Update claimHistory array for My Profile
+            let claimHistory = JSON.parse(localStorage.getItem("claimHistory")) || [];
+            if (!Array.isArray(claimHistory)) {
+                claimHistory = [];
+            }
+            const historyItem = "Claimed +5 Score from 'शाळेची गोष्ट'";
+            claimHistory.unshift(historyItem);
+            localStorage.setItem("claimHistory", JSON.stringify(claimHistory));
+            
+            // Sync with Firebase if user is logged in
+            const userEmail = localStorage.getItem("userEmail");
+            if (userEmail) {
+                const safeKey = userEmail.replace(/[.#$[\]]/g, "_");
+                db.ref('users/' + safeKey).update({
+                    score: currentScore,
+                    claimHistory: claimHistory
+                });
+            }
+            
+            const resultMsg = document.getElementById("resultMsg");
+            resultMsg.style.color = "#00ffcc";
+            resultMsg.innerText = "🎊 अभिनंदन! तुमचे ५ गुण यशस्वीरित्या 'My Profile' आणि Firebase मध्ये जोडले गेले आहेत.\nआता तुम्ही बरोबर १ मिनिटानंतर पुन्हा क्लेम करू शकता.";
+            
+            lockQuiz(60);
+        }
+
+        function lockQuiz(secondsLeft) {
+            const resultMsg = document.getElementById("resultMsg");
+            const claimBtn = document.getElementById("claimBtn");
+            if (claimBtn) claimBtn.disabled = true;
+            resultMsg.style.color = "#ff9900";
+            resultMsg.innerText = `⏳ तुम्ही आधीच ५ गुण क्लेम केले आहेत! कृपया आणखी ${secondsLeft} सेकंदांनी पुन्हा प्रयत्न करा.`;
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

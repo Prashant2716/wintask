@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कथेचा सारांश व शिकवण - मातीचा सुगंध आणि गावातली जत्रा - wintask.in</title>
+    <!-- Firebase SDK Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+        }
+        body {
+            background: linear-gradient(rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.95)),
+                        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        .quiz-container {
+            background: rgba(18, 18, 32, 0.9);
+            border: 2px solid #00ffcc;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+            max-width: 900px;
+            width: 100%;
+            backdrop-filter: blur(12px);
+        }
+        h1 {
+            font-size: 34px;
+            color: #00ffcc;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #ff007f;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .lesson-box {
+            margin-bottom: 25px;
+            padding: 25px;
+            background: rgba(25, 25, 45, 0.7);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.1);
+        }
+        .lesson-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ff9900;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px rgba(255, 153, 0, 0.4);
+        }
+        .lesson-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #d0d5e0;
+            text-align: justify;
+        }
+        .lesson-text p {
+            margin-bottom: 15px;
+        }
+        .submit-container {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .claim-btn {
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            color: #000;
+            padding: 14px 30px;
+            font-size: 18px;
+            font-weight: 800;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+            transition: transform 0.3s;
+        }
+        .claim-btn:not(:disabled):hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #ff007f, #ff9900);
+            color: #fff;
+        }
+        .claim-btn:disabled {
+            background: #444;
+            color: #888;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        #result-display {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 800;
+            margin-top: 20px;
+            color: #ff9900;
+            text-shadow: 0 0 10px rgba(255, 153, 0, 0.4);
+            white-space: pre-line;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .nav-btn {
+            background: rgba(20, 22, 35, 0.9);
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: 800;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover {
+            transform: scale(1.05);
+            background: #00ffcc;
+            color: #000;
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.6);
+        }
+        /* Google Translate Styling */
+        #google_translate_element {
+            text-align: center;
+            margin-top: 25px;
+        }
+        .goog-te-combo {
+            background: #141623;
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.3);
+        }
+        .goog-te-combo:hover {
+            background: #00ffcc;
+            color: #000;
+        }
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+        .goog-logo-link { display: none !important; }
+        .goog-te-gadget { color: transparent !important; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>कथेची शिकवण व संदेश</h1>
+        <div class="subtitle">गोष्ट: मातीचा सुगंध आणि गावातली जत्रा</div>
+        
+        <div class="lesson-box">
+            <div class="lesson-title">🌱 या कथेतून आपल्याला काय शिकायला मिळते?</div>
+            <div class="lesson-text">
+                <p><strong>१. मुळांशी आणि संस्कृतीशी जोडलेले राहणे:</strong> आपण कितीही मोठे वा उच्चशिक्षित झालो आणि शहरात राहिलो तरी आपल्या गावाची माती, संस्कृती आणि जुन्या नात्यांचा विसर पडू देता कामा नये.</p>
+                <p><strong>२. तंत्रज्ञान आणि परंपरा यांचा सुवर्णमध्य:</strong> आधुनिक तंत्रज्ञान (जसे की wintask.in पोर्टल आणि डिजिटल प्लॅटफॉर्म्स) वापरून आपण आपल्या जुन्या सांस्कृतिक परंपरांना अधिक प्रभावीपणे जतन करू शकतो.</p>
+                <p><strong>३. आपुलकी आणि एकोपा:</strong> संकटाच्या किंवा गैरसमजाच्या प्रसंगी संयम बाळगून सत्य शोधणे आणि एकमेकांच्या मदतीसाठी धावून जाणे हे गावकऱ्यांचे खरे सामर्थ्य असते.</p>
+                <p><strong>४. खरी सुखसमाधान संपत्तीत नसून नात्यांमध्ये आहे:</strong> भौतिक सुखसुविधांपेक्षा गावाकडची प्रेमळ माणसे, ओल्या मातीचा सुगंध आणि आपुलकीचे वातावरण यातच जीवनाची खरी सुखप्राप्ती असते.</p>
+            </div>
+        </div>
+        <div class="submit-container">
+            <button type="button" id="claimBtn" class="claim-btn" onclick="claimScore()">🎁 Claim 5 Score</button>
+        </div>
+        
+        <div id="result-display"></div>
+        <div class="button-group">
+            <a href="story2.html" class="nav-btn">📖 गोष्ट वाचा (Story)</a>
+            <a href="storypage.html" class="nav-btn">🏠 सर्व गोष्टींवर जा</a>
+        </div>
+        
+        <!-- Google Translate Widget -->
+        <div id="google_translate_element"></div>
+    </div>
+    
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCXUoDQtDlj4bcvfRkKZ_wK5TGoZmVsn7Y",
+            authDomain: "wintask-app.firebaseapp.com",
+            databaseURL: "https://wintask-app-default-rtdb.firebaseio.com",
+            projectId: "wintask-app",
+            storageBucket: "wintask-app.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcde"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'mr',
+                includedLanguages: 'mr,hi,bn,gu,ta,te,kn,ml,pa,ur,or,as,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+        function checkCooldownOnLoad() {
+            const claimBtn = document.getElementById("claimBtn");
+            const resultDiv = document.getElementById("result-display");
+            const lastClaimTime = localStorage.getItem("story2_last_claim");
+            
+            if (lastClaimTime) {
+                const currentTime = new Date().getTime();
+                const timeDiff = currentTime - parseInt(lastClaimTime);
+                const oneMinute = 60 * 1000; // 1 मिनिटाचे मिलिसेकंद
+                if (timeDiff < oneMinute) {
+                    const remainingSeconds = Math.ceil((oneMinute - timeDiff) / 1000);
+                    claimBtn.disabled = true;
+                    resultDiv.innerText = `⏳ तुम्ही आधीच ५ गुण क्लेम केले आहेत! कृपया आणखी ${remainingSeconds} सेकंदांनी पुन्हा प्रयत्न करा.`;
+                }
+            }
+        }
+        function claimScore() {
+            const currentTime = new Date().getTime();
+            localStorage.setItem("story2_last_claim", currentTime);
+            
+            // Add 5 points to user profile score storage (matching typical profile total keys)
+            let currentProfileScore = parseInt(localStorage.getItem("user_profile_score") || "0");
+            currentProfileScore += 5;
+            localStorage.setItem("user_profile_score", currentProfileScore);
+            localStorage.setItem("userScore", currentProfileScore);
+            let claimHistory = JSON.parse(localStorage.getItem("claimHistory")) || [];
+            if (!Array.isArray(claimHistory)) claimHistory = [];
+            claimHistory.unshift("Claimed +5 Score from Story 2");
+            localStorage.setItem("claimHistory", JSON.stringify(claimHistory));
+            // Sync with Firebase if user is logged in
+            const userEmail = localStorage.getItem("userEmail");
+            if (userEmail) {
+                const safeKey = userEmail.replace(/[.#$[\]]/g, "_");
+                db.ref('users/' + safeKey).update({
+                    score: currentProfileScore,
+                    claimHistory: claimHistory
+                });
+            }
+            
+            const claimBtn = document.getElementById("claimBtn");
+            const resultDiv = document.getElementById("result-display");
+            
+            claimBtn.disabled = true;
+            resultDiv.style.color = "#00ffcc";
+            resultDiv.innerText = "🎊 अभिनंदन! तुमचे ५ गुण यशस्वीरित्या 'My Profile' आणि Firebase मध्ये जोडले गेले आहेत.\nआता तुम्ही बरोबर १ मिनिटानंतर पुन्हा क्लेम करू शकता.";
+        }
+        window.onload = function() {
+            checkCooldownOnLoad();
+        };
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

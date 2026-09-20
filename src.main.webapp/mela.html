@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shivapur Village Fair - Mela Game</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@600;700&display=swap');
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#FFF8E7;display:flex;align-items:center;justify-content:center;padding:16px;font-family:'Nunito',sans-serif}
+.game-wrap{width:100%;max-width:520px;background:#fff;border-radius:28px;border:3px solid #fff;box-shadow:0 24px 60px rgba(0,0,0,.18),0 10px 0 #E8C88A;overflow:hidden;position:relative}
+.header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#FFF1B8;border-bottom:3px solid #F6E6A3}
+.badge{background:#2D2A26;color:#FFE9A0;padding:6px 12px;border-radius:999px;font-family:'Fredoka';font-weight:700;font-size:12px}
+.score{font-family:'Fredoka';font-weight:800;font-size:14px}
+#canvas{display:block;width:100%;height:560px;background:linear-gradient(#87E8FF 0%, #E0F7FF 55%, #FFF6D6 55%, #FFE9A0 100%);touch-action:none}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px;background:#FFF8E7}
+.controls button{padding:16px;border-radius:18px;border:2.5px solid #0FA3B1;background:#fff;font-family:'Fredoka';font-weight:800;box-shadow:0 5px 0 #0FA3B1;cursor:pointer}
+#startScreen{position:absolute;left:0;right:0;top:48px;bottom:72px;background:rgba(255,248,231,.94);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:16px;z-index:10}
+.card{background:#FFF8E7;border-radius:28px;border:3px solid #fff;box-shadow:0 20px 40px rgba(0,0,0,.15),0 10px 0 #E8C88A;padding:24px;text-align:center;max-width:420px;width:100%}
+.btn{width:100%;padding:14px;border-radius:999px;border:0;font-family:'Fredoka';font-weight:800;font-size:18px;cursor:pointer}
+.btn-play{background:#FF8C42;color:#fff;box-shadow:0 6px 0 #C85A1A}
+</style>
+</head>
+<body>
+<div class="game-wrap">
+  <div class="header">
+    <div class="badge">SHIVAPUR MELA</div>
+    <div class="score">Score: <span id="score">0</span> | Lives <span id="lives">3</span></div>
+  </div>
+  <canvas id="canvas" width="520" height="560"></canvas>
+  <div id="startScreen">
+    <div class="card">
+      <div style="font-size:48px">🎪</div>
+      <h1 style="font-family:'Fredoka';margin:8px 0">Shivapur Fair Game</h1>
+      <p style="color:#6B5A3E;font-weight:600">Malhari la halavun Jalebi 🥨, Balloons 🎈 aani Toys 🪀 pakad. Kaulya pasun vach!</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:16px 0">
+        <div style="background:#FFF6D6;border-radius:16px;padding:8px">🥨<br><b>+10</b></div>
+        <div style="background:#E0F7F5;border-radius:16px;padding:8px">🎈<br><b>+15</b></div>
+        <div style="background:#FFE0E0;border-radius:16px;padding:8px">🪀<br><b>+25</b></div>
+      </div>
+      <button class="btn btn-play" id="playBtn">▶ PLAY MELA!</button>
+    </div>
+  </div>
+  <div class="controls">
+    <button id="leftBtn">◀ LEFT</button>
+    <button id="rightBtn">RIGHT ▶</button>
+  </div>
+</div>
+<script>
+//... same JS as file - working version
+const canvas=document.getElementById('canvas'),ctx=canvas.getContext('2d');
+const scoreEl=document.getElementById('score'),livesEl=document.getElementById('lives'),startScreen=document.getElementById('startScreen');
+const playBtn=document.getElementById('playBtn'),leftBtn=document.getElementById('leftBtn'),rightBtn=document.getElementById('rightBtn');
+let W=canvas.width,H=canvas.height;
+let player={x:220,y:470,w:64,h:72,targetX:220},items=[],score=0,lives=3,running=false,lastSpawn=0,spawnInt=750,idC=0,rafId=null;
+let keys={left:false,right:false};
+function resetGame(){score=0;lives=3;items=[];idC=0;player.x=W/2-player.w/2;player.targetX=player.x;scoreEl.textContent=0;livesEl.textContent=3;spawnInt=750;lastSpawn=0;}
+function spawnItem(){const r=Math.random();let type=r<0.35?'jalebi':r<0.65?'balloon':r<0.85?'toy':'crow';items.push({type,x:Math.random()*(W-50)+10,y:-50,w:42,h:42,vy:(type==='balloon'?1.2:2.5)+Math.random()*2+score/600,vx:(Math.random()-0.5)*1.5,rot:0,rotSpeed:(Math.random()-0.5)*0.15});}
+function drawPlayer(){ctx.save();ctx.translate(player.x+player.w/2,player.y+player.h/2);ctx.fillStyle='rgba(0,0,0,0.15)';ctx.beginPath();ctx.ellipse(0,36,28,8,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#0FA3B1';ctx.fillRect(-18,-10,36,34);ctx.fillStyle='#FFD6A0';ctx.beginPath();ctx.arc(0,-22,18,0,Math.PI*2);ctx.fill();ctx.fillStyle='#2D2A26';ctx.beginPath();ctx.arc(0,-28,18,0,Math.PI,true);ctx.fill();ctx.restore();}
+function drawItem(it){ctx.save();ctx.translate(it.x+it.w/2,it.y+it.h/2);ctx.rotate(it.rot);ctx.font='28px serif';ctx.textAlign='center';if(it.type==='jalebi')ctx.fillText('🥨',0,0);else if(it.type==='balloon')ctx.fillText('🎈',0,0);else if(it.type==='toy')ctx.fillText('🪀',0,0);else ctx.fillText('🐦',0,0);ctx.restore();}
+function drawBackground(){ctx.clearRect(0,0,W,H);ctx.fillStyle='#FFE9A0';ctx.beginPath();ctx.moveTo(0,H*0.55);ctx.quadraticCurveTo(W*0.3,H*0.48,W*0.6,H*0.55);ctx.quadraticCurveTo(W*0.85,H*0.62,W,H*0.58);ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fill();ctx.fillStyle='#8B5E3C';ctx.fillRect(40,H*0.35,18,H*0.2);ctx.fillStyle='#4CAF50';ctx.beginPath();ctx.arc(49,H*0.35,32,0,Math.PI*2);ctx.fill();}
+function gameLoop(t){if(!running)return;rafId=requestAnimationFrame(gameLoop);if(!lastSpawn)lastSpawn=t;if(t-lastSpawn>spawnInt){spawnItem();lastSpawn=t;spawnInt=Math.max(350,750-score*2);}if(keys.left)player.targetX-=7;if(keys.right)player.targetX+=7;player.targetX=Math.max(0,Math.min(W-player.w,player.targetX));player.x+=(player.targetX-player.x)*0.25;drawBackground();for(let i=items.length-1;i>=0;i--){const it=items[i];it.y+=it.vy;it.x+=it.vx;it.rot+=it.rotSpeed;drawItem(it);if(it.y+it.h>player.y&&it.y<player.y+player.h&&it.x+it.w>player.x&&it.x<player.x+player.w){if(it.type==='crow'){lives--;livesEl.textContent=lives;items.splice(i,1);if(lives<=0){gameOver();return;}}else{score+=it.type==='jalebi'?10:it.type==='balloon'?15:25;scoreEl.textContent=score;items.splice(i,1);}continue;}if(it.y>H+60)items.splice(i,1);}drawPlayer();}
+function gameOver(){running=false;if(rafId)cancelAnimationFrame(rafId);startScreen.style.display='flex';startScreen.innerHTML='<div class="card"><h1>Game Over</h1><p>Score: <b style="color:#FF8C42;font-size:32px">'+score+'</b></p><button class="btn btn-play" id="replayBtn">Play Again</button><br><br><a href="storypage.html" style="text-decoration:none;color:#2D2A26;background:#fff;padding:10px 20px;border-radius:999px;border:2px solid #F6E6A3;display:inline-block">Back to Stories</a></div>';document.getElementById('replayBtn').addEventListener('click',startGame);}
+function startGame(){resetGame();startScreen.style.display='none';running=true;lastSpawn=0;if(rafId)cancelAnimationFrame(rafId);rafId=requestAnimationFrame(gameLoop);}
+window.startGame=startGame;
+playBtn.addEventListener('click',startGame);
+leftBtn.addEventListener('pointerdown',e=>{e.preventDefault();keys.left=true;});
+leftBtn.addEventListener('pointerup',e=>{e.preventDefault();keys.left=false;});
+rightBtn.addEventListener('pointerdown',e=>{e.preventDefault();keys.right=true;});
+rightBtn.addEventListener('pointerup',e=>{e.preventDefault();keys.right=false;});
+window.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key.toLowerCase()==='a')keys.left=true;if(e.key==='ArrowRight'||e.key.toLowerCase()==='d')keys.right=true;});
+window.addEventListener('keyup',e=>{if(e.key==='ArrowLeft'||e.key.toLowerCase()==='a')keys.left=false;if(e.key==='ArrowRight'||e.key.toLowerCase()==='d')keys.right=false;});
+let dragging=false;
+canvas.addEventListener('pointerdown',e=>{dragging=true;const r=canvas.getBoundingClientRect();const cx=(e.clientX-r.left)/r.width*W;player.targetX=cx-player.w/2;});
+canvas.addEventListener('pointermove',e=>{if(!dragging)return;const r=canvas.getBoundingClientRect();const cx=(e.clientX-r.left)/r.width*W;player.targetX=cx-player.w/2;});
+canvas.addEventListener('pointerup',()=>dragging=false);
+drawBackground();drawPlayer();
+</script>
+</body>
+</html>

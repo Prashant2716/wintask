@@ -1,0 +1,859 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+ 
+<title>Stack Rush - wintask.in</title> 
+ 
+<style> 
+ 
+*{ 
+    box-sizing:border-box; 
+    margin:0; 
+    padding:0; 
+} 
+ 
+html{ 
+    scroll-behavior:smooth; 
+} 
+ 
+body{ 
+    font-family:"Segoe UI",Arial,sans-serif; 
+    background: 
+        radial-gradient(circle at 90% 10%,#21184f,transparent 30%), 
+        linear-gradient(135deg,#050816,#0b1224); 
+    color:white; 
+    min-height:100vh; 
+} 
+ 
+/* ========================= 
+   NAVBAR 
+========================= */ 
+ 
+.navbar{ 
+    height:75px; 
+    display:flex; 
+    align-items:center; 
+    justify-content:space-between; 
+    padding:0 45px; 
+    background:rgba(3,7,18,.95); 
+    border-bottom:1px solid #263451; 
+} 
+ 
+.logo{ 
+    color:#00ffcc; 
+    font-size:26px; 
+    font-weight:800; 
+    text-decoration:none; 
+} 
+ 
+.nav-buttons{ 
+    display:flex; 
+    gap:12px; 
+} 
+ 
+.nav-btn{ 
+    text-decoration:none; 
+    color:white; 
+    background:#111a30; 
+    border:1px solid #33456b; 
+    padding:10px 20px; 
+    border-radius:20px; 
+    font-weight:700; 
+} 
+ 
+.nav-btn:hover{ 
+    background:#1b2948; 
+} 
+ 
+/* ========================= 
+   HERO INTERFACE 
+========================= */ 
+ 
+.hero{ 
+    max-width:1250px; 
+    margin:0 auto; 
+    padding:75px 30px 60px; 
+ 
+    display:grid; 
+    grid-template-columns:1.05fr .95fr; 
+    gap:60px; 
+    align-items:center; 
+} 
+ 
+.hero-small{ 
+    color:#8ba8ff; 
+    font-size:15px; 
+    font-weight:800; 
+    letter-spacing:2px; 
+    margin-bottom:20px; 
+} 
+ 
+.hero h1{ 
+    font-size:78px; 
+    line-height:.95; 
+    font-weight:900; 
+    letter-spacing:-3px; 
+} 
+ 
+.hero h1 span{ 
+    display:block; 
+    background:linear-gradient(90deg,#5b8cff,#a46cff,#ff4fd8); 
+    -webkit-background-clip:text; 
+    background-clip:text; 
+    color:transparent; 
+} 
+ 
+.hero-text{ 
+    color:#9caac5; 
+    font-size:21px; 
+    line-height:1.7; 
+    margin:30px 0; 
+    max-width:700px; 
+} 
+ 
+.hero-buttons{ 
+    display:flex; 
+    gap:15px; 
+    flex-wrap:wrap; 
+} 
+ 
+.play-btn{ 
+    border:none; 
+    background:linear-gradient(135deg,#6675ff,#9b5cff); 
+    color:white; 
+    padding:17px 28px; 
+    border-radius:14px; 
+    font-size:17px; 
+    font-weight:900; 
+    cursor:pointer; 
+    text-decoration:none; 
+    display:inline-block; 
+} 
+ 
+.play-btn:hover{ 
+    transform:translateY(-2px); 
+} 
+ 
+.leader-btn{ 
+    border:1px solid #33456b; 
+    background:#0c1428; 
+    color:white; 
+    padding:17px 28px; 
+    border-radius:14px; 
+    font-size:17px; 
+    font-weight:900; 
+    text-decoration:none; 
+} 
+ 
+/* ========================= 
+   HERO PREVIEW 
+========================= */ 
+ 
+.preview{ 
+    min-height:560px; 
+    border:1px solid #293858; 
+    border-radius:28px; 
+    background:#111a30; 
+    padding:30px; 
+ 
+    display:flex; 
+    flex-direction:column; 
+    align-items:center; 
+    justify-content:center; 
+ 
+    box-shadow:0 0 50px rgba(91,140,255,.08); 
+} 
+ 
+.preview-top{ 
+    width:100%; 
+    display:flex; 
+    justify-content:center; 
+    color:#aab7d1; 
+    font-weight:800; 
+    margin-bottom:35px; 
+} 
+ 
+.preview-score{ 
+    font-size:85px; 
+    font-weight:900; 
+    color:#29334e; 
+    margin-bottom:30px; 
+} 
+ 
+.preview-stack{ 
+    width:90%; 
+    display:flex; 
+    flex-direction:column; 
+    align-items:center; 
+    gap:7px; 
+} 
+ 
+.preview-block{ 
+    height:40px; 
+    border-radius:9px; 
+} 
+ 
+.p1{ width:70%; background:#4e7fff; } 
+.p2{ width:62%; background:#2dd4bf; } 
+.p3{ width:53%; background:#8b72ff; } 
+.p4{ width:44%; background:#4e7fff; } 
+ 
+.p5{ 
+    width:35%; 
+    background:#fbbf24; 
+    position:relative; 
+    animation:previewBlockMove 2s ease-in-out infinite alternate; 
+} 
+ 
+@keyframes previewBlockMove{ 
+    from{ transform:translateX(-70px); } 
+    to{ transform:translateX(70px); } 
+} 
+ 
+.preview-label{ 
+    margin-top:30px; 
+    color:#9caac5; 
+    letter-spacing:3px; 
+    font-size:13px; 
+} 
+ 
+/* ========================= 
+   STATS 
+========================= */ 
+ 
+.hero-stats{ 
+    max-width:1250px; 
+    margin:-15px auto 70px; 
+    padding:0 30px; 
+    display:flex; 
+    justify-content:center;
+} 
+ 
+.hero-stat strong{ 
+    display:block; 
+    font-size:30px; 
+} 
+ 
+.hero-stat span{ 
+    color:#8190aa; 
+    font-size:13px; 
+    letter-spacing:1px; 
+} 
+ 
+/* ========================= 
+   GAME SECTION 
+========================= */ 
+ 
+.game-section{ 
+    max-width:1250px; 
+    margin:0 auto; 
+    padding:40px 30px 80px; 
+} 
+ 
+.game-title{ 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+    margin-bottom:22px; 
+} 
+ 
+.game-title h2{ 
+    font-size:38px; 
+} 
+ 
+.stats{ 
+    display:flex; 
+    gap:12px; 
+} 
+ 
+.stat{ 
+    background:#111a30; 
+    border:1px solid #2d3d60; 
+    border-radius:12px; 
+    padding:12px 20px; 
+    min-width:110px; 
+    text-align:center; 
+} 
+ 
+.stat span{ 
+    display:block; 
+    color:#9caac5; 
+    font-size:13px; 
+} 
+ 
+.stat strong{ 
+    font-size:20px; 
+} 
+ 
+/* ========================= 
+   GAME LAYOUT 
+========================= */ 
+ 
+.game-layout{ 
+    display:grid; 
+    grid-template-columns:1fr 330px; 
+    gap:25px; 
+} 
+ 
+.game-card{ 
+    background:#091122; 
+    border:1px solid #293858; 
+    border-radius:20px; 
+    padding:15px; 
+} 
+ 
+#gameCanvas{ 
+    width:100%; 
+    height:600px; 
+    display:block; 
+    background: 
+        linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px), 
+        linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px), 
+        #070d1c; 
+    background-size:30px 30px; 
+    border-radius:14px; 
+    cursor:pointer; 
+} 
+ 
+.start-btn{ 
+    width:100%; 
+    margin-top:18px; 
+    padding:16px; 
+    border:none; 
+    border-radius:12px; 
+    background:linear-gradient(135deg,#6675ff,#9b5cff); 
+    color:white; 
+    font-size:18px; 
+    font-weight:800; 
+    cursor:pointer; 
+} 
+ 
+.start-btn:hover{ 
+    transform:scale(1.02); 
+} 
+ 
+/* NEXT BUTTON STYLING */ 
+.next-btn { 
+    width: 100%; 
+    margin-top: 12px; 
+    padding: 16px; 
+    border: none; 
+    border-radius: 12px; 
+    background: linear-gradient(135deg, #10b981, #059669); 
+    color: white; 
+    font-size: 18px; 
+    font-weight: 800; 
+    cursor: pointer; 
+    text-transform: uppercase; 
+    transition: all 0.3s ease; 
+} 
+ 
+.next-btn:disabled { 
+    background: #1e293b; 
+    color: #64748b; 
+    cursor: not-allowed; 
+    transform: none; 
+    box-shadow: none; 
+} 
+ 
+.next-btn:hover:not(:disabled) { 
+    transform: scale(1.02); 
+    background: linear-gradient(135deg, #059669, #047857); 
+} 
+ 
+/* ========================= 
+   SIDE CARDS 
+========================= */ 
+ 
+.info-card{ 
+    background:#11192d; 
+    border:1px solid #2c3b5c; 
+    border-radius:18px; 
+    padding:25px; 
+    margin-bottom:18px; 
+} 
+ 
+.info-card h3{ 
+    margin-bottom:15px; 
+    color:#aab7d1; 
+    font-size:14px; 
+    letter-spacing:2px; 
+} 
+ 
+.info-card h2{ 
+    margin-bottom:10px; 
+} 
+ 
+.info-card p{ 
+    color:#94a3bd; 
+    line-height:1.6; 
+} 
+ 
+.control{ 
+    display:flex; 
+    justify-content:space-between; 
+    padding:10px 0; 
+    color:#aab7d1; 
+} 
+ 
+.key{ 
+    border:1px solid #3b4c70; 
+    padding:5px 10px; 
+    border-radius:7px; 
+    color:white; 
+} 
+ 
+/* ========================= 
+   RESPONSIVE 
+========================= */ 
+ 
+@media(max-width:900px){ 
+    .hero{ grid-template-columns:1fr; } 
+    .hero h1{ font-size:55px; } 
+    .game-layout{ grid-template-columns:1fr; } 
+    .game-title{ flex-direction:column; align-items:flex-start; gap:15px; } 
+} 
+ 
+@media(max-width:600px){ 
+    .navbar{ padding:0 15px; } 
+    .nav-buttons{ gap:5px; } 
+    .nav-btn{ padding:8px 12px; font-size:13px; } 
+    .hero{ padding:50px 20px; } 
+    .hero h1{ font-size:45px; } 
+    .hero-text{ font-size:17px; } 
+    .preview{ min-height:430px; } 
+    .game-section{ padding:30px 15px 60px; } 
+    #gameCanvas{ height:500px; } 
+} 
+ 
+</style> 
+</head> 
+ 
+<body> 
+ 
+<!-- ========================= 
+     NAVBAR 
+========================= --> 
+<header class="navbar"> 
+    <a href="games.html" class="logo">🎮 wintask.in</a> 
+    <div class="nav-buttons"> 
+        <a href="games.html" class="nav-btn">← Games</a> 
+        <a href="index.html" class="nav-btn">Home</a> 
+    </div> 
+</header> 
+ 
+<!-- ========================= 
+     HERO INTERFACE 
+========================= --> 
+<section class="hero"> 
+    <div> 
+        <div class="hero-small">⚡ FAST • COMPETITIVE • REPLAYABLE</div> 
+        <h1> 
+            Build your 
+            <span>tower.</span> 
+            Beat your 
+            <span>best.</span> 
+        </h1> 
+        <p class="hero-text"> 
+            Time every drop, stack blocks precisely and climb the high score charts. 
+        </p> 
+        <div class="hero-buttons"> 
+            <a href="#stackGame" class="play-btn">PLAY NOW →</a> 
+            <a href="#stackGame" class="leader-btn">VIEW LEADERBOARD</a> 
+        </div> 
+    </div> 
+ 
+    <!-- Preview on right --> 
+    <div class="preview"> 
+        <div class="preview-top"> 
+            <span>STACK RUSH</span> 
+        </div> 
+        <div class="preview-score">042</div> 
+        <div class="preview-stack"> 
+            <div class="preview-block p1"></div> 
+            <div class="preview-block p2"></div> 
+            <div class="preview-block p3"></div> 
+            <div class="preview-block p4"></div> 
+            <div class="preview-block p5"></div> 
+        </div> 
+        <div class="preview-label">PERFECT STACK</div> 
+    </div> 
+</section> 
+ 
+<!-- ========================= 
+     HERO STATS 
+========================= --> 
+<div class="hero-stats"> 
+    <div class="hero-stat" style="text-align: center;"> 
+        <strong id="heroBest">0</strong> 
+        <span>YOUR BEST SCORE</span> 
+    </div> 
+</div> 
+ 
+<!-- ========================= 
+     ACTUAL GAME 
+========================= --> 
+<section class="game-section" id="stackGame"> 
+    <div class="game-title"> 
+        <h2>Stack Rush</h2> 
+        <div class="stats"> 
+            <div class="stat"> 
+                <span>Score</span> 
+                <strong id="score">0</strong> 
+            </div> 
+            <div class="stat"> 
+                <span>Best</span> 
+                <strong id="best">0</strong> 
+            </div> 
+        </div> 
+    </div> 
+ 
+    <div class="game-layout"> 
+        <!-- GAME --> 
+        <div class="game-card"> 
+            <canvas id="gameCanvas"></canvas> 
+            <button class="start-btn" id="startButton" onclick="startGame()">START GAME</button> 
+            
+            <!-- NEXT BUTTON (Disabled until user plays 2 times) -->
+            <button class="next-btn" id="nextButton" disabled onclick="goToClaimRush()">NEXT ➔</button> 
+        </div> 
+ 
+        <!-- INFORMATION --> 
+        <div> 
+            <div class="info-card"> 
+                <h3>HOW TO PLAY</h3> 
+                <h2>Find the perfect moment.</h2> 
+                <p>Align the moving block with your tower. Click the game or press SPACE to drop the block.</p> 
+            </div> 
+ 
+            <div class="info-card"> 
+                <h3>PROGRESSION</h3> 
+                <h2>Play 2 Times</h2> 
+                <p>Complete at least 2 game sessions to unlock the Next button and proceed.</p> 
+            </div> 
+ 
+            <div class="info-card"> 
+                <h3>CONTROLS</h3> 
+                <div class="control"> 
+                    <span class="key">SPACE</span> 
+                    <span>Drop block</span> 
+                </div> 
+                <div class="control"> 
+                    <span class="key">CLICK</span> 
+                    <span>Drop block</span> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+</section> 
+ 
+<script> 
+ 
+/* ========================================= 
+   STACK RUSH GAME 
+========================================= */ 
+ 
+const canvas = document.getElementById("gameCanvas"); 
+const ctx = canvas.getContext("2d"); 
+ 
+let score = 0; 
+let best = Number(localStorage.getItem("stackRushBest")) || 0; 
+let gamesPlayedCount = Number(localStorage.getItem("stackRushGamesCount")) || 0; 
+ 
+let running = false; 
+let gameOver = false; 
+let animationId = null; 
+let blocks = []; 
+let movingBlock = null; 
+let direction = 1; 
+let speed = 4; 
+ 
+/* ========================================= 
+   CANVAS SIZE 
+========================================= */ 
+ 
+function resizeCanvas(){ 
+    const rect = canvas.getBoundingClientRect(); 
+    canvas.width = rect.width; 
+    canvas.height = rect.height; 
+    draw(); 
+} 
+ 
+window.addEventListener("resize", resizeCanvas); 
+ 
+/* ========================================= 
+   RESET GAME 
+========================================= */ 
+ 
+function resetGame(){ 
+    score = 0; 
+    running = false; 
+    gameOver = false; 
+    direction = 1; 
+    speed = 4; 
+    blocks = []; 
+ 
+    const baseWidth = Math.min(260, canvas.width * .45); 
+    const baseHeight = 30; 
+    const baseX = (canvas.width - baseWidth) / 2; 
+    const baseY = canvas.height - 60; 
+ 
+    blocks.push({ 
+        x: baseX, 
+        y: baseY, 
+        width: baseWidth, 
+        height: baseHeight 
+    }); 
+ 
+    movingBlock = { 
+        x: 0, 
+        y: baseY - baseHeight, 
+        width: baseWidth, 
+        height: baseHeight 
+    }; 
+ 
+    updateUI(); 
+    draw(); 
+} 
+ 
+/* ========================================= 
+   START GAME 
+========================================= */ 
+ 
+function startGame(){ 
+    if(running) return; 
+ 
+    if(gameOver){ 
+        resetGame(); 
+    } 
+ 
+    running = true; 
+    gameOver = false; 
+ 
+    document.getElementById("startButton").innerText = "DROP BLOCK"; 
+ 
+    cancelAnimationFrame(animationId); 
+    gameLoop(); 
+} 
+ 
+/* ========================================= 
+   DROP BLOCK 
+========================================= */ 
+ 
+function dropBlock(){ 
+    if(!running){ 
+        startGame(); 
+        return; 
+    } 
+ 
+    const previous = blocks[blocks.length - 1]; 
+    const left = Math.max(movingBlock.x, previous.x); 
+    const right = Math.min(movingBlock.x + movingBlock.width, previous.x + previous.width); 
+    const overlap = right - left; 
+ 
+    /* Missed tower */ 
+    if(overlap <= 10){ 
+        endGame(); 
+        return; 
+    } 
+ 
+    /* Successful block */ 
+    const newBlock = { 
+        x: left, 
+        y: movingBlock.y, 
+        width: overlap, 
+        height: movingBlock.height 
+    }; 
+ 
+    blocks.push(newBlock); 
+    score++; 
+    updateUI(); 
+ 
+    /* Increase speed */ 
+    if(score % 5 === 0){ 
+        speed += .7; 
+    } 
+ 
+    /* New moving block */ 
+    movingBlock = { 
+        x: direction > 0 ? 0 : canvas.width - overlap, 
+        y: newBlock.y - newBlock.height, 
+        width: overlap, 
+        height: newBlock.height 
+    }; 
+ 
+    /* Move tower down */ 
+    if(movingBlock.y < 100){ 
+        for(let block of blocks){ 
+            block.y += 35; 
+        } 
+        movingBlock.y += 35; 
+    } 
+} 
+ 
+/* ========================================= 
+   GAME OVER 
+========================================= */ 
+ 
+function endGame(){ 
+    running = false; 
+    gameOver = true; 
+    cancelAnimationFrame(animationId); 
+ 
+    if(score > best){ 
+        best = score; 
+        localStorage.setItem("stackRushBest", best); 
+    } 
+
+    // खेळ संपल्यावर गेम्स खेळल्याची संख्या वाढवणे (काउंटर अपडेट)
+    gamesPlayedCount++;
+    localStorage.setItem("stackRushGamesCount", gamesPlayedCount);
+ 
+    updateUI(); 
+ 
+    document.getElementById("startButton").innerText = "PLAY AGAIN"; 
+    draw(); 
+} 
+ 
+/* ========================================= 
+   GAME LOOP 
+========================================= */ 
+ 
+function gameLoop(){ 
+    if(!running) return; 
+ 
+    movingBlock.x += speed * direction; 
+ 
+    if(movingBlock.x <= 0){ 
+        movingBlock.x = 0; 
+        direction = 1; 
+    } 
+ 
+    if(movingBlock.x + movingBlock.width >= canvas.width){ 
+        movingBlock.x = canvas.width - movingBlock.width; 
+        direction = -1; 
+    } 
+ 
+    draw(); 
+    animationId = requestAnimationFrame(gameLoop); 
+} 
+ 
+/* ========================================= 
+   DRAW GAME 
+========================================= */ 
+ 
+function draw(){ 
+    ctx.clearRect(0, 0, canvas.width, canvas.height); 
+ 
+    /* Existing blocks */ 
+    blocks.forEach((block, index) => { 
+        const gradient = ctx.createLinearGradient(block.x, block.y, block.x + block.width, block.y); 
+        if(index % 2 === 0){ 
+            gradient.addColorStop(0, "#3b82f6"); 
+            gradient.addColorStop(1, "#60a5fa"); 
+        } else { 
+            gradient.addColorStop(0, "#10b981"); 
+            gradient.addColorStop(1, "#34d399"); 
+        } 
+        ctx.fillStyle = gradient; 
+        roundRect(ctx, block.x, block.y, block.width, block.height, 8); 
+        ctx.fill(); 
+    }); 
+ 
+    /* Moving block */ 
+    if(movingBlock && !gameOver){ 
+        ctx.fillStyle = "#fbbf24"; 
+        roundRect(ctx, movingBlock.x, movingBlock.y, movingBlock.width, movingBlock.height, 8); 
+        ctx.fill(); 
+    } 
+ 
+    /* Start screen */ 
+    if(!running && !gameOver){ 
+        overlay(); 
+        text("STACK RUSH", canvas.width / 2, canvas.height / 2 - 30, 32); 
+        text("Press START GAME or SPACE", canvas.width / 2, canvas.height / 2 + 15, 18); 
+    } 
+ 
+    /* Game over */ 
+    if(gameOver){ 
+        overlay(); 
+        text("GAME OVER", canvas.width / 2, canvas.height / 2 - 35, 36); 
+        text("Final Score: " + score, canvas.width / 2, canvas.height / 2 + 5, 20); 
+        text("Click PLAY AGAIN", canvas.width / 2, canvas.height / 2 + 40, 18); 
+    } 
+} 
+ 
+/* ========================================= 
+   HELPERS 
+========================================= */ 
+ 
+function overlay(){ 
+    ctx.fillStyle = "rgba(5,10,25,.72)"; 
+    ctx.fillRect(0, 0, canvas.width, canvas.height); 
+} 
+ 
+function text(value, x, y, size){ 
+    ctx.fillStyle = "white"; 
+    ctx.font = "800 " + size + "px Segoe UI"; 
+    ctx.textAlign = "center"; 
+    ctx.fillText(value, x, y); 
+} 
+ 
+function roundRect(context, x, y, width, height, radius){ 
+    context.beginPath(); 
+    context.roundRect(x, y, width, height, radius); 
+} 
+ 
+/* ========================================= 
+   UI & NEXT BUTTON CHECK 
+========================================= */ 
+ 
+function updateUI(){ 
+    document.getElementById("score").innerText = score; 
+    document.getElementById("best").innerText = best; 
+    document.getElementById("heroBest").innerText = best; 
+ 
+    // वापरकर्त्याने किमान २ वेळा गेम खेळल्याची पडताळणी करणे
+    const nextBtn = document.getElementById("nextButton");
+    if(gamesPlayedCount >= 2){
+        nextBtn.disabled = false;
+    } else {
+        nextBtn.disabled = true;
+    }
+} 
+ 
+function goToClaimRush(){
+    if(gamesPlayedCount >= 2){
+        window.location.href = "claimrush.html";
+    }
+}
+ 
+/* ========================================= 
+   CONTROLS 
+========================================= */ 
+ 
+canvas.addEventListener("click", function(){ 
+    dropBlock(); 
+}); 
+ 
+document.addEventListener("keydown", function(event){ 
+    if(event.code === "Space"){ 
+        event.preventDefault(); 
+        dropBlock(); 
+    } 
+}); 
+ 
+/* ========================================= 
+   INITIALIZE 
+========================================= */ 
+ 
+resizeCanvas(); 
+resetGame(); 
+updateUI(); // पेज लोड झाल्यावर Next बटणाची स्थिती तपासण्यासाठी
+ 
+</script> 
+ 
+</body> 
+</html>

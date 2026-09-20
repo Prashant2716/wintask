@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wintask.in - Wallet Dashboard & Earning Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+        }
+        body {
+            background: linear-gradient(rgba(11, 12, 16, 0.92), rgba(11, 12, 16, 0.99)),
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 255, 204, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 30px;
+            font-weight: 800;
+            color: #00ffcc;
+            text-transform: lowercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            text-shadow: 0 0 15px #00ffcc;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            color: #00ffcc;
+        }
+        .back-home-btn {
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            color: #000 !important;
+            padding: 8px 22px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 0 12px rgba(0, 255, 204, 0.5);
+            text-decoration: none;
+        }
+        .wallet-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        .wallet-card-wrapper {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        /* Single Box for Total Coins Balance Only */
+        .wallet-box-single {
+            background: rgba(18, 18, 35, 0.95);
+            border: 2px solid rgba(0, 255, 204, 0.5);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.2);
+            backdrop-filter: blur(15px);
+        }
+        .wallet-box-title {
+            font-size: 18px;
+            color: #00ffcc;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+        .wallet-box-value {
+            font-size: 65px;
+            font-weight: 900;
+            color: #00ffcc;
+            text-shadow: 0 0 20px rgba(0, 255, 204, 0.7);
+        }
+        .wallet-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .action-btn {
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            color: #000;
+            border: none;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+            transition: 0.3s;
+        }
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #00ffcc;
+        }
+        .redeem-btn {
+            background: linear-gradient(45deg, #ff007f, #7928ca);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+        }
+        .redeem-btn:hover {
+            box-shadow: 0 0 25px #ff007f;
+        }
+        /* Comprehensive Motivation & Mastery Guide Section */
+        .motivation-section {
+            background: rgba(15, 17, 26, 0.95);
+            border: 1px solid rgba(0, 255, 204, 0.25);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            margin-top: 10px;
+        }
+        .motivation-section h2 {
+            color: #00ffcc;
+            font-size: 26px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px dashed rgba(0, 255, 204, 0.3);
+            padding-bottom: 10px;
+        }
+        .motivation-section h3 {
+            color: #ff007f;
+            font-size: 20px;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+        .motivation-section p {
+            color: #cfd3dc;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .motivation-section ul {
+            list-style-type: square;
+            padding-left: 25px;
+            color: #bbb;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        .motivation-section li {
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        .highlight-box {
+            background: rgba(0, 255, 204, 0.05);
+            border-left: 4px solid #00ffcc;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 12px 12px 0;
+            color: #e0fcf9;
+            font-style: italic;
+        }
+        .footer {
+            text-align: center;
+            padding: 25px;
+            background: rgba(7, 8, 12, 0.85);
+            border-top: 1px solid rgba(0, 255, 204, 0.2);
+            color: #777;
+            font-size: 13px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <a href="index.html" class="logo">🎮 wintask.in</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="games.html">Games</a></li>
+            <li><a href="index.html" class="back-home-btn">🏠 Back to Home</a></li>
+        </ul>
+    </header>
+
+    <div class="wallet-container">
+        <div class="wallet-card-wrapper">
+            <!-- Only Total Coins Balance Box (No Money/Currency Value) -->
+            <div class="wallet-box-single">
+                <div class="wallet-box-title">Total Coins Balance</div>
+                <div class="wallet-box-value" id="totalCoins">0</div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="wallet-actions">
+                <button class="action-btn" onclick="refreshWallet()">🔄 Refresh Balance</button>
+                <button class="action-btn redeem-btn" onclick="claimRewards()">🎁 Claim Milestone Reward</button>
+            </div>
+
+            <!-- Detailed Motivation, Success Guide & Strategy Section -->
+            <div class="motivation-section">
+                <h2>🚀 The Ultimate WinTask Success & Motivation Guide</h2>
+                
+                <p>Welcome to your central hub of achievement on <strong>wintask.in</strong>! Every single coin reflected in your balance above is a testament to your focus, dedication, and problem-solving skills. In the digital arena, consistency is not just a habit; it is your ultimate superpower. When you log in daily, tackle interactive tasks, and engage with our gaming modules, you are not merely collecting digital points—you are sharpening your cognitive reflexes, enhancing your digital dexterity, and building a disciplined work ethic that translates directly into long-term personal growth.</p>
+
+                <div class="highlight-box">
+                    "Success is the sum of small efforts, repeated day in and day out. Your coin balance is a live scorecard of your commitment to excellence."
+                </div>
+
+                <h3>🌟 Why Every Single Coin Matters</h3>
+                <p>Many beginners underestimate the compounding power of small accumulations. In life and on wintask.in, massive milestones are never achieved overnight; they are constructed block by block, coin by coin. When you dedicate even just 15 to 30 minutes a day to completing tasks, exploring mini-games, and interacting with our web features, you create an unstoppable momentum. Over a week, a month, and a year, these small sessions compound into extraordinary achievement metrics.</p>
+                <ul>
+                    <li><strong>Drives Daily Discipline:</strong> Checking your wallet and watching your coin pool expand trains your brain to value consistent daily output over sporadic bursts of energy.</li>
+                    <li><strong>Unlocks Exclusive Tiers:</strong> Higher coin thresholds unlock prestigious achievement badges and special seasonal challenges on wintask.in.</li>
+                    <li><strong>Builds Resilience:</strong> Facing a difficult puzzle or task and conquering it for extra coin rewards trains your mind to push through complex challenges.</li>
+                </ul>
+
+                <h3>💡 Core Strategies to Maximize Your Coin Collection</h3>
+                <p>To accelerate your progress and watch your <strong>Total Coins Balance</strong> soar to unprecedented heights, you need more than just raw effort—you need smart execution strategies. Here is how top achievers on wintask.in optimize their daily routine:</p>
+                <ul>
+                    <li><strong>Establish a Routine Time Slot:</strong> Dedicate a fixed window every day (e.g., early morning or late evening) strictly for your wintask.in sessions to build an unbreakable habit loop.</li>
+                    <li><strong>Master Every Task Category:</strong> Do not stick to just one comfort zone. Explore web challenges, navigation tasks, and gaming modules to diversify your coin inflows.</li>
+                    <li><strong>Never Miss Daily Streaks:</strong> Consistency multipliers reward players who check in and collect rewards without breaking their daily sequence.</li>
+                    <li><strong>Refine Your Focus:</strong> Minimize distractions during your task sessions to ensure maximum efficiency and faster completion rates.</li>
+                </ul>
+
+                <h3>🎯 Overcoming Mental Barriers and Procrastination</h3>
+                <p>The greatest enemy of digital productivity is not lack of skill or lack of opportunity—it is procrastination. Often, when faced with a task, our minds tempt us to delay action. Remember that procrastination shrinks when you break goals down into micro-steps. Tell yourself: <em>"I will just spend 5 minutes on wintask.in right now."</em> More often than not, once you begin, momentum takes over, and you complete full task cycles effortlessly.</p>
+                <p>Keep your eyes fixed on your goals. Whenever you feel unmotivated, come straight to this wallet page, look at your current coin count, and visualize multiplying it tenfold. You have absolute control over your growth trajectory. Push your limits, stay hungry for success, and let every coin earned fuel your drive toward greatness!</p>
+
+                <div class="highlight-box">
+                    "Your potential is limitless, and your toolkit is right here. Keep grinding, stay consistent, and let your coin balance reflect your true dedication!"
+                </div>
+
+                <h3>📈 The Long-Term Vision of WinTask</h3>
+                <p>At wintask.in, we designed this ecosystem to empower your digital journey. As you continue to interact with our platform, expect continuous updates, richer task modules, and enhanced interactive features designed to reward your loyalty and engagement. Your feedback and activity shape the future of this platform. Stay tuned, keep participating, and let us build a legendary digital community together!</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        © 2026 wintask.in. All rights reserved. Empowering your digital journey, one coin at a time.
+    </footer>
+
+    <script>
+        function refreshWallet() {
+            // Read score/coins from LocalStorage
+            let savedCoins = parseInt(localStorage.getItem('wintask_score')) || 0;
+            
+            // Update UI element for coins only
+            const coinsEl = document.getElementById("totalCoins");
+            if (coinsEl) {
+                coinsEl.innerText = savedCoins;
+            }
+        }
+
+        function claimRewards() {
+            let savedCoins = parseInt(localStorage.getItem('wintask_score')) || 0;
+            if (savedCoins <= 0) {
+                alert("Your coin balance is 0. Engage with games and tasks to earn coins first!");
+            } else {
+                alert("Milestone checked! Keep up the fantastic work. Your current balance is " + savedCoins + " coins.");
+            }
+        }
+
+        // Automatically load coin balance when the page loads
+        window.onload = function() {
+            refreshWallet();
+        };
+    </script>
+</body>
+</html>

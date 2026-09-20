@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Thirsty Crow Story - wintask.in</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .story-wrapper {
+            background: rgba(22, 33, 62, 0.95);
+            max-width: 900px;
+            width: 100%;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            border: 2px solid #00ffcc;
+        }
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            color: #00ffcc;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+        }
+        .story-image-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .story-image {
+            max-width: 100%;
+            max-height: 350px;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 255, 204, 0.4);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+            object-fit: cover;
+        }
+        .story-text-container {
+            margin-bottom: 30px;
+        }
+        .story-text-container p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #d0d5e0;
+            margin-bottom: 15px;
+        }
+        .mcq-section {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid rgba(0, 255, 204, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .mcq-section h3 {
+            color: #00ffcc;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            color: #e2e8f0;
+            cursor: pointer;
+            background: rgba(22, 33, 62, 0.6);
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            transition: all 0.3s ease;
+        }
+        .option-label:hover {
+            border-color: #00ffcc;
+            background: rgba(0, 255, 204, 0.05);
+        }
+        .option-label input {
+            accent-color: #00ffcc;
+            transform: scale(1.2);
+        }
+        .submit-btn {
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 800;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+            transition: transform 0.3s;
+        }
+        .submit-btn:hover {
+            transform: scale(1.05);
+        }
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .nav-btn {
+            background: transparent;
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover {
+            background: rgba(0, 255, 204, 0.1);
+            transform: scale(1.05);
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 14px;
+            color: #a0a5b0;
+            border-top: 1px solid rgba(255, 255, 204, 0.1);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="story-wrapper">
+        <h1>The Thirsty Crow - Extended Story</h1>
+        
+        <!-- Story Image Container -->
+        <div class="story-image-container">
+            <a href="https://ibb.co/xSwNLJDb" target="_blank">
+                <img src="https://i.ibb.co/WW7L5g6X/crow-dropping-pebble.jpg" alt="crow-dropping-pebble" border="0" class="story-image">
+            </a>
+        </div>
+
+        <!-- Story Text Without Box -->
+        <div class="story-text-container">
+            <p>Once upon a time, during the scorching heat of a dry summer season, a small black crow lived near a peaceful village. The sun blazed fiercely in the clear blue sky, baking the earth and drying up all the small puddles, streams, and ponds in the surrounding area. Day after day, the temperature continued to rise, making life extremely difficult for all the animals and birds living in the nearby forest.</p>
+            
+            <p>Our clever little crow had been flying across fields and gardens for hours, searching everywhere for a single drop of water to quench his burning thirst. His throat felt dry, his wings felt heavy, and his energy was rapidly draining away. Yet, no matter how far he flew or how high he soared, he could not find water anywhere. Despair began to set in, but the smart crow refused to give up hope easily. He kept flapping his tired wings, scanning the ground below with sharp, hopeful eyes.</p>
+            
+            <p>Finally, as he was about to collapse from exhaustion, his sharp eyes spotted something interesting down below in an open courtyard near a small farmhouse. It was a pitcher, an earthen pot, sitting quietly under the shade of a large green mango tree. With a burst of renewed energy, the crow quickly swooped down and landed gracefully right on the rim of the pitcher. His heart leaped with joy at the sight of the pot, hoping his misery had finally come to an end.</p>
+            
+            <p>Eagerly, the crow stretched his neck and peered inside the pitcher to drink. To his great disappointment, he discovered that the water level inside was very low. The pitcher was wide and deep, and the cool water sat far down at the bottom, completely out of reach of his beak. The crow tried stretching his neck further, dipping his head inside as far as it could possibly go, but his beak still fell short by several inches. He tried tilting the heavy pot, but it was too sturdy and firmly placed on the ground to budge even a tiny fraction.</p>
+            
+            <p>Frustration and sorrow washed over him, but instead of sitting back and losing hope, his brilliant mind began to work. He looked around the courtyard and noticed a heap of small, hard pebbles scattered near the base of a garden wall. An ingenious idea sparked in his clever brain. He realized that if he couldn't reach the water, he had to bring the water up to his level.</p>
+            
+            <p>One by one, the determined crow flew down, picked up a small pebble in his beak, carried it back to the pitcher, and dropped it inside. *Plop!* The pebble sank to the bottom, displacing just a tiny bit of water. Undeterred by the slow progress, the crow repeated this action continuously. He flew back and forth dozens of times, working hard under the blazing sun, carrying stone after stone and dropping them into the pitcher. Slowly and steadily, as more and more pebbles filled the bottom of the pot, the water level began to rise higher and higher.</p>
+            
+            <p>At last, after a lot of hard work and clever thinking, the water level reached right up to the brim of the pitcher. The smart crow let out a cheerful caw of victory. He bent his head, drank the cool, refreshing water to his heart's content, and quenched his thirst completely. He flew away happily, proving once again that where there is a will, intelligence and patience will always find a way.</p>
+        </div>
+
+        <!-- MCQ Section -->
+        <div class="mcq-section">
+            <h3>🧠 Story Question (MCQ)</h3>
+            <p style="margin-bottom: 15px; font-weight: 600; color: #fff;">hya story ch nav kyyy?</p>
+            <div class="options-group">
+                <label class="option-label">
+                    <input type="radio" name="storyQuiz" value="wrong1"> The Clever Fox
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="storyQuiz" value="correct"> The Thirsty Crow
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="storyQuiz" value="wrong2"> The Greedy Dog
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="storyQuiz" value="wrong3"> The Thirsty Lion
+                </label>
+            </div>
+            <button type="button" class="submit-btn" onclick="validateQuiz()">Submit</button>
+            <div id="errorMsg" class="error-msg"></div>
+        </div>
+
+        <div class="btn-group">
+            <a href="story5.html" class="nav-btn">← Back</a>
+        </div>
+        
+        <div class="footer-note">
+            &copy; 2026 Wintask Story Collection. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        function validateQuiz() {
+            const selectedOption = document.querySelector('input[name="storyQuiz"]:checked');
+            const errorMsg = document.getElementById("errorMsg");
+
+            if (!selectedOption) {
+                errorMsg.innerText = "⚠️ Krupaya ek option select kra!";
+                return;
+            }
+
+            if (selectedOption.value === "correct") {
+                errorMsg.innerText = "";
+                window.location.href = "story6mcq.html";
+            } else {
+                errorMsg.innerText = "❌ Choote answer! Krupaya yogy option select kra.";
+            }
+        }
+    </script>
+</body>
+</html>

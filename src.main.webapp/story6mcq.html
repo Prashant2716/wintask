@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Thirsty Crow Summary & Claim - wintask.in</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .story-wrapper {
+            background: rgba(22, 33, 62, 0.95);
+            max-width: 900px;
+            width: 100%;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            border: 2px solid #00ffcc;
+        }
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            color: #00ffcc;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+        }
+        .summary-section {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid rgba(0, 255, 204, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .summary-section h3 {
+            color: #00ffcc;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .summary-section p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #d0d5e0;
+            margin-bottom: 15px;
+        }
+        .claim-section {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid rgba(0, 255, 204, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .claim-btn {
+            background: #00ffcc;
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .claim-btn:hover:not(:disabled) {
+            background: #00cca3;
+            transform: scale(1.05);
+        }
+        .claim-btn:disabled {
+            background: #4a5568;
+            color: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #claimTimer {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #00ffcc;
+            font-weight: 600;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .nav-btn {
+            background: transparent;
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover {
+            background: rgba(0, 255, 204, 0.1);
+            transform: scale(1.05);
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 14px;
+            color: #a0a5b0;
+            border-top: 1px solid rgba(255, 255, 204, 0.1);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="story-wrapper">
+        <h1>The Thirsty Crow - Story Summary</h1>
+        
+        <!-- Story Summary Section -->
+        <div class="summary-section">
+            <h3>📖 Saransh (Summary)</h3>
+            <p>Once upon a time, during a scorching summer, a thirsty crow searched everywhere for water and finally found a pitcher with very little water at the bottom that he could not reach.</p>
+            <p>Showing incredible intelligence and patience, the clever crow picked up small pebbles one by one and dropped them into the pitcher. As the pebbles accumulated at the bottom, the water level gradually rose to the top.</p>
+            <p>The crow drank the water and quenched his thirst completely, proving that where there is a will, intelligence and persistent effort will always find a way to succeed.</p>
+        </div>
+
+        <!-- Claim Reward Section with 1-Hour Cooldown Logic -->
+        <div class="claim-section">
+            <h3>🎁 Reward Claim Section</h3>
+            <p style="margin-bottom: 15px; color: #e2e8f0;">Click the button below to claim your <strong>5 Score</strong> reward. Once claimed, you will have to wait 1 hour for the next claim.</p>
+            <button type="button" id="claimBtn" class="claim-btn" onclick="claimReward()">Claim 5 Score</button>
+            <div id="claimTimer"></div>
+        </div>
+
+        <div class="btn-group">
+            <a href="story6.html" class="nav-btn">← Back</a>
+        </div>
+        
+        <div class="footer-note">
+            &copy; 2026 Wintask Story Collection. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        const CLAIM_COOLDOWN_TIME = 60 * 60 * 1000; // 1 Hour in milliseconds
+        const REWARD_AMOUNT = 5;
+
+        function updateClaimStatus() {
+            const lastClaimTime = localStorage.getItem('lastClaimTime_thirstyCrowSummary');
+            const claimBtn = document.getElementById('claimBtn');
+            const timerDisplay = document.getElementById('claimTimer');
+
+            if (lastClaimTime) {
+                const elapsedTime = Date.now() - parseInt(lastClaimTime, 10);
+                if (elapsedTime < CLAIM_COOLDOWN_TIME) {
+                    claimBtn.disabled = true;
+                    const remainingTime = CLAIM_COOLDOWN_TIME - elapsedTime;
+                    const minutesLeft = Math.floor(remainingTime / (60 * 1000));
+                    const secondsLeft = Math.floor((remainingTime % (60 * 1000)) / 1000);
+                    
+                    timerDisplay.innerText = `⏳ Next claim available in: ${minutesLeft}m ${secondsLeft}s`;
+                } else {
+                    claimBtn.disabled = false;
+                    timerDisplay.innerText = "✅ Reward is ready to be claimed!";
+                }
+            } else {
+                claimBtn.disabled = false;
+                timerDisplay.innerText = "";
+            }
+        }
+
+        function claimReward() {
+            // Update timestamp for 1-hour cooldown
+            localStorage.setItem('lastClaimTime_thirstyCrowSummary', Date.now().toString());
+
+            // 1. Update My Profile Score
+            let currentScore = parseInt(localStorage.getItem('userScore') || '0', 10);
+            currentScore += REWARD_AMOUNT;
+            localStorage.setItem('userScore', currentScore.toString());
+
+            // 2. Add to Claim History
+            let claimHistory = JSON.parse(localStorage.getItem('claimHistory') || '[]');
+            const newClaimEntry = {
+                title: "The Thirsty Crow Summary",
+                score: REWARD_AMOUNT,
+                date: new Date().toLocaleString()
+            };
+            claimHistory.unshift(newClaimEntry);
+            localStorage.setItem('claimHistory', JSON.stringify(claimHistory));
+
+            alert("🎉 5 Score successfully claimed and added to your profile & history!");
+            updateClaimStatus();
+        }
+
+        // Run on page load and update every second
+        updateClaimStatus();
+        setInterval(updateClaimStatus, 1000);
+    </script>
+</body>
+</html>

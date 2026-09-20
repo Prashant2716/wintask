@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wintask.in - Connect Dots & Numbers</title>
+    <!-- Confetti Library for Paper Pieces Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { 
+            margin: 0; 
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); 
+            color: #fff; 
+            text-align: center; 
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 1. इन्फॉर्मेशन स्क्रीन (पहिला स्क्रीन) */
+        #infoScreen {
+            background: rgba(20, 20, 35, 0.95);
+            border: 2px solid #00ffcc;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 600px;
+            width: 92%;
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.3);
+            text-align: left;
+            z-index: 10;
+        }
+        #infoScreen h1 {
+            color: #00ffcc;
+            font-size: 24px;
+            margin-top: 0;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(0,255,204,0.4);
+        }
+        #infoScreen ul {
+            padding-left: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+        #infoScreen li {
+            margin-bottom: 6px;
+        }
+
+        /* 2. गेम स्क्रीन आणि पेंड्युलम एकत्र ठेवण्यासाठी मुख्य लेआउट */
+        .main-layout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px; 
+            width: 100%;
+            max-width: 1100px;
+            padding: 10px;
+        }
+
+        #gameScreen {
+            display: none;
+            position: relative;
+            z-index: 5;
+        }
+
+        .game-container {
+            background: rgba(20, 20, 35, 0.9);
+            border: 2px solid #00ffcc;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.3);
+            max-width: 500px;
+            width: 95%;
+            margin: 0 auto;
+            position: relative;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #00ffcc;
+        }
+        .back-btn {
+            background: transparent;
+            border: 1px solid #ff007f;
+            color: #ff007f;
+            padding: 5px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: #ff007f; color: #fff; }
+        
+        canvas {
+            background: #12121e;
+            border: 2px dashed rgba(0, 255, 204, 0.4);
+            border-radius: 12px;
+            cursor: pointer;
+            touch-action: none;
+            display: block;
+            margin: 0 auto;
+        }
+        .msg {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            min-height: 22px;
+        }
+        
+        /* --- थेट गेम पेजवर दिसणारे काँग्रेच्युलेशन्स आणि मेडल डिझाईन --- */
+        #winSection {
+            display: none;
+            text-align: center;
+            margin-top: 12px;
+            animation: fadeInAnim 0.4s ease-out;
+        }
+
+        #winSection h2 {
+            color: #00ffcc;
+            font-size: 20px;
+            margin: 0 0 5px 0;
+            text-shadow: 0 0 10px rgba(0,255,204,0.5);
+            letter-spacing: 1px;
+        }
+
+        .medal-container {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            border-radius: 50%;
+            margin: 5px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px #ffd700, inset 0 0 8px rgba(255,255,255,0.6);
+            border: 2px solid #fff;
+            animation: bounceMedal 1s infinite alternate;
+        }
+
+        .medal-container::before {
+            content: '🏆';
+            font-size: 30px;
+        }
+
+        @keyframes fadeInAnim {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounceMedal {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-4px); }
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .btn { 
+            padding: 8px 20px; 
+            background: linear-gradient(45deg, #ff007f, #7928ca); 
+            color: #fff; 
+            font-size: 15px; 
+            font-weight: bold; 
+            border: none; 
+            border-radius: 25px; 
+            cursor: pointer; 
+            box-shadow: 0 0 10px rgba(255,0,127,0.5);
+            transition: 0.3s;
+        }
+        .btn:hover { transform: scale(1.05); }
+
+        /* पेंड्युलम (Pendulum - Pipe Style with Blinking Lights & Big Text) Styling */
+        .pendulum-wrapper {
+            height: 480px;
+            width: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .pendulum-text {
+            font-family: 'Brush Script MT', cursive, sans-serif;
+            font-size: 34px; 
+            font-weight: bold;
+            color: #00ffcc;
+            text-shadow: 0 0 15px rgba(0,255,204,0.8), 0 0 5px #ff007f;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .pendulum-rod {
+            width: 14px; 
+            height: 240px;
+            background: linear-gradient(to right, #111, #444, #111);
+            border: 1px solid #00ffcc;
+            border-radius: 7px;
+            transform-origin: top center;
+            position: relative;
+            box-shadow: inset 0 0 8px rgba(0,255,204,0.5);
+        }
+
+        .left-pendulum .pendulum-rod {
+            animation: swingLeft 3s ease-in-out infinite alternate;
+        }
+        .right-pendulum .pendulum-rod {
+            animation: swingRight 3s ease-in-out infinite alternate;
+        }
+
+        .pipe-light {
+            width: 6px;
+            height: 6px;
+            background-color: #ff007f;
+            border-radius: 50%;
+            position: absolute;
+            left: 3px;
+            box-shadow: 0 0 8px #ff007f;
+            animation: blinkLight 1s infinite alternate;
+        }
+        .pipe-light:nth-child(2) { top: 40px; animation-delay: 0.2s; background-color: #00ffcc; box-shadow: 0 0 8px #00ffcc; }
+        .pipe-light:nth-child(3) { top: 90px; animation-delay: 0.4s; }
+        .pipe-light:nth-child(4) { top: 140px; animation-delay: 0.6s; background-color: #00ffcc; box-shadow: 0 0 8px #00ffcc; }
+        .pipe-light:nth-child(5) { top: 190px; animation-delay: 0.8s; }
+
+        .reward-circle {
+            width: 85px;
+            height: 85px;
+            background: radial-gradient(circle, #ff007f, #7928ca);
+            border: 3px solid #00ffcc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.8);
+            text-transform: uppercase;
+            animation: pulseCircle 2s infinite;
+            margin-top: -5px; 
+        }
+
+        @keyframes swingLeft {
+            0% { transform: rotate(-12deg); }
+            100% { transform: rotate(12deg); }
+        }
+        @keyframes swingRight {
+            0% { transform: rotate(12deg); }
+            100% { transform: rotate(-12deg); }
+        }
+        @keyframes pulseCircle {
+            0% { transform: scale(1); box-shadow: 0 0 10px #ff007f; }
+            50% { transform: scale(1.08); box-shadow: 0 0 22px #00ffcc; }
+            100% { transform: scale(1); box-shadow: 0 0 10px #ff007f; }
+        }
+        @keyframes blinkLight {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @media (max-width: 950px) {
+            .pendulum-wrapper { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. इन्फॉर्मेशन पेज -->
+    <div id="infoScreen">
+        <h1>🔗 Connect Dots & Numbers Challenge</h1>
+        <ul>
+            <li><b>Game Overview:</b> Welcome to the ultimate brain teaser and focus booster game on wintask.in! This engaging puzzle is specially designed to test your hand-eye coordination, quick thinking, and sequential logic across 100 progressive levels.</li>
+            <li><b>How to Play:</b> Random numbered dots will appear on your canvas screen. Your primary objective is to connect these numbers in strict ascending order, starting from 1, then moving to 2, 3, 4, and so on, until the final dot is successfully linked.</li>
+            <li><b>Difficulty Curve:</b> The game begins with easy layouts containing fewer dots, making it relaxing for beginners. As you advance through the 100 levels, the puzzle complexity increases dynamically, introducing more dots and tighter spacing that challenge even expert puzzle solvers!</li>
+            <li><b>Scoring & Rewards:</b> Successfully clearing each unique level rewards you with 10 bonus coins, which are automatically added to your global user score balance. Test your endurance, avoid misclicks, and aim to complete all 100 stages to unlock ultimate mastery.</li>
+            <li><b>Pro Tips:</b> Maintain steady focus and trace out the visual path in your mind before tapping. Use the reset or play again features if you ever need to restart a tough stage. Click the button below to jump right into the action!</li>
+        </ul>
+        <button class="btn" style="width: 100%; padding: 12px; font-size: 17px;" onclick="startGame()">Play Now 🚀</button>
+    </div>
+
+    <!-- 2. गेम स्क्रीन आणि पेंड्युलम एकत्र ठेवण्यासाठी मुख्य लेआउट -->
+    <div id="mainLayoutContainer" class="main-layout" style="display: none;">
+        
+        <!-- डाव्या बाजूचे पाईप-पेंड्युलम -->
+        <div class="pendulum-wrapper left-pendulum">
+            <div class="pendulum-text">wintask</div>
+            <div class="pendulum-rod">
+                <div class="pipe-light" style="top: 20px;"></div>
+                <div class="pipe-light" style="top: 70px;"></div>
+                <div class="pipe-light" style="top: 120px;"></div>
+                <div class="pipe-light" style="top: 170px;"></div>
+                <div class="pipe-light" style="top: 215px;"></div>
+            </div>
+            <div class="reward-circle">REWARD</div>
+        </div>
+
+        <!-- मुख्य गेम बॉक्स -->
+        <div id="gameScreen">
+            <div class="game-container">
+                <div class="header">
+                    <button class="back-btn" onclick="goBackToInfo()">← Back</button>
+                    <span id="levelText">Level: 1 / 100</span>
+                    <span id="scoreText">Score: 0 🪙</span>
+                </div>
+                <p style="font-size: 13px; color: #bbb; margin: 0 0 8px 0;">Connect numbers in ascending order (1 → 2 → 3...)!</p>
+                <canvas id="gameCanvas" width="380" height="380"></canvas>
+                <div class="msg" id="msgBox"></div>
+                
+                <!-- लेव्हल पूर्ण झाल्यावर गेम पेजवर थेट दिसणारा भाग (Medal आणि Congratulations) -->
+                <div id="winSection">
+                    <h2>CONGRATULATIONS!</h2>
+                    <div class="medal-container"></div>
+                    <p style="font-size: 13px; color: #00ffcc; margin: 4px 0 10px 0;">+10 Coins Earned! 🎉</p>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn" id="playAgainBtn" onclick="restartLevel()" style="background: rgba(255,255,255,0.15); border: 1px solid #00ffcc;">Play Again</button>
+                    <button class="btn" id="nextBtn" style="display:none;" onclick="nextLevel()">Next Level ➔</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- उजव्या बाजूचे पाईप-पेंड्युलम -->
+        <div class="pendulum-wrapper right-pendulum">
+            <div class="pendulum-text">wintask</div>
+            <div class="pendulum-rod">
+                <div class="pipe-light" style="top: 20px;"></div>
+                <div class="pipe-light" style="top: 70px;"></div>
+                <div class="pipe-light" style="top: 120px;"></div>
+                <div class="pipe-light" style="top: 170px;"></div>
+                <div class="pipe-light" style="top: 215px;"></div>
+            </div>
+            <div class="reward-circle">REWARD</div>
+        </div>
+
+    </div>
+
+    <script>
+        const infoScreen = document.getElementById('infoScreen');
+        const mainLayoutContainer = document.getElementById('mainLayoutContainer');
+        const gameScreen = document.getElementById('gameScreen');
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const levelText = document.getElementById('levelText');
+        const scoreText = document.getElementById('scoreText');
+        const msgBox = document.getElementById('msgBox');
+        const nextBtn = document.getElementById('nextBtn');
+        const winSection = document.getElementById('winSection');
+
+        let currentLevel = 1;
+        let totalCoins = parseInt(localStorage.getItem('wintask_coins') || 0);
+        scoreText.innerText = `Score: ${totalCoins} 🪙`;
+
+        let dots = [];
+        let currentTarget = 1;
+        let connectedLines = [];
+
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playPopSound() {
+            try {
+                initAudio();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } catch(e) {}
+        }
+
+        function playWinSound() {
+            try {
+                initAudio();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                let notes = [523.25, 659.25, 783.99, 1046.50]; 
+                notes.forEach((freq, index) => {
+                    let osc = audioCtx.createOscillator();
+                    let gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.1);
+                    gain.gain.setValueAtTime(0.3, audioCtx.currentTime + index * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.1 + 0.3);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(audioCtx.currentTime + index * 0.1);
+                    osc.stop(audioCtx.currentTime + index * 0.1 + 0.3);
+                });
+            } catch(e) {}
+        }
+
+        function playErrorSound() {
+            try {
+                initAudio();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(100, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.2);
+            } catch(e) {}
+        }
+
+        function startGame() {
+            initAudio();
+            infoScreen.style.display = 'none';
+            mainLayoutContainer.style.display = 'flex';
+            gameScreen.style.display = 'block';
+            initLevel();
+        }
+
+        function goBackToInfo() {
+            winSection.style.display = 'none';
+            nextBtn.style.display = 'none';
+            mainLayoutContainer.style.display = 'none';
+            gameScreen.style.display = 'none';
+            infoScreen.style.display = 'block';
+        }
+
+        function restartLevel() {
+            winSection.style.display = 'none';
+            nextBtn.style.display = 'none';
+            initLevel();
+        }
+
+        function initLevel() {
+            winSection.style.display = 'none';
+            nextBtn.style.display = 'none';
+            dots = [];
+            connectedLines = [];
+            currentTarget = 1;
+            msgBox.innerText = "";
+
+            let totalDots = Math.min(4 + Math.floor(currentLevel / 12), 12);
+            let minDistance = 55;
+            for (let i = 1; i <= totalDots; i++) {
+                let x, y, overlapping;
+                let attempts = 0;
+                do {
+                    overlapping = false;
+                    x = Math.random() * (canvas.width - 60) + 30;
+                    y = Math.random() * (canvas.height - 60) + 30;
+                    
+                    for (let d of dots) {
+                        let dist = Math.hypot(d.x - x, d.y - y);
+                        if (dist < minDistance) {
+                            overlapping = true;
+                            break;
+                        }
+                    }
+                    attempts++;
+                } while (overlapping && attempts < 100);
+                dots.push({ num: i, x: x, y: y });
+            }
+
+            levelText.innerText = `Level: ${currentLevel} / 100`;
+            drawGame();
+        }
+
+        function drawGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            for (let line of connectedLines) {
+                ctx.strokeStyle = line.color;
+                ctx.beginPath();
+                ctx.moveTo(line.from.x, line.from.y);
+                ctx.lineTo(line.to.x, line.to.y);
+                ctx.stroke();
+            }
+
+            dots.forEach(dot => {
+                ctx.beginPath();
+                ctx.arc(dot.x, dot.y, 16, 0, Math.PI * 2);
+                
+                if (dot.num < currentTarget) {
+                    ctx.fillStyle = '#00ffcc';
+                } else if (dot.num === currentTarget) {
+                    ctx.fillStyle = '#ff007f';
+                } else {
+                    ctx.fillStyle = '#444';
+                }
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = '#fff';
+                ctx.stroke();
+
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 14px Segoe UI';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(dot.num, dot.x, dot.y);
+            });
+        }
+
+        function handleInput(clientX, clientY) {
+            if (nextBtn.style.display === 'inline-block') return; // लेव्हल पूर्ण झाली असल्यास क्लिक बंद
+
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = clientX - rect.left;
+            const mouseY = clientY - rect.top;
+
+            dots.forEach(dot => {
+                let dist = Math.hypot(dot.x - mouseX, dot.y - mouseY);
+                if (dist < 22) {
+                    if (dot.num === currentTarget) {
+                        playPopSound(); 
+                        if (currentTarget > 1) {
+                            let prevDot = dots.find(d => d.num === currentTarget - 1);
+                            let hue = (currentTarget * 45) % 360;
+                            connectedLines.push({
+                                from: prevDot,
+                                to: dot,
+                                color: `hsl(${hue}, 100%, 50%)`
+                            });
+                        }
+                        currentTarget++;
+
+                        if (currentTarget > dots.length) {
+                            totalCoins += 10;
+                            localStorage.setItem('wintask_coins', totalCoins);
+                            scoreText.innerText = `Score: ${totalCoins} 🪙`;
+                            
+                            // --- Win Sound & Confetti & Direct Page Celebration Display ---
+                            playWinSound();
+                            confetti({
+                                particleCount: 150,
+                                spread: 90,
+                                origin: { y: 0.5 }
+                            });
+                            
+                            winSection.style.display = 'block'; // गेम पेजवर थेट मेडल आणि काँग्रेच्युलेशन्स दिसेल
+                            nextBtn.style.display = 'inline-block'; // Next Level बटन दिसेल
+                        }
+                        drawGame();
+                    } else if (dot.num > currentTarget) {
+                        playErrorSound(); 
+                        msgBox.style.color = "#ff007f";
+                        msgBox.innerText = `❌ Connect number ${currentTarget} first.`;
+                    }
+                }
+            });
+        }
+
+        canvas.addEventListener('click', (e) => handleInput(e.clientX, e.clientY));
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            handleInput(e.touches[0].clientX, e.touches[0].clientY);
+        });
+
+        function nextLevel() {
+            if (currentLevel < 100) {
+                currentLevel++;
+                initLevel();
+            }
+        }
+    </script>
+</body>
+</html>

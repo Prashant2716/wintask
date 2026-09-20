@@ -1,0 +1,1538 @@
+cardswipe<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Card Swipe - wintask.in</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Segoe UI",Arial,sans-serif;
+    background:
+        radial-gradient(circle at 90% 10%,#21184f,transparent 30%),
+        linear-gradient(135deg,#050816,#0b1224);
+    color:white;
+    min-height:100vh;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+    height:75px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 45px;
+    background:rgba(3,7,18,.95);
+    border-bottom:1px solid #263451;
+}
+
+.logo{
+    color:#00ffcc;
+    font-size:26px;
+    font-weight:800;
+    text-decoration:none;
+}
+
+.nav-buttons{
+    display:flex;
+    gap:12px;
+}
+
+.nav-btn{
+    text-decoration:none;
+    color:white;
+    background:#111a30;
+    border:1px solid #33456b;
+    padding:10px 20px;
+    border-radius:20px;
+    font-weight:700;
+}
+
+.nav-btn:hover{
+    background:#1b2948;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    max-width:1250px;
+    margin:0 auto;
+    padding:75px 30px 60px;
+
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:60px;
+    align-items:center;
+}
+
+.hero-small{
+    color:#8ba8ff;
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:2px;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:78px;
+    line-height:.95;
+    font-weight:900;
+    letter-spacing:-3px;
+}
+
+.hero h1 span{
+    display:block;
+    background:linear-gradient(90deg,#5b8cff,#a46cff,#ff4fd8);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.hero-text{
+    color:#9caac5;
+    font-size:21px;
+    line-height:1.7;
+    margin:30px 0;
+    max-width:700px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.play-btn{
+    border:none;
+    background:linear-gradient(135deg,#6675ff,#9b5cff);
+    color:white;
+    padding:17px 28px;
+    border-radius:14px;
+    font-size:17px;
+    font-weight:900;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-block;
+}
+
+.play-btn:hover{
+    transform:translateY(-2px);
+}
+
+.leader-btn{
+    border:1px solid #33456b;
+    background:#0c1428;
+    color:white;
+    padding:17px 28px;
+    border-radius:14px;
+    font-size:17px;
+    font-weight:900;
+    text-decoration:none;
+}
+
+/* =========================
+   PREVIEW
+========================= */
+
+.preview{
+    min-height:560px;
+    border:1px solid #293858;
+    border-radius:28px;
+    background:#111a30;
+    padding:30px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:0 0 50px rgba(91,140,255,.08);
+}
+
+.preview-top{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    color:#aab7d1;
+    font-weight:800;
+    margin-bottom:30px;
+}
+
+.preview-card{
+    width:230px;
+    height:300px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #273b76,
+            #6b4bb8
+        );
+
+    border:3px solid #6675ff;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.4);
+
+    transform:rotate(-5deg);
+
+    animation:previewMove 2s ease-in-out infinite alternate;
+}
+
+.preview-animal{
+    font-size:100px;
+}
+
+.preview-name{
+    margin-top:15px;
+    font-size:22px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+@keyframes previewMove{
+
+    from{
+        transform:rotate(-5deg) translateX(-15px);
+    }
+
+    to{
+        transform:rotate(5deg) translateX(15px);
+    }
+
+}
+
+.preview-label{
+    margin-top:35px;
+    color:#9caac5;
+    letter-spacing:3px;
+    font-size:13px;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.hero-stats{
+    max-width:1250px;
+    margin:-15px auto 70px;
+    padding:0 30px;
+
+    display:flex;
+    gap:60px;
+}
+
+.hero-stat strong{
+    display:block;
+    font-size:30px;
+}
+
+.hero-stat span{
+    color:#8190aa;
+    font-size:13px;
+    letter-spacing:1px;
+}
+
+/* =========================
+   GAME SECTION
+========================= */
+
+.game-section{
+    max-width:1250px;
+    margin:0 auto;
+    padding:40px 30px 80px;
+}
+
+.game-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+}
+
+.game-title h2{
+    font-size:38px;
+}
+
+.stats{
+    display:flex;
+    gap:12px;
+}
+
+.stat{
+    background:#111a30;
+    border:1px solid #2d3d60;
+    border-radius:12px;
+    padding:12px 20px;
+    min-width:90px;
+    text-align:center;
+}
+
+.stat span{
+    display:block;
+    color:#9caac5;
+    font-size:13px;
+}
+
+.stat strong{
+    font-size:20px;
+}
+
+/* =========================
+   GAME LAYOUT
+========================= */
+
+.game-layout{
+    display:grid;
+    grid-template-columns:1fr 330px;
+    gap:25px;
+}
+
+.game-card{
+    background:#091122;
+    border:1px solid #293858;
+    border-radius:20px;
+    padding:15px;
+}
+
+#gameArea{
+
+    width:100%;
+    height:600px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.015) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.015) 1px,
+            transparent 1px
+        ),
+        #070d1c;
+
+    background-size:30px 30px;
+
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    touch-action:none;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.animal-card{
+
+    width:270px;
+    height:360px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #263b79,
+            #754bc0
+        );
+
+    border:3px solid #6675ff;
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.45);
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    position:absolute;
+
+    cursor:grab;
+
+    user-select:none;
+
+    transition:
+        transform .25s ease,
+        opacity .25s ease;
+}
+
+.animal-card:active{
+    cursor:grabbing;
+}
+
+.animal-emoji{
+    font-size:120px;
+    pointer-events:none;
+}
+
+.animal-name{
+    margin-top:20px;
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:2px;
+    pointer-events:none;
+}
+
+.swipe-text{
+    position:absolute;
+    bottom:35px;
+
+    color:#7f8daa;
+
+    font-size:14px;
+    font-weight:700;
+
+    letter-spacing:2px;
+
+    text-align:center;
+}
+
+/* =========================
+   START BUTTON
+========================= */
+
+.start-btn{
+    width:100%;
+    margin-top:18px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6675ff,
+            #9b5cff
+        );
+
+    color:white;
+
+    font-size:18px;
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+.start-btn:hover{
+    transform:scale(1.02);
+}
+
+/* =========================
+   SIDE CARDS
+========================= */
+
+.info-card{
+    background:#11192d;
+    border:1px solid #2c3b5c;
+    border-radius:18px;
+    padding:25px;
+    margin-bottom:18px;
+}
+
+.info-card h3{
+    margin-bottom:15px;
+    color:#aab7d1;
+    font-size:14px;
+    letter-spacing:2px;
+}
+
+.info-card h2{
+    margin-bottom:10px;
+}
+
+.info-card p{
+    color:#94a3bd;
+    line-height:1.6;
+}
+
+.control{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    color:#aab7d1;
+}
+
+.key{
+    border:1px solid #3b4c70;
+    padding:5px 10px;
+    border-radius:7px;
+    color:white;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+    .hero{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:55px;
+    }
+
+    .game-layout{
+        grid-template-columns:1fr;
+    }
+
+    .game-title{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    .hero-stats{
+        gap:30px;
+        flex-wrap:wrap;
+    }
+}
+
+@media(max-width:600px){
+
+    .navbar{
+        padding:0 15px;
+    }
+
+    .nav-buttons{
+        gap:5px;
+    }
+
+    .nav-btn{
+        padding:8px 12px;
+        font-size:13px;
+    }
+
+    .hero{
+        padding:50px 20px;
+    }
+
+    .hero h1{
+        font-size:45px;
+    }
+
+    .hero-text{
+        font-size:17px;
+    }
+
+    .preview{
+        min-height:430px;
+    }
+
+    .game-section{
+        padding:30px 15px 60px;
+    }
+
+    #gameArea{
+        height:500px;
+    }
+
+    .animal-card{
+        width:220px;
+        height:300px;
+    }
+
+    .animal-emoji{
+        font-size:90px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<header class="navbar">
+
+    <a href="games.html" class="logo">
+        🎮 wintask.in
+    </a>
+
+    <div class="nav-buttons">
+
+        <a href="games.html" class="nav-btn">
+            ← Games
+        </a>
+
+        <a href="index.html" class="nav-btn">
+            Home
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <div>
+
+        <div class="hero-small">
+            ⚡ FAST • SIMPLE • REPLAYABLE
+        </div>
+
+        <h1>
+            Swipe the
+            <span>animals.</span>
+            Beat your
+            <span>score.</span>
+        </h1>
+
+        <p class="hero-text">
+            Swipe animal cards left or right,
+            keep going for 60 seconds and collect
+            Stack Coins as you play.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#cardGame" class="play-btn">
+                PLAY NOW →
+            </a>
+
+            <a href="#cardGame" class="leader-btn">
+                VIEW GAME
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Preview -->
+
+    <div class="preview">
+
+        <div class="preview-top">
+
+            <span>CARD SWIPE</span>
+
+            <span>
+                🪙 <b id="heroCoins">0</b>
+            </span>
+
+        </div>
+
+
+        <div class="preview-card">
+
+            <div class="preview-animal">
+                🦁
+            </div>
+
+            <div class="preview-name">
+                LION
+            </div>
+
+        </div>
+
+
+        <div class="preview-label">
+            SWIPE TO PLAY
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     HERO STATS
+========================= -->
+
+<div class="hero-stats">
+
+    <div class="hero-stat">
+
+        <strong>1,248</strong>
+
+        <span>
+            PLAYERS
+        </span>
+
+    </div>
+
+
+    <div class="hero-stat">
+
+        <strong id="heroBest">
+            0
+        </strong>
+
+        <span>
+            YOUR BEST
+        </span>
+
+    </div>
+
+
+    <div class="hero-stat">
+
+        <strong id="heroCoins2">
+            0
+        </strong>
+
+        <span>
+            YOUR COINS
+        </span>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     ACTUAL GAME
+========================= -->
+
+<section
+    class="game-section"
+    id="cardGame"
+>
+
+    <div class="game-title">
+
+        <h2>
+            Card Swipe
+        </h2>
+
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <span>
+                    Time
+                </span>
+
+                <strong id="time">
+                    60
+                </strong>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span>
+                    Swipes
+                </span>
+
+                <strong id="score">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat">
+
+                <span>
+                    Coins
+                </span>
+
+                <strong id="coins">
+                    0 🪙
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="game-layout">
+
+
+        <!-- GAME -->
+
+        <div class="game-card">
+
+            <div id="gameArea">
+
+                <div
+                    class="animal-card"
+                    id="animalCard"
+                >
+
+                    <div
+                        class="animal-emoji"
+                        id="animalEmoji"
+                    >
+                        🦁
+                    </div>
+
+                    <div
+                        class="animal-name"
+                        id="animalName"
+                    >
+                        LION
+                    </div>
+
+                </div>
+
+
+                <div class="swipe-text">
+                    ← SWIPE LEFT &nbsp;&nbsp;&nbsp;
+                    SWIPE RIGHT →
+                </div>
+
+            </div>
+
+
+            <button
+                class="start-btn"
+                id="startButton"
+                onclick="startGame()"
+            >
+                START GAME
+            </button>
+
+        </div>
+
+
+
+        <!-- INFORMATION -->
+
+        <div>
+
+
+            <div class="info-card">
+
+                <h3>
+                    HOW TO PLAY
+                </h3>
+
+                <h2>
+                    Swipe the card.
+                </h2>
+
+                <p>
+                    Swipe the animal card left or
+                    right. Keep swiping until the
+                    60 second timer ends.
+                </p>
+
+            </div>
+
+
+
+            <div class="info-card">
+
+                <h3>
+                    REWARD
+                </h3>
+
+                <h2>
+                    🪙 +50 Coins
+                </h2>
+
+                <p>
+                    Complete the full 60 second
+                    game to receive 50 coins.
+                </p>
+
+            </div>
+
+
+
+            <div class="info-card">
+
+                <h3>
+                    CONTROLS
+                </h3>
+
+
+                <div class="control">
+
+                    <span class="key">
+                        ← →
+                    </span>
+
+                    <span>
+                        Swipe card
+                    </span>
+
+                </div>
+
+
+                <div class="control">
+
+                    <span class="key">
+                        TOUCH
+                    </span>
+
+                    <span>
+                        Swipe card
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<script>
+
+/* =========================================
+   CARD SWIPE GAME
+========================================= */
+
+
+/* ANIMALS */
+
+const animals = [
+
+    {
+        emoji:"🦁",
+        name:"LION"
+    },
+
+    {
+        emoji:"🐯",
+        name:"TIGER"
+    },
+
+    {
+        emoji:"🐼",
+        name:"PANDA"
+    },
+
+    {
+        emoji:"🐶",
+        name:"DOG"
+    },
+
+    {
+        emoji:"🐱",
+        name:"CAT"
+    },
+
+    {
+        emoji:"🐵",
+        name:"MONKEY"
+    },
+
+    {
+        emoji:"🐘",
+        name:"ELEPHANT"
+    },
+
+    {
+        emoji:"🦊",
+        name:"FOX"
+    },
+
+    {
+        emoji:"🐻",
+        name:"BEAR"
+    },
+
+    {
+        emoji:"🐨",
+        name:"KOALA"
+    },
+
+    {
+        emoji:"🦒",
+        name:"GIRAFFE"
+    },
+
+    {
+        emoji:"🐸",
+        name:"FROG"
+    }
+
+];
+
+
+/* ELEMENTS */
+
+const card =
+    document.getElementById("animalCard");
+
+const emoji =
+    document.getElementById("animalEmoji");
+
+const animalName =
+    document.getElementById("animalName");
+
+
+/* GAME VARIABLES */
+
+let score = 0;
+
+let best =
+    Number(
+        localStorage.getItem(
+            "cardSwipeBest"
+        )
+    ) || 0;
+
+
+let coins =
+    Number(
+        localStorage.getItem(
+            "stackRushCoins"
+        )
+    ) || 0;
+
+
+let timeLeft = 60;
+
+let running = false;
+
+let timer = null;
+
+let startX = 0;
+
+let currentX = 0;
+
+let dragging = false;
+
+
+/* =========================================
+   RANDOM ANIMAL
+========================================= */
+
+function randomAnimal(){
+
+    const animal =
+        animals[
+            Math.floor(
+                Math.random() *
+                animals.length
+            )
+        ];
+
+    emoji.innerText =
+        animal.emoji;
+
+    animalName.innerText =
+        animal.name;
+
+}
+
+
+/* =========================================
+   RESET GAME
+========================================= */
+
+function resetGame(){
+
+    score = 0;
+
+    timeLeft = 60;
+
+    running = false;
+
+    clearInterval(timer);
+
+    card.style.transition =
+        "none";
+
+    card.style.transform =
+        "translateX(0) rotate(0deg)";
+
+    card.style.opacity =
+        "1";
+
+    randomAnimal();
+
+    updateUI();
+
+}
+
+
+/* =========================================
+   START GAME
+========================================= */
+
+function startGame(){
+
+    if(running){
+        return;
+    }
+
+
+    resetGame();
+
+    running = true;
+
+
+    document.getElementById(
+        "startButton"
+    ).innerText =
+        "SWIPE NOW";
+
+
+    timer =
+        setInterval(
+            function(){
+
+                timeLeft--;
+
+                updateUI();
+
+
+                if(timeLeft <= 0){
+
+                    finishGame();
+
+                }
+
+            },
+            1000
+        );
+
+}
+
+
+/* =========================================
+   FINISH GAME
+========================================= */
+
+function finishGame(){
+
+    running = false;
+
+    clearInterval(timer);
+
+
+    if(score > best){
+
+        best = score;
+
+        localStorage.setItem(
+            "cardSwipeBest",
+            best
+        );
+
+    }
+
+
+    /*
+       COMPLETE 60 SECOND GAME
+       REWARD +50 COINS
+    */
+
+    coins += 50;
+
+    localStorage.setItem(
+        "stackRushCoins",
+        coins
+    );
+
+
+    updateUI();
+
+
+    document.getElementById(
+        "startButton"
+    ).innerText =
+        "PLAY AGAIN";
+
+
+    card.style.transition =
+        "transform .3s ease";
+
+    card.style.transform =
+        "scale(1.05)";
+
+}
+
+
+/* =========================================
+   SWIPE CARD
+========================================= */
+
+function swipeCard(direction){
+
+    if(!running){
+        return;
+    }
+
+
+    score++;
+
+
+    if(score > best){
+
+        best = score;
+
+    }
+
+
+    const moveX =
+        direction === "left"
+        ? -500
+        : 500;
+
+
+    const rotate =
+        direction === "left"
+        ? -25
+        : 25;
+
+
+    card.style.transition =
+        "transform .25s ease, opacity .25s ease";
+
+
+    card.style.transform =
+        "translateX(" +
+        moveX +
+        "px) rotate(" +
+        rotate +
+        "deg)";
+
+
+    card.style.opacity =
+        "0";
+
+
+    setTimeout(
+
+        function(){
+
+            randomAnimal();
+
+            card.style.transition =
+                "none";
+
+            card.style.transform =
+                "translateX(0) rotate(0deg)";
+
+            card.style.opacity =
+                "1";
+
+        },
+
+        220
+
+    );
+
+
+    updateUI();
+
+}
+
+
+/* =========================================
+   MOUSE / TOUCH START
+========================================= */
+
+function pointerStart(event){
+
+    if(!running){
+        return;
+    }
+
+
+    dragging = true;
+
+
+    if(event.type === "touchstart"){
+
+        startX =
+            event.touches[0].clientX;
+
+    }else{
+
+        startX =
+            event.clientX;
+
+    }
+
+
+    currentX = startX;
+
+
+    card.style.transition =
+        "none";
+
+}
+
+
+/* =========================================
+   MOUSE / TOUCH MOVE
+========================================= */
+
+function pointerMove(event){
+
+    if(!dragging || !running){
+        return;
+    }
+
+
+    if(event.type === "touchmove"){
+
+        currentX =
+            event.touches[0].clientX;
+
+        event.preventDefault();
+
+    }else{
+
+        currentX =
+            event.clientX;
+
+    }
+
+
+    const difference =
+        currentX - startX;
+
+
+    card.style.transform =
+        "translateX(" +
+        difference +
+        "px) rotate(" +
+        difference / 12 +
+        "deg)";
+
+}
+
+
+/* =========================================
+   MOUSE / TOUCH END
+========================================= */
+
+function pointerEnd(){
+
+    if(!dragging || !running){
+        return;
+    }
+
+
+    dragging = false;
+
+
+    const difference =
+        currentX - startX;
+
+
+    /*
+       Minimum swipe distance
+    */
+
+    if(Math.abs(difference) >= 80){
+
+        if(difference < 0){
+
+            swipeCard("left");
+
+        }else{
+
+            swipeCard("right");
+
+        }
+
+    }else{
+
+        card.style.transition =
+            "transform .25s ease";
+
+        card.style.transform =
+            "translateX(0) rotate(0deg)";
+
+    }
+
+}
+
+
+/* =========================================
+   TOUCH EVENTS
+========================================= */
+
+card.addEventListener(
+    "touchstart",
+    pointerStart,
+    {
+        passive:false
+    }
+);
+
+
+card.addEventListener(
+    "touchmove",
+    pointerMove,
+    {
+        passive:false
+    }
+);
+
+
+card.addEventListener(
+    "touchend",
+    pointerEnd
+);
+
+
+/* =========================================
+   MOUSE EVENTS
+========================================= */
+
+card.addEventListener(
+    "mousedown",
+    pointerStart
+);
+
+
+document.addEventListener(
+    "mousemove",
+    pointerMove
+);
+
+
+document.addEventListener(
+    "mouseup",
+    pointerEnd
+);
+
+
+/* =========================================
+   KEYBOARD CONTROLS
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(!running){
+            return;
+        }
+
+
+        if(event.key === "ArrowLeft"){
+
+            swipeCard("left");
+
+        }
+
+
+        if(event.key === "ArrowRight"){
+
+            swipeCard("right");
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   UI
+========================================= */
+
+function updateUI(){
+
+    document.getElementById(
+        "time"
+    ).innerText =
+        timeLeft;
+
+
+    document.getElementById(
+        "score"
+    ).innerText =
+        score;
+
+
+    document.getElementById(
+        "coins"
+    ).innerText =
+        coins + " 🪙";
+
+
+    document.getElementById(
+        "heroBest"
+    ).innerText =
+        best;
+
+
+    document.getElementById(
+        "heroCoins"
+    ).innerText =
+        coins;
+
+
+    document.getElementById(
+        "heroCoins2"
+    ).innerText =
+        coins;
+
+}
+
+
+/* =========================================
+   INITIALIZE
+========================================= */
+
+resetGame();
+
+</script>
+
+
+</body>
+</html>

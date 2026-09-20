@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D City Bike Racing - wintask.in</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #0b091a; color: #fff; overflow: hidden; height: 100vh; }
+        
+        #canvas-container { width: 100vw; height: 100vh; display: block; }
+
+        /* UI Overlays */
+        .hud { position: absolute; top: 20px; left: 20px; font-size: 20px; font-weight: bold; background: rgba(0,0,0,0.7); padding: 10px 20px; border-radius: 12px; border: 2px solid #00ffcc; text-shadow: 0 0 10px #00ffcc; z-index: 10; }
+        .controls-info { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.7); padding: 10px 25px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); font-size: 14px; color: #aaa; text-align: center; z-index: 10; }
+        .home-btn { position: absolute; top: 20px; right: 20px; background: linear-gradient(45deg, #ff007f, #7928ca); color: #fff; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: bold; border: none; z-index: 10; transition: 0.3s; }
+        .home-btn:hover { transform: scale(1.05); }
+
+        /* Start / Game Over Screens */
+        .screen-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 8, 25, 0.92); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 20; text-align: center; padding: 20px; }
+        .screen-overlay h1 { font-size: 48px; color: #00ffcc; margin-bottom: 15px; text-shadow: 0 0 20px #00ffcc; }
+        .screen-overlay p { font-size: 18px; color: #ccc; margin-bottom: 25px; max-width: 600px; line-height: 1.5; }
+        .action-btn { background: linear-gradient(45deg, #ff007f, #7928ca); color: #fff; border: none; padding: 15px 40px; border-radius: 25px; font-size: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(255,0,127,0.5); }
+        .action-btn:hover { transform: scale(1.08); box-shadow: 0 0 25px #ff007f; }
+    </style>
+</head>
+<body>
+
+    <div class="hud" id="hudDisplay">Speed: 0 KM/H | Distance: 2000m</div>
+    <a href="games.html" class="home-btn">← Back to Games</a>
+
+    <div class="controls-info">
+        Controls: <b>W / Up Arrow</b> (Accelerate) | <b>A / D / Left / Right</b> (Steer) | <b>S / Down</b> (Brake)
+    </div>
+
+    <!-- Start Screen -->
+    <div id="startScreen" class="screen-overlay">
+        <h1>🌆 Cyber City Bike Solo Rush 3D</h1>
+        <p>Race through high-tech city streets with realistic buildings and trees along the road! High-speed physics and neon environment await you.</p>
+        <button class="action-btn" onclick="startGame()">Start Race 🚀</button>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameOverScreen" class="screen-overlay" style="display: none;">
+        <h1 id="resultTitle">Race Finished! 🎉</h1>
+        <p id="resultText">You successfully reached the end of the city!</p>
+        <button class="action-btn" onclick="restartGame()">Play Again 🔄</button>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <!-- Three.js Library CDN for 3D Graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        let scene, camera, renderer;
+        let playerBike;
+        let trackLength = 2000;
+        let gameActive = false;
+        let playerSpeed = 0;
+        let maxSpeed = 1.8;
+        let acceleration = 0.015;
+        let deceleration = 0.02;
+        let keys = { w: false, s: false, a: false, d: false };
+        let playerZ = 0;
+
+        function init3D() {
+            const container = document.getElementById('canvas-container');
+            
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x070514);
+            scene.fog = new THREE.FogExp2(0x070514, 0.012);
+
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            container.appendChild(renderer.domElement);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0x00ffcc, 0.8);
+            dirLight.position.set(50, 100, 50);
+            scene.add(dirLight);
+
+            buildCityEnvironment();
+            createPlayerBike();
+
+            window.addEventListener('resize', onWindowResize);
+            window.addEventListener('keydown', (e) => handleKey(e, true));
+            window.addEventListener('keyup', (e) => handleKey(e, false));
+        }
+
+        // Build 3D City Environment with Detailed Buildings & Trees instead of blocks
+        function buildCityEnvironment() {
+            // Road Ground
+            const roadGeo = new THREE.PlaneGeometry(30, trackLength + 200);
+            const roadMat = new THREE.MeshStandardMaterial({ color: 0x111118, roughness: 0.8 });
+            const road = new THREE.Mesh(roadGeo, roadMat);
+            road.rotation.x = -Math.PI / 2;
+            road.position.set(0, 0, -trackLength / 2);
+            scene.add(road);
+
+            // Glowing Center Lane Striping
+            for (let i = 0; i > -trackLength; i -= 20) {
+                const lineGeo = new THREE.BoxGeometry(0.4, 0.05, 8);
+                const lineMat = new THREE.MeshBasicMaterial({ color: 0x00ffcc });
+                const line = new THREE.Mesh(lineGeo, lineMat);
+                line.position.set(0, 0.02, i);
+                scene.add(line);
+            }
+
+            // Realistic Buildings and Trees along both sides of the road
+            const buildingMat = new THREE.MeshStandardMaterial({ color: 0x191435, roughness: 0.3 });
+            const windowMat = new THREE.MeshBasicMaterial({ color: 0x00ffcc });
+            const trunkMat = new THREE.MeshStandardMaterial({ color: 0x5c4033 });
+            const leavesMat = new THREE.MeshStandardMaterial({ color: 0x228b22, roughness: 0.9 });
+
+            for (let i = -20; i > -trackLength; i -= 40) {
+                // Left Side Building
+                let h1 = 50 + Math.random() * 50;
+                let buildingL = new THREE.Mesh(new THREE.BoxGeometry(22, h1, 30), buildingMat);
+                buildingL.position.set(-32, h1 / 2, i);
+                scene.add(buildingL);
+
+                // Left Side Tree
+                let trunkL = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.8, 5, 8), trunkMat);
+                trunkL.position.set(-18, 2.5, i + 10);
+                scene.add(trunkL);
+                let leavesL = new THREE.Mesh(new THREE.SphereGeometry(2.5, 8, 8), leavesMat);
+                leavesL.position.set(-18, 6, i + 10);
+                scene.add(leavesL);
+
+                // Right Side Building
+                let h2 = 50 + Math.random() * 50;
+                let buildingR = new THREE.Mesh(new THREE.BoxGeometry(22, h2, 30), buildingMat);
+                buildingR.position.set(32, h2 / 2, i);
+                scene.add(buildingR);
+
+                // Right Side Tree
+                let trunkR = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.8, 5, 8), trunkMat);
+                trunkR.position.set(18, 2.5, i + 10);
+                scene.add(trunkR);
+                let leavesR = new THREE.Mesh(new THREE.SphereGeometry(2.5, 8, 8), leavesMat);
+                leavesR.position.set(18, 6, i + 10);
+                scene.add(leavesR);
+            }
+        }
+
+        // Create Detailed 3D Player Bike
+        function createPlayerBike() {
+            playerBike = new THREE.Group();
+
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0xff007f, metalness: 0.8, roughness: 0.2 });
+            const darkMat = new THREE.MeshStandardMaterial({ color: 0x111111 });
+            const glassMat = new THREE.MeshBasicMaterial({ color: 0x00ffcc });
+
+            // Main Chassis
+            const frame = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.6, 2.2), bodyMat);
+            frame.position.y = 0.7;
+            playerBike.add(frame);
+
+            // Windshield
+            const shield = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.5, 0.8), glassMat);
+            shield.position.set(0, 1.1, 0.2);
+            shield.rotation.x = -0.3;
+            playerBike.add(shield);
+
+            // Wheels
+            const wheelGeo = new THREE.CylinderGeometry(0.5, 0.5, 0.4, 32);
+            wheelGeo.rotateZ(Math.PI / 2);
+
+            const frontWheel = new THREE.Mesh(wheelGeo, darkMat);
+            frontWheel.position.set(0, 0.5, 1.1);
+            playerBike.add(frontWheel);
+
+            const rearWheel = new THREE.Mesh(wheelGeo, darkMat);
+            rearWheel.position.set(0, 0.5, -1.1);
+            playerBike.add(rearWheel);
+
+            playerBike.position.set(0, 0, 0);
+            scene.add(playerBike);
+        }
+
+        function handleKey(e, isDown) {
+            if (e.key === 'w' || e.key === 'ArrowUp') keys.w = isDown;
+            if (e.key === 's' || e.key === 'ArrowDown') keys.s = isDown;
+            if (e.key === 'a' || e.key === 'ArrowLeft') keys.a = isDown;
+            if (e.key === 'd' || e.key === 'ArrowRight') keys.d = isDown;
+        }
+
+        function startGame() {
+            document.getElementById('startScreen').style.display = 'none';
+            gameActive = true;
+            animate();
+        }
+
+        function restartGame() {
+            location.reload();
+        }
+
+        function animate() {
+            if (!gameActive) return;
+
+            requestAnimationFrame(animate);
+
+            // Player Physics & Acceleration
+            if (keys.w) {
+                if (playerSpeed < maxSpeed) playerSpeed += acceleration;
+            } else if (keys.s) {
+                if (playerSpeed > 0) playerSpeed -= deceleration;
+            } else {
+                if (playerSpeed > 0) playerSpeed -= deceleration * 0.5;
+            }
+
+            playerZ -= playerSpeed;
+            playerBike.position.z = playerZ;
+
+            // Steering Left / Right within road boundaries (-12 to 12)
+            if (keys.a && playerBike.position.x > -12) {
+                playerBike.position.x -= 0.25;
+                playerBike.rotation.y = 0.3;
+            } else if (keys.d && playerBike.position.x < 12) {
+                playerBike.position.x += 0.25;
+                playerBike.rotation.y = -0.3;
+            } else {
+                playerBike.rotation.y *= 0.8; // Return to center tilt
+            }
+
+            // Camera follow behind player bike
+            camera.position.set(playerBike.position.x * 0.5, playerBike.position.y + 3.5, playerBike.position.z + 7);
+            camera.lookAt(playerBike.position.x, playerBike.position.y + 1, playerBike.position.z - 5);
+
+            // HUD Update
+            let displaySpeed = Math.floor(playerSpeed * 110);
+            let distanceLeft = Math.max(0, Math.floor(trackLength + playerZ));
+            document.getElementById('hudDisplay').innerText = `Speed: ${displaySpeed} KM/H | Distance: ${distanceLeft}m`;
+
+            // Check Finish Line (-trackLength)
+            if (playerZ <= -trackLength) {
+                gameActive = false;
+                document.getElementById('resultTitle').innerText = '🏆 Amazing Ride! Finish Line Reached! 🎉';
+                document.getElementById('resultText').innerText = 'You successfully navigated through the cyber city with beautiful trees and buildings!';
+                document.getElementById('gameOverScreen').style.display = 'flex';
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        window.onload = init3D;
+    </script>
+</body>
+</html>

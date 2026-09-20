@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mystery of the Space Needle Secret</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #004d80;
+            text-align: center;
+        }
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .dashboard {
+            display: flex;
+            justify-content: space-around;
+            background: #eef2f7;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .claim-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        #claimBtn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        #claimBtn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #claimBtn:hover:not(:disabled) {
+            background-color: #218838;
+        }
+        .history-box {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .history-item {
+            font-size: 14px;
+            color: #555;
+            border-bottom: 1px solid #eee;
+            padding: 5px 0;
+        }
+        .nav-btn-container {
+            margin-top: 25px;
+        }
+        .back-btn {
+            background: transparent;
+            color: #004d80;
+            border: 2px solid #004d80;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover {
+            background: rgba(0, 77, 128, 0.1);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The Mystery of the Space Needle Secret</h1>
+        <h2>Story Summary</h2>
+        
+        <p>Living in Seattle, two school friends Lucas and Harper are walking past the Space Needle after school when Lucas's sneaker scrapes against an old mysterious brass box hidden under a pile of leaves. It has an engraved riddle: <em>"Where the needles touch the sky, look below to find what money cannot buy."</em> Using information from their recent school project about the 1962 World's Fair, Harper figures out the combination and unlocks the box.</p>
+        
+        <p>Inside the box, instead of gold or coins, they find a vintage Polaroid camera, a notebook filled with adventurous notes from students dating back to 1985, and an instruction card. The instructions require them to take a photo of the Space Needle at sunset, write their future dreams in the notebook, and re-hide the box for the next finders. With a beautiful sunset backdrop, Lucas takes the photo, marking the beginning of an exciting adventure.</p>
+        
+        <!-- User Dashboard (Score & Profile Info) -->
+        <div class="dashboard">
+            <div>My Profile Score: <span id="userScore">0</span> Points</div>
+            <div>Timer Status: <span id="timerStatus">Ready to Claim</span></div>
+        </div>
+
+        <!-- Claim Button Section -->
+        <div class="claim-section">
+            <button id="claimBtn" onclick="claimReward()">Claim 5 Score</button>
+            <p id="cooldownMsg" style="color: #d9534f; font-size: 14px; margin-top: 10px;"></p>
+        </div>
+
+        <!-- Claim History Section -->
+        <div>
+            <h3>Claim History</h3>
+            <div class="history-box" id="historyList">
+                <div class="history-item">No claims yet.</div>
+            </div>
+        </div>
+
+        <!-- Back Button Section -->
+        <div class="nav-btn-container">
+            <a href="story7.html" class="back-btn">← Back</a>
+        </div>
+    </div>
+
+    <script>
+        // Load data on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            updateUI();
+            checkCooldown();
+            setInterval(checkCooldown, 1000); // Check timer every second
+        });
+
+        function getStoredData() {
+            let score = parseInt(localStorage.getItem('userScore')) || 0;
+            let history = JSON.parse(localStorage.getItem('claimHistory_spaceNeedleSummary')) || [];
+            let lastClaimTime = parseInt(localStorage.getItem('lastClaimTime_spaceNeedleSummary')) || 0;
+            return { score, history, lastClaimTime };
+        }
+
+        function updateUI() {
+            let data = getStoredData();
+            document.getElementById('userScore').innerText = data.score;
+            
+            let historyContainer = document.getElementById('historyList');
+            if (data.history.length === 0) {
+                historyContainer.innerHTML = '<div class="history-item">No claims yet.</div>';
+            } else {
+                historyContainer.innerHTML = data.history.map(item => `<div class="history-item">✅ Claimed 5 Score (${item.title}) on ${item.date}</div>`).join('');
+            }
+        }
+
+        function claimReward() {
+            let data = getStoredData();
+            let currentTime = new Date().getTime();
+            let cooldownTime = 60 * 60 * 1000; // 1 hour in milliseconds
+            
+            if (currentTime - data.lastClaimTime < cooldownTime) {
+                alert("You have already claimed the reward! Please wait for 1 hour to complete.");
+                return;
+            }
+
+            // Increase score by 5
+            data.score += 5;
+            data.lastClaimTime = currentTime;
+            
+            // Add current time to history
+            let newClaimEntry = {
+                title: "The Mystery of the Space Needle Secret",
+                score: 5,
+                date: new Date().toLocaleString()
+            };
+            data.history.unshift(newClaimEntry); // New history appears at the top
+
+            // Save to localStorage
+            localStorage.setItem('userScore', data.score);
+            localStorage.setItem('lastClaimTime_spaceNeedleSummary', data.lastClaimTime);
+            localStorage.setItem('claimHistory_spaceNeedleSummary', JSON.stringify(data.history));
+
+            updateUI();
+            checkCooldown();
+            alert("Congratulations! 5 score has been successfully added.");
+        }
+
+        function checkCooldown() {
+            let data = getStoredData();
+            let currentTime = new Date().getTime();
+            let cooldownTime = 60 * 60 * 1000; // 1 hour
+            let timeLeft = cooldownTime - (currentTime - data.lastClaimTime);
+            let btn = document.getElementById('claimBtn');
+            let msg = document.getElementById('cooldownMsg');
+            let timerStatus = document.getElementById('timerStatus');
+
+            if (timeLeft > 0) {
+                btn.disabled = true;
+                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                timerStatus.innerText = `Wait ${minutes}m ${seconds}s`;
+                msg.innerText = `Please wait ${minutes} minutes and ${seconds} seconds to claim again.`;
+            } else {
+                btn.disabled = false;
+                timerStatus.innerText = "Ready to Claim";
+                msg.innerText = "";
+            }
+        }
+    </script>
+</body>
+</html>

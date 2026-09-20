@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Summary & Reward - wintask.in</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .story-wrapper {
+            background: rgba(22, 33, 62, 0.95);
+            max-width: 900px;
+            width: 100%;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            border: 2px solid #00ffcc;
+        }
+        h1 {
+            text-align: center;
+            font-size: 34px;
+            color: #00ffcc;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+        }
+        .summary-box {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .summary-box h3 {
+            color: #00ffcc;
+            font-size: 22px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 255, 204, 0.2);
+            padding-bottom: 8px;
+        }
+        .summary-box p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #d0d5e0;
+            margin-bottom: 15px;
+        }
+        .reward-section {
+            text-align: center;
+            background: rgba(25, 30, 50, 0.9);
+            border: 2px dashed #ff007f;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+        .reward-section h4 {
+            font-size: 20px;
+            color: #ff007f;
+            margin-bottom: 10px;
+        }
+        .reward-section p {
+            font-size: 15px;
+            color: #a0a5b0;
+            margin-bottom: 15px;
+        }
+        .action-btn {
+            background: linear-gradient(45deg, #ff007f, #00ffcc);
+            color: #000;
+            padding: 12px 30px;
+            font-size: 17px;
+            font-weight: 800;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .action-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+        .action-btn:disabled {
+            background: #4a5568;
+            color: #a0aec0;
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.6;
+        }
+        #claimMessage {
+            margin-top: 15px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .nav-btn {
+            background: transparent;
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover {
+            background: rgba(0, 255, 204, 0.1);
+            transform: scale(1.05);
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 14px;
+            color: #a0a5b0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="story-wrapper">
+        <h1>Story Summary & Rewards</h1>
+        
+        <!-- Summary Section -->
+        <div class="summary-box">
+            <h3>📖 Story Summary: The Great Miller Family Wedding Debacle</h3>
+            <p><strong>Overview:</strong> This comedic story revolves around the Miller family in suburban Ohio preparing for the wedding of Arthur and Chloe. What was supposed to be a simple backyard ceremony turns into total chaos due to overbearing and eccentric family members.</p>
+            <p><strong>Key Highlights:</strong> Martha (Arthur's mother) tries to run the event using color-coded binders; Leo (the tech-savvy brother) attempts to deliver rings via drones while avoiding a dog allergic to them; Uncle Bob builds a dangerously flimsy wooden arch with duct tape; and Aunt Clara bakes cardboard-like vegan cupcakes. Amidst all the flying cupcakes, barking dogs, and structural collapses, Arthur and Chloe embrace the utter madness with laughter, realizing their love can survive anything.</p>
+        </div>
+        <!-- Reward Claim Section -->
+        <div class="reward-section">
+            <h4>🎁 Earn Your Reward!</h4>
+            <p>Claim your <strong>+5 Score</strong> for completing Story 4 successfully.</p>
+            <button type="button" class="action-btn" id="claimBtn" onclick="claimReward()">Claim +5 Score</button>
+            <div id="claimMessage"></div>
+        </div>
+        <!-- Navigation Buttons -->
+        <div class="btn-group">
+            <a href="story4.html" class="nav-btn">← Back to Story</a>
+        </div>
+        <div class="footer-note">
+            &copy; 2026 Wintask Story Collection. All rights reserved.
+        </div>
+    </div>
+    <script>
+        // Load existing scores and history across multiple unified keys so My Profile and other pages sync seamlessly
+        let currentScore = parseInt(localStorage.getItem('wintask_score')) || parseInt(localStorage.getItem('userScore')) || parseInt(localStorage.getItem('user_profile_score')) || 0;
+        let claimHistory = JSON.parse(localStorage.getItem('wintask_history')) || JSON.parse(localStorage.getItem('claimHistory')) || [];
+        let hasClaimed = localStorage.getItem('story4_claimed') === 'true';
+        window.onload = function() {
+            if (hasClaimed) {
+                const btn = document.getElementById("claimBtn");
+                btn.disabled = true;
+                btn.innerText = "Already Claimed";
+                document.getElementById("claimMessage").style.color = "#00ffcc";
+                document.getElementById("claimMessage").innerText = "You have already claimed the +5 reward for this story!";
+            }
+        };
+        function claimReward() {
+            if (hasClaimed) return;
+            
+            currentScore += 5;
+            hasClaimed = true;
+            
+            const timestamp = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            const newEntry = {
+                title: "Story 4: The Great Miller Family Wedding",
+                points: 5,
+                time: timestamp
+            };
+            claimHistory.unshift(newEntry);
+            // Save to all unified keys so My Profile page reads the updated data accurately
+            localStorage.setItem('wintask_score', currentScore);
+            localStorage.setItem('userScore', currentScore);
+            localStorage.setItem('user_profile_score', currentScore);
+            
+            localStorage.setItem('wintask_history', JSON.stringify(claimHistory));
+            localStorage.setItem('claimHistory', JSON.stringify(claimHistory));
+            localStorage.setItem('story4_claimed', 'true');
+            // Update UI
+            const btn = document.getElementById("claimBtn");
+            btn.disabled = true;
+            btn.innerText = "Claimed Successfully";
+            const msg = document.getElementById("claimMessage");
+            msg.style.color = "#00ffcc";
+            msg.innerText = "🎉 Success! +5 points added to your profile score.";
+        }
+    </script>
+</body>
+</html>

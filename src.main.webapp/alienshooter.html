@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alien Shooter - wintask.in</title>
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+body{
+    font-family:"Segoe UI",Arial,sans-serif;
+    background:
+        radial-gradient(circle at 90% 10%,#21184f,transparent 30%),
+        linear-gradient(135deg,#050816,#0b1224);
+    color:white;
+    min-height:100vh;
+    scroll-behavior: smooth;
+}
+/* NAVBAR */
+.navbar{
+    height:75px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 45px;
+    background:rgba(3,7,18,.95);
+    border-bottom:1px solid #263451;
+}
+.logo{
+    color:#00ffcc;
+    font-size:26px;
+    font-weight:800;
+    text-decoration:none;
+}
+.nav-buttons{
+    display:flex;
+    gap:12px;
+}
+.nav-btn{
+    text-decoration:none;
+    color:white;
+    background:#111a30;
+    border:1px solid #33456b;
+    padding:10px 20px;
+    border-radius:20px;
+    font-weight:700;
+}
+/* HERO */
+.hero{
+    max-width:1250px;
+    margin:auto;
+    padding:65px 30px 45px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    align-items:center;
+}
+.hero-small{
+    color:#8ba8ff;
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:2px;
+    margin-bottom:20px;
+}
+.hero h1{
+    font-size:70px;
+    line-height:.95;
+    font-weight:900;
+    letter-spacing:-3px;
+}
+.hero h1 span{
+    display:block;
+    background:linear-gradient(90deg,#5b8cff,#a46cff,#ff4fd8);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+.hero-text{
+    color:#9caac5;
+    font-size:20px;
+    line-height:1.7;
+    margin:25px 0;
+}
+.play-btn{
+    display:inline-block;
+    text-decoration:none;
+    color:white;
+    background:linear-gradient(135deg,#6675ff,#9b5cff);
+    padding:16px 27px;
+    border-radius:14px;
+    font-weight:900;
+}
+/* PREVIEW */
+.preview{
+    min-height:390px;
+    border:1px solid #293858;
+    border-radius:28px;
+    background:#111a30;
+    padding:30px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+.preview-top{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    color:#aab7d1;
+    font-weight:800;
+    margin-bottom:20px;
+}
+.alien{
+    font-size:110px;
+    animation:floatAlien 2s ease-in-out infinite;
+}
+@keyframes floatAlien{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-15px);
+    }
+}
+.preview-label{
+    margin-top:20px;
+    color:#9caac5;
+    letter-spacing:3px;
+}
+/* STATS */
+.hero-stats{
+    max-width:1250px;
+    margin:0 auto 50px;
+    padding:0 30px;
+    display:flex;
+    gap:60px;
+}
+.hero-stat strong{
+    display:block;
+    font-size:30px;
+}
+.hero-stat span{
+    color:#8190aa;
+    font-size:13px;
+    letter-spacing:1px;
+}
+
+/* ==========================================
+   GAME INFO SECTION (ADHI FATK INFORMATION)
+========================================== */
+.game-info-container {
+    max-width: 1000px;
+    margin: 50px auto 30px;
+    padding: 0 30px;
+    text-align: center;
+}
+
+.info-box {
+    background: #11192d;
+    border: 1px solid #2c3b5c;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: left;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    margin-bottom: 30px;
+}
+
+.info-box h2 {
+    font-size: 28px;
+    color: #00ffcc;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-box p {
+    color: #b0c4de;
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.info-box p strong {
+    color: #ffffff;
+}
+
+.main-play-btn {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    background: linear-gradient(135deg, #6675ff, #9b5cff);
+    padding: 18px 45px;
+    border-radius: 14px;
+    font-size: 20px;
+    font-weight: 900;
+    box-shadow: 0 0 25px rgba(102, 117, 255, 0.4);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.main-play-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(155, 92, 255, 0.7);
+}
+
+/* ==========================================
+   GAME SECTION (MG KHALI GAME CHA PAGE)
+========================================== */
+.game-section{
+    max-width:1000px;
+    margin:auto;
+    padding:50px 30px 80px;
+}
+.game-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+}
+.game-title h2{
+    font-size:32px;
+}
+.stats{
+    display:flex;
+    gap:12px;
+}
+.stat{
+    background:#111a30;
+    border:1px solid #2d3d60;
+    border-radius:12px;
+    padding:10px 16px;
+    min-width:80px;
+    text-align:center;
+}
+.stat span{
+    display:block;
+    color:#9caac5;
+    font-size:12px;
+}
+.stat strong{
+    font-size:18px;
+}
+
+.game-card{
+    background:#091122;
+    border:1px solid #293858;
+    border-radius:20px;
+    padding:15px;
+    margin-bottom:25px;
+}
+#gameCanvas{
+    width:100%;
+    height:550px;
+    display:block;
+    background:
+        radial-gradient(circle at 50% 30%,#18264a,transparent 35%),
+        #050a17;
+    border-radius:14px;
+    cursor:crosshair;
+}
+
+.start-btn{
+    width:100%;
+    margin-top:15px;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,#6675ff,#9b5cff);
+    color:white;
+    font-size:18px;
+    font-weight:800;
+    cursor:pointer;
+}
+.start-btn:disabled {
+    opacity: 0.5;
+    background: #2a2f3d;
+    cursor: not-allowed;
+}
+
+/* HOURLY CHECK-IN ZONE (BELOW GAME) */
+.horror-checkin-banner {
+    background: linear-gradient(180deg, #120508 0%, #080304 100%);
+    border: 2px solid #ff2a2a;
+    box-shadow: 0 0 25px rgba(255, 42, 42, 0.35);
+    border-radius: 16px;
+    padding: 22px;
+    width: 100%;
+}
+
+.horror-checkin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.horror-title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.horror-title-group h3 {
+    color: #ff4d4d;
+    font-size: 16px;
+    font-weight: 800;
+    text-shadow: 0 0 10px rgba(255, 77, 77, 0.4);
+}
+
+.streak-badge {
+    background: rgba(255, 120, 0, 0.15);
+    border: 1px solid #ff7800;
+    color: #ff9f43;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.horror-desc {
+    color: #bfa5a8;
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.horror-desc span {
+    color: #ff4d4d;
+    font-weight: 700;
+}
+
+.horror-checkin-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.horror-checkin-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #ff5e4d, #d93829);
+    box-shadow: 0 0 22px rgba(255, 94, 77, 0.7);
+}
+
+.horror-checkin-btn:disabled {
+    opacity: 0.5;
+    background: #3a1c20;
+    border: 1px solid #5a2c32;
+    color: #a8787c;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+    .hero{
+        grid-template-columns:1fr;
+    }
+    .hero h1{
+        font-size:55px;
+    }
+    .game-title{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+}
+@media(max-width:600px){
+    .navbar{
+        padding:0 15px;
+    }
+    .hero{
+        padding:45px 20px;
+    }
+    .hero h1{
+        font-size:45px;
+    }
+    .game-info-container, .game-section{
+        padding:20px 15px;
+    }
+    #gameCanvas{
+        height:450px;
+    }
+    .stats{
+        flex-wrap:wrap;
+    }
+}
+</style>
+</head>
+<body>
+<header class="navbar">
+    <a href="games.html" class="logo">
+        🎮 wintask.in
+    </a>
+    <div class="nav-buttons">
+        <a href="games.html" class="nav-btn">
+            ← Games
+        </a>
+        <a href="index.html" class="nav-btn">
+            Home
+        </a>
+    </div>
+</header>
+
+<section class="hero">
+    <div>
+        <div class="hero-small">
+            👾 ARCADE • FAST • FUN
+        </div>
+        <h1>
+            Defend your
+            <span>planet.</span>
+            Beat your
+            <span>score.</span>
+        </h1>
+        <p class="hero-text">
+            Shoot the incoming cartoon aliens,
+            collect coins and survive as long as possible.
+        </p>
+        <a href="#gameInfo" class="play-btn">
+            PLAY NOW →
+        </a>
+    </div>
+    <div class="preview">
+        <div class="preview-top">
+            <span>ALIEN SHOOTER</span>
+            <span>🪙 <b id="heroCoins">0</b></span>
+        </div>
+        <div class="alien">
+            👾
+        </div>
+        <div class="preview-label">
+            ALIEN INVASION
+        </div>
+    </div>
+</section>
+
+<div class="hero-stats">
+    <div class="hero-stat">
+        <strong>1,248</strong>
+        <span>PLAYERS</span>
+    </div>
+    <div class="hero-stat">
+        <strong id="heroBest">0</strong>
+        <span>YOUR BEST</span>
+    </div>
+    <div class="hero-stat">
+        <strong id="heroCoins2">0</strong>
+        <span>YOUR COINS</span>
+    </div>
+</div>
+
+<!-- 1. ADHI FATK GAME INFORMATION & PLAY NOW BUTTON -->
+<div class="game-info-container" id="gameInfo">
+    <div class="info-box">
+        <h2>👾 Alien Shooter Rules & Info</h2>
+        <p><strong>Rules:</strong> Alien Shooter is a fast-paced arcade defense game. Cartoon aliens appear from the top of the screen and descend toward your planet. Shoot them before they reach the bottom to protect your lives and score points.</p>
+        <p><strong>Controls:</strong> On desktop, click an alien with your mouse/cursor to shoot it. On mobile, tap directly on the incoming aliens to destroy them.</p>
+        <p><strong>Tips:</strong> Stay focused and react quickly as the aliens speed up over time. Keep your aim steady to maintain your streak and earn extra coins!</p>
+    </div>
+    <a href="#alienGame" class="main-play-btn" id="scrollToGameBtn">
+        ▶ PLAY NOW
+    </a>
+</div>
+
+<!-- 2. MG KHALI GAME CHA PAGE (CANVAS & CHECK-IN) -->
+<section class="game-section" id="alienGame">
+    <div class="game-title">
+        <h2>
+            👾 Alien Shooter Game
+        </h2>
+        <div class="stats">
+            <div class="stat">
+                <span>Score</span>
+                <strong id="score">0</strong>
+            </div>
+            <div class="stat">
+                <span>Best</span>
+                <strong id="best">0</strong>
+            </div>
+            <div class="stat">
+                <span>Lives</span>
+                <strong id="lives">❤️ 3</strong>
+            </div>
+            <div class="stat">
+                <span>Coins</span>
+                <strong id="coins">0 🪙</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-card">
+        <canvas id="gameCanvas"></canvas>
+        <button class="start-btn" id="startButton" disabled>
+            🔒 COMPLETE CHECK-IN TO PLAY
+        </button>
+    </div>
+
+    <!-- HOURLY CHECK-IN ZONE (BELOW GAME) -->
+    <div class="horror-checkin-banner">
+        <div class="horror-checkin-header">
+            <div class="horror-title-group">
+                <span>🎁</span>
+                <h3>Alien Hourly Check-In Zone</h3>
+            </div>
+            <div class="streak-badge" id="streakBadge">
+                🔥 Streak: <span id="streakCount">1</span> Win
+            </div>
+        </div>
+        <p class="horror-desc">
+            First complete your hourly check-in to unlock <span>+20 Alien Bonus Coins</span> and activate the Game Start button!
+        </p>
+        <button class="horror-checkin-btn" id="checkInButton">
+            CLAIM +20 COINS
+        </button>
+    </div>
+</section>
+
+<script>
+/* ==========================================
+   CANVAS SETUP
+========================================== */
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+function resizeCanvas() {
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+/* ==========================================
+   GAME VARIABLES
+========================================== */
+let score = 0;
+let best = Number(localStorage.getItem("alienShooterBest")) || 0;
+let coins = Number(localStorage.getItem("alienShooterCoins")) || 0;
+let streak = Number(localStorage.getItem("alienStreak")) || 1;
+let lives = 3;
+let isPlaying = false;
+let aliens = [];
+let spawnTimer = 0;
+let spawnInterval = 60;
+let gameAnimationId = null;
+
+// UI Elements
+const scoreEl = document.getElementById("score");
+const bestEl = document.getElementById("best");
+const livesEl = document.getElementById("lives");
+const coinsEl = document.getElementById("coins");
+const heroCoinsEl = document.getElementById("heroCoins");
+const heroCoins2El = document.getElementById("heroCoins2");
+const heroBestEl = document.getElementById("heroBest");
+const startButton = document.getElementById("startButton");
+const checkInButton = document.getElementById("checkInButton");
+const streakCountEl = document.getElementById("streakCount");
+const scrollToGameBtn = document.getElementById("scrollToGameBtn");
+
+bestEl.textContent = best;
+coinsEl.textContent = coins + " 🪙";
+heroCoinsEl.textContent = coins;
+heroCoins2El.textContent = coins;
+heroBestEl.textContent = best;
+streakCountEl.textContent = streak;
+
+// Smooth scroll to game canvas when clicking Play Now
+scrollToGameBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    document.getElementById("alienGame").scrollIntoView({ behavior: 'smooth' });
+});
+
+/* ==========================================
+   1-HOUR ALIEN CHECK-IN SYSTEM
+========================================== */
+const CHECKIN_COOLDOWN = 60 * 60 * 1000; // 1 hour
+
+function updateCheckInStatus() {
+    const lastCheckIn = Number(localStorage.getItem("alienLastCheckIn")) || 0;
+    const now = Date.now();
+    const elapsed = now - lastCheckIn;
+
+    if (elapsed < CHECKIN_COOLDOWN) {
+        const remaining = CHECKIN_COOLDOWN - elapsed;
+        const minutes = Math.floor((remaining / (1000 * 60)) % 60);
+        const seconds = Math.floor((remaining / 1000) % 60);
+        
+        checkInButton.textContent = `⏳ Check-in in ${minutes}m ${seconds}s`;
+        checkInButton.disabled = true;
+        
+        if (!isPlaying) {
+            startButton.disabled = false;
+            startButton.textContent = "START GAME";
+        }
+    } else {
+        checkInButton.textContent = "CLAIM +20 COINS";
+        checkInButton.disabled = false;
+        
+        if (!localStorage.getItem("alienLastCheckIn")) {
+            startButton.disabled = true;
+            startButton.textContent = "🔒 COMPLETE CHECK-IN TO PLAY";
+        }
+    }
+}
+
+setInterval(updateCheckInStatus, 1000);
+updateCheckInStatus();
+
+checkInButton.addEventListener("click", () => {
+    const lastCheckIn = Number(localStorage.getItem("alienLastCheckIn")) || 0;
+    const now = Date.now();
+
+    if (now - lastCheckIn >= CHECKIN_COOLDOWN) {
+        coins += 20;
+        streak += 1;
+        localStorage.setItem("alienShooterCoins", coins);
+        localStorage.setItem("alienLastCheckIn", now);
+        localStorage.setItem("alienStreak", streak);
+        
+        streakCountEl.textContent = streak;
+        updateUI();
+        updateCheckInStatus();
+        
+        startButton.disabled = false;
+        startButton.textContent = "START GAME";
+        
+        alert("🎉 Success! Alien Check-In complete. +20 Coins added. Game is now Unlocked!");
+    }
+});
+
+/* ==========================================
+   ALIEN CLASS
+========================================== */
+class Alien {
+    constructor() {
+        this.radius = 32;
+        this.x = Math.random() * (canvas.width - this.radius * 2) + this.radius;
+        this.y = -this.radius;
+        this.speed = 1.5 + Math.random() * 2 + (score * 0.03);
+        
+        const palettes = [
+            { body: "#00ffcc", glow: "#00ffff", eye: "#0a0f1d", antenna: "#ff007f" },
+            { body: "#ff007f", glow: "#ff4fd8", eye: "#050816", antenna: "#00ffcc" },
+            { body: "#a46cff", glow: "#b583ff", eye: "#080c18", antenna: "#ffcc00" },
+            { body: "#ffcc00", glow: "#ffea75", eye: "#0a0f1d", antenna: "#00ffcc" }
+        ];
+        this.color = palettes[Math.floor(Math.random() * palettes.length)];
+        this.wobble = Math.random() * Math.PI * 2;
+    }
+    update() {
+        this.y += this.speed;
+        this.wobble += 0.05;
+        this.x += Math.sin(this.wobble) * 0.8;
+    }
+    draw() {
+        ctx.save();
+        ctx.shadowColor = this.color.glow;
+        ctx.shadowBlur = 20;
+        ctx.strokeStyle = this.color.body;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(this.x - 12, this.y - 18);
+        ctx.lineTo(this.x - 22, this.y - 35);
+        ctx.moveTo(this.x + 12, this.y - 18);
+        ctx.lineTo(this.x + 22, this.y - 35);
+        ctx.stroke();
+        ctx.fillStyle = this.color.antenna;
+        ctx.beginPath();
+        ctx.arc(this.x - 22, this.y - 35, 5, 0, Math.PI * 2);
+        ctx.arc(this.x + 22, this.y - 35, 5, 0, Math.PI * 2);
+        ctx.fill();
+        let gradient = ctx.createRadialGradient(this.x, this.y - 5, 5, this.x, this.y, this.radius);
+        gradient.addColorStop(0, "#ffffff");
+        gradient.addColorStop(0.4, this.color.body);
+        gradient.addColorStop(1, "#050816");
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius * 0.85, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = this.color.eye;
+        ctx.beginPath();
+        ctx.ellipse(this.x - 9, this.y - 2, 6, 11, 0, 0, Math.PI * 2);
+        ctx.ellipse(this.x + 9, this.y - 2, 6, 11, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(this.x - 11, this.y - 5, 2, 0, Math.PI * 2);
+        ctx.arc(this.x + 7, this.y - 5, 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = this.color.eye;
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y + 8, 8, 0, Math.PI);
+        ctx.stroke();
+        ctx.restore();
+    }
+}
+
+/* ==========================================
+   GAME CONTROL FUNCTIONS
+========================================== */
+function startGame() {
+    score = 0;
+    lives = 3;
+    aliens = [];
+    spawnTimer = 0;
+    isPlaying = true;
+    startButton.textContent = "GAME RUNNING...";
+    startButton.style.opacity = "0.7";
+    
+    updateUI();
+    
+    if (gameAnimationId) cancelAnimationFrame(gameAnimationId);
+    gameLoop();
+}
+
+function gameOver() {
+    isPlaying = false;
+    startButton.textContent = "PLAY AGAIN";
+    startButton.style.opacity = "1";
+
+    if (score > best) {
+        best = score;
+        localStorage.setItem("alienShooterBest", best);
+        bestEl.textContent = best;
+        heroBestEl.textContent = best;
+    }
+}
+
+function updateUI() {
+    scoreEl.textContent = score;
+    livesEl.textContent = "❤️ " + lives;
+    coinsEl.textContent = coins + " 🪙";
+    heroCoinsEl.textContent = coins;
+    heroCoins2El.textContent = coins;
+}
+
+function gameLoop() {
+    if (!isPlaying) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    spawnTimer++;
+    if (spawnTimer >= Math.max(25, spawnInterval - Math.floor(score / 5))) {
+        aliens.push(new Alien());
+        spawnTimer = 0;
+    }
+
+    for (let i = aliens.length - 1; i >= 0; i--) {
+        let alien = aliens[i];
+        alien.update();
+        alien.draw();
+
+        if (alien.y - alien.radius > canvas.height) {
+            aliens.splice(i, 1);
+            lives--;
+            updateUI();
+            if (lives <= 0) {
+                gameOver();
+                return;
+            }
+        }
+    }
+
+    gameAnimationId = requestAnimationFrame(gameLoop);
+}
+
+/* ==========================================
+   CLICK / TAP TO SHOOT
+========================================== */
+canvas.addEventListener("pointerdown", (e) => {
+    if (!isPlaying) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
+
+    for (let i = aliens.length - 1; i >= 0; i--) {
+        let alien = aliens[i];
+        let distX = clickX - alien.x;
+        let distY = clickY - alien.y;
+        let distance = Math.sqrt(distX * distX + distY * distY);
+
+        if (distance <= alien.radius + 10) {
+            aliens.splice(i, 1);
+            score++;
+            
+            if (score % 10 === 0) {
+                coins += 5;
+                localStorage.setItem("alienShooterCoins", coins);
+            }
+            
+            updateUI();
+            break;
+        }
+    }
+});
+
+startButton.addEventListener("click", () => {
+    if (!isPlaying && !startButton.disabled) {
+        startGame();
+    }
+});
+</script>
+</body>
+</html>

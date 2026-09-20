@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Score</title>
+    <style>
+        /* बेस डिझाईन */
+        body {
+            background-color: #050505;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* कार्ड डिझाईन */
+        .checkin-card {
+            background: linear-gradient(145deg, #1a0505, #0a0000);
+            border: 2px solid #ef4444;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.3), inset 0 0 15px rgba(239, 68, 68, 0.1);
+        }
+
+        /* टायटल */
+        .checkin-title {
+            font-size: 24px;
+            color: #ef4444;
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+        }
+
+        /* मेसेज टेक्स्ट */
+        #bonusMsg {
+            font-size: 16px;
+            color: #d1d5db;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        #bonusMsg b {
+            color: #fca5a5;
+            font-size: 18px;
+        }
+
+        /* क्लेम बटण */
+        .claim-btn-cyber {
+            background: linear-gradient(45deg, #991b1b, #dc2626);
+            color: #fff;
+            border: 2px solid #ff7979;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 900;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            width: 100%;
+        }
+        .claim-btn-cyber:hover:not(:disabled) {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #dc2626, #b91c1c);
+            box-shadow: 0 0 30px #ef4444;
+        }
+        .claim-btn-cyber:disabled {
+            background: #2a2a2a;
+            color: #666;
+            border-color: #444;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* बॅक बटण */
+        .back-btn {
+            margin-top: 25px;
+            background: transparent;
+            color: #fca5a5;
+            border: 2px solid #991b1b;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .back-btn:hover {
+            background: #991b1b;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- क्लेम कार्ड -->
+    <div class="checkin-card">
+        <div class="checkin-title">🎁 Hourly Check-In Zone</div>
+        <p id="bonusMsg">Visit every 1 Hour to claim your <b>+5 Horror Score</b> instantly!</p>
+        <button id="claimBtn" class="claim-btn-cyber" onclick="claimDailyBonus()">Claim +5 Score</button>
+    </div>
+
+    <!-- बॅक बटण -->
+    <button class="back-btn" onclick="window.location.href='village.html'">⬅ Back to Village</button>
+
+    <script>
+        // १ तासाचा लॉजिक
+        let villageStreak = parseInt(localStorage.getItem('village_streak') || 1);
+
+        function checkVillageBonusStatus() {
+            let lastClaimTime = localStorage.getItem('village_last_claim');
+            let currentTime = new Date().getTime();
+            let oneHour = 60 * 60 * 1000; // १ तास (६० मिनिटे)
+            let btn = document.getElementById("claimBtn");
+            let msg = document.getElementById("bonusMsg");
+            
+            if (!btn || !msg) return;
+
+            if (lastClaimTime) {
+                let timeDifference = currentTime - parseInt(lastClaimTime);
+                if (timeDifference < oneHour) {
+                    let millisLeft = oneHour - timeDifference;
+                    let minutesLeft = Math.floor((millisLeft % (60 * 60 * 1000)) / (60 * 1000));
+                    let secondsLeft = Math.floor((millisLeft % (60 * 1000)) / 1000);
+                    
+                    btn.disabled = true;
+                    // मेसेज अपडेट 
+                    msg.innerHTML = `Next bonus in <b>${minutesLeft}m ${secondsLeft}s</b>! ⏳`;
+                    
+                    setTimeout(checkVillageBonusStatus, 1000);
+                } else {
+                    btn.disabled = false;
+                    msg.innerHTML = "1-Hour bonus is ready to claim! 🎉 Tap below.";
+                }
+            } else {
+                btn.disabled = false;
+            }
+        }
+
+        function claimDailyBonus() {
+            let currentTime = new Date().getTime();
+            localStorage.setItem('village_last_claim', currentTime);
+            
+            villageStreak += 1;
+            localStorage.setItem('village_streak', villageStreak);
+            
+            // १. My Profile score मध्ये +5 जोडणे
+            let currentProfileScore = parseInt(localStorage.getItem('wintask_score') || 0);
+            let updatedProfileScore = currentProfileScore + 5;
+            localStorage.setItem('wintask_score', updatedProfileScore);
+            
+            // २. Claim History मध्ये रेकॉर्ड जोडणे
+            let history = JSON.parse(localStorage.getItem('claim_history') || '[]');
+            let dateStr = new Date().toLocaleString();
+            history.unshift({
+                title: "Hourly Game Bonus",
+                reward: "+5 Score",
+                date: dateStr
+            });
+            localStorage.setItem('claim_history', JSON.stringify(history));
+            
+            // अ‍ॅलर्ट दाखवणे आणि टायमर पुन्हा सुरू करणे
+            alert("🦇 Success! +5 Score added to your My Profile and saved to Claim History!");
+            checkVillageBonusStatus();
+        }
+
+        // पेज लोड झाल्यावर टायमर चालू करण्यासाठी
+        window.addEventListener('load', () => {
+            checkVillageBonusStatus();
+        });
+    </script>
+</body>
+</html>

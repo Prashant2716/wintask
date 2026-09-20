@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Great Miller Family Wedding Debacle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .story-wrapper {
+            background: rgba(22, 33, 62, 0.95);
+            max-width: 900px;
+            width: 100%;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            border: 2px solid #00ffcc;
+        }
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #00ffcc;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+        }
+        .story-image-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .story-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 255, 204, 0.5);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+        .story-image:hover {
+            transform: scale(1.02);
+        }
+        .story-content {
+            font-size: 17px;
+            line-height: 1.9;
+            color: #d0d5e0;
+        }
+        .story-content p {
+            margin-bottom: 20px;
+        }
+        .story-content p:first-of-type::first-letter {
+            font-size: 3.5em;
+            float: left;
+            line-height: 0.8;
+            margin-right: 8px;
+            color: #ff007f;
+            font-weight: bold;
+        }
+        /* MCQ Section Styling */
+        .mcq-section {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 35px;
+        }
+        .mcq-section h3 {
+            color: #00ffcc;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .mcq-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .mcq-options label {
+            background: rgba(22, 33, 62, 0.8);
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        .mcq-options label:hover {
+            border-color: #00ffcc;
+            background: rgba(0, 255, 204, 0.05);
+        }
+        .mcq-options input {
+            margin-right: 10px;
+            accent-color: #00ffcc;
+        }
+        .mcq-btn-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .action-btn {
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            color: #000;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: 800;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .action-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+        .action-btn:disabled {
+            background: #4a5568;
+            color: #a0aec0;
+            cursor: not-allowed;
+            box-shadow: none;
+            opacity: 0.6;
+        }
+        .back-link-btn {
+            background: transparent;
+            color: #00ffcc;
+            border: 2px solid #00ffcc;
+            padding: 8px 20px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .back-link-btn:hover {
+            background: rgba(0, 255, 204, 0.1);
+            transform: scale(1.05);
+        }
+        #mcqResult {
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #a0a5b0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="story-wrapper">
+        <h1>The Great Miller Family Wedding Debacle</h1>
+        
+        <div class="story-image-container">
+            <a href="https://ibb.co/v6R2g7BB" target="_blank">
+                <img src="https://i.ibb.co/zTDKjy55/backyard-wedding-chaos.jpg" alt="backyard-wedding-chaos" class="story-image" border="0">
+            </a>
+        </div>
+        
+        <div class="story-content">
+            <p>The Miller household living in suburban Ohio was normally a sanctuary of quiet chaos, but that peace shattered the moment Arthur announced his engagement to Chloe. Arthur, a mild-mannered high school history teacher with a passion for bad puns, had finally proposed to Chloe, a brilliant wildlife photographer. Naturally, the entire extended family descended upon the house to plan the ceremony, transforming a simple backyard wedding into a full-scale comedic disaster.</p>
+            
+            <p>Martha, Arthur’s mother, immediately assumed the role of an authoritarian general. Armed with three color-coded binders and an aggressively optimistic attitude, she declared that the wedding theme would be "Rustic Elegance." Meanwhile, Arthur’s younger brother Leo, an aspiring tech entrepreneur, decided that a traditional wedding was too mainstream. He spent the entire morning trying to pitch a live-streamed drone delivery system for the wedding rings, completely ignoring the fact that their golden retriever, Buster, was violently allergic to drones.</p>
+            
+            <p>Uncle Bob, famous for his DIY disasters and unwarranted confidence, insisted on building the wedding arch himself out of reclaimed barn wood and industrial-strength duct tape. "Trust me, kids," Bob proclaimed while wearing a tool belt that sagged down to his knees, "this thing could withstand a category-five hurricane." Aunt Clara, on the other hand, took charge of the catering menu, though her definition of catering involved baking four hundred vegan, gluten-free cupcakes that tasted suspiciously like compressed cardboard and regret.</p>
+            
+            <p>As rehearsal day arrived, the backyard resembled a war zone. Buster the dog managed to get his head stuck inside a decorative mason jar, sending Leo running across the lawn in a blind panic while shouting algorithmic calculations for canine extraction. Martha was frantically arguing with a florist over the precise shade of lavender hydrangeas, while Arthur stared blankly at a spreadsheet that itemized the cost of microscopic napkins.</p>
+            
+            <p>Amidst the flying cupcakes, barking dogs, and Bob’s leaning tower of wooden beams, Chloe walked up to Arthur, adjusted his crooked bowtie, and laughed out loud. "Your family is completely insane," she whispered with a broad grin.</p>
+            
+            <p>Arthur wrapped his arms around her, dodging a stray drone that Leo was desperately trying to recall. "Yeah," Arthur smiled, "and the best part is, we’re officially stuck with them forever." And as Bob’s wooden arch finally collapsed into a pile of gentle splinters right on cue, the entire family burst into laughter, proving that a chaotic American family wedding was truly built on love, patience, and absolute nonsense.</p>
+        </div>
+
+        <!-- MCQ Section Added Here -->
+        <div class="mcq-section">
+            <h3>Quick Quiz: Test Your Memory!</h3>
+            <p style="margin-bottom: 15px; font-size: 16px;">What is the title of this story?</p>
+            
+            <div class="mcq-options">
+                <label><input type="radio" name="quiz" value="wrong1"> A) The Tech Entrepreneur's Guide</label>
+                <label><input type="radio" name="quiz" value="correct"> B) The Great Miller Family Wedding Debacle</label>
+                <label><input type="radio" name="quiz" value="wrong2"> C) Suburban Ohio Wildlife Adventures</label>
+                <label><input type="radio" name="quiz" value="wrong3"> D) The Backyard Drone Disaster</label>
+            </div>
+
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <button type="button" class="action-btn" id="submitBtn" onclick="checkAnswer()">Submit Answer</button>
+                <button type="button" class="action-btn" id="nextBtn" disabled onclick="goToNext()">Next Page</button>
+            </div>
+            <div id="mcqResult"></div>
+        </div>
+
+        <!-- Back Button at Bottom Left -->
+        <div class="mcq-btn-group" style="margin-top: 30px;">
+            <a href="storypage.html" class="back-link-btn">← Back</a>
+        </div>
+
+        <div class="footer-note">
+            &copy; 2026 Wintask Story Collection. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            const selectedOption = document.querySelector('input[name="quiz"]:checked');
+            const resultDiv = document.getElementById("mcqResult");
+            const nextBtn = document.getElementById("nextBtn");
+
+            if (!selectedOption) {
+                resultDiv.style.color = "#ff9900";
+                resultDiv.innerText = "Please select an option first!";
+                return;
+            }
+
+            if (selectedOption.value === "correct") {
+                resultDiv.style.color = "#00ffcc";
+                resultDiv.innerText = "Correct! Great job. You can now proceed to the next page.";
+                nextBtn.disabled = false;
+            } else {
+                resultDiv.style.color = "#ff4d4d";
+                resultDiv.innerText = "Incorrect answer. Try again!";
+                nextBtn.disabled = true;
+            }
+        }
+
+        function goToNext() {
+            window.location.href = "story4mcq.html";
+        }
+    </script>
+</body>
+</html>

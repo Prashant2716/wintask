@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Rainy Street - Horror Mario</title>
+    <style>
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: #000000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px 0;
+        }
+        .game-card {
+            width: 950px;
+            height: 550px;
+            border: 4px solid #450a0a;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(185, 28, 28, 0.4);
+        }
+        .front-page {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.95)), 
+                        url('https://images.unsplash.com/photo-1519692933481-e162a57d6721?q=80&w=1000') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: all 0.5s ease;
+            padding: 20px;
+            text-align: center;
+        }
+        .game-title {
+            font-size: 2.8rem;
+            color: #ef4444;
+            text-shadow: 3px 3px 0px #450a0a, 0 0 20px #dc2626;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            animation: flicker 1.5s infinite alternate;
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; text-shadow: 0 0 25px #dc2626; }
+            50% { opacity: 0.6; text-shadow: 0 0 5px #450a0a; }
+        }
+        .controls-hint {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid #7f1d1d;
+            margin: 15px 0 25px 0;
+            color: #fca5a5;
+            font-size: 0.9rem;
+            box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
+        }
+        .btn-action {
+            padding: 14px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(45deg, #991b1b, #450a0a);
+            border: 3px solid #ef4444;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(220, 38, 38, 0.8);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        .btn-action:hover {
+            transform: scale(1.08);
+            background: linear-gradient(45deg, #dc2626, #7f1d1d);
+            box-shadow: 0 0 40px rgba(239, 68, 68, 1);
+        }
+        .hud {
+            position: absolute;
+            top: 15px; left: 20px; right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fca5a5;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 8px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(220, 38, 38, 0.5);
+        }
+        .audio-btn {
+            background: #450a0a;
+            border: 1px solid #ef4444;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        canvas {
+            display: block;
+            width: 100%; height: 100%;
+            background: #000;
+        }
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 90;
+        }
+        .overlay-title {
+            font-size: 2.8rem;
+            color: #dc2626;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px #ef4444;
+        }
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .level-btn {
+            width: 60px; height: 60px;
+            background: #000;
+            border: 2px solid #991b1b;
+            color: #ef4444;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .level-btn:hover {
+            background: #dc2626;
+            color: #fff;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #ef4444;
+        }
+        .hourly-checkin-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 950px;
+            margin-top: 20px;
+        }
+        .checkin-card {
+            background: rgba(15, 5, 8, 0.95);
+            border: 3px solid #ef4444;
+            border-radius: 20px;
+            padding: 25px 30px;
+            width: 100%;
+            box-shadow: 0 0 40px rgba(239, 68, 68, 0.5), inset 0 0 20px rgba(239, 68, 68, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        .checkin-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(239, 68, 68, 0.4);
+            padding-bottom: 10px;
+        }
+        .checkin-title {
+            font-size: 20px;
+            color: #ef4444;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
+        }
+        .file-badge {
+            background: #450a0a;
+            border: 1px solid #ef4444;
+            color: #fca5a5;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .checkin-body-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .checkin-desc p {
+            font-size: 15px;
+            color: #f3f4f6;
+            line-height: 1.5;
+        }
+        .checkin-desc b {
+            color: #ef4444;
+        }
+        .next-btn-cyber {
+            background: linear-gradient(45deg, #991b1b, #dc2626);
+            color: #fff;
+            border: 2px solid #ef4444;
+            padding: 14px 35px;
+            font-size: 16px;
+            font-weight: 900;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.7);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        .next-btn-cyber:hover {
+            transform: scale(1.06);
+            background: linear-gradient(45deg, #dc2626, #b91c1c);
+            box-shadow: 0 0 35px #ef4444;
+        }
+        @media(max-width: 980px) {
+            .game-card, .hourly-checkin-wrapper {
+                width: 95vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-card">
+        <div class="front-page" id="frontPage">
+            <h1 class="game-title">🌧️ DARK RAINY STREET</h1>
+            <div class="controls-hint">
+                🕹️ Move: <b>A/D or Arrows</b> | 🪂 Jump: <b>Space / W</b> | 🔥 Fireball: <b>F / Shift</b>
+            </div>
+            <button class="btn-action" onclick="showLevelSelect()">💀 START NIGHTMARE</button>
+        </div>
+        <div class="hud">
+            <div>🚩 LEVEL: <span id="levelVal">1</span>/10</div>
+            <div>🪙 SKULLS: <span id="coinVal">0</span></div>
+            <div>❤️ LIVES: <span id="lifeVal">3</span></div>
+            <button class="audio-btn" id="audioToggle" onclick="toggleAudio()">🔊 MUSIC: ON</button>
+        </div>
+        <canvas id="gameCanvas" width="950" height="550"></canvas>
+        <div class="overlay" id="overlay">
+            <h1 class="overlay-title" id="overlayMsg">SELECT NIGHTMARE</h1>
+            <div class="level-grid" id="levelGrid"></div>
+            <button class="btn-action" id="restartBtn" style="display:none; margin-top: 20px;" onclick="showLevelSelect()">MENU</button>
+        </div>
+    </div>
+    <div class="hourly-checkin-wrapper">
+        <div class="checkin-card">
+            <div class="checkin-header-flex">
+                <div class="checkin-title">
+                    🎮 Village Game Navigation Zone <span class="file-badge">📁 village.html</span>
+                </div>
+            </div>
+            <div class="checkin-body-flex">
+                <div class="checkin-desc">
+                    <p>Click the <b>Next</b> button below to proceed further to the village score board and rankings page!</p>
+                </div>
+                <a href="villagescore.html" class="next-btn-cyber">Next ▶</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const frontPage = document.getElementById('frontPage');
+        const overlay = document.getElementById('overlay');
+        const overlayMsg = document.getElementById('overlayMsg');
+        const levelGrid = document.getElementById('levelGrid');
+        const restartBtn = document.getElementById('restartBtn');
+        const levelVal = document.getElementById('levelVal');
+        const coinVal = document.getElementById('coinVal');
+        const lifeVal = document.getElementById('lifeVal');
+        let isRunning = false;
+        let currentLevel = 1;
+        let score = 0;
+        let lives = 3;
+        let cameraX = 0;
+        let audioMuted = false;
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioCtx();
+        }
+        function playSound(type) {
+            if (audioMuted || !audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            if (type === 'fire') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(280, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(70, audioCtx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            } else if (type === 'jump') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(140, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(380, audioCtx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.12);
+            } else if (type === 'hit') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(90, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(30, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.2);
+            }
+        }
+        function toggleAudio() {
+            audioMuted = !audioMuted;
+            document.getElementById('audioToggle').innerText = audioMuted ? "🔇 MUSIC: OFF" : "🔊 MUSIC: ON";
+        }
+        const mario = {
+            x: 50, y: 350,
+            width: 32, height: 42,
+            speed: 5, velX: 0, velY: 0,
+            jumping: false, grounded: false,
+            dir: 1,
+            lastShoot: 0
+        };
+        const keys = {};
+        const gravity = 0.55;
+        const friction = 0.82;
+        let platforms = [];
+        let skulls = [];
+        let enemies = [];
+        let fireballs = [];
+        let raindrops = [];
+        let flag = { x: 0, y: 0, width: 15, height: 240 };
+        let levelWidth = 2000;
+        for (let r = 0; r < 40; r++) {
+            raindrops.push({
+                x: Math.random() * 950,
+                y: Math.random() * 550,
+                speed: Math.random() * 8 + 12,
+                length: Math.random() * 15 + 10
+            });
+        }
+        function loadLevel(lvl) {
+            initAudio();
+            currentLevel = lvl;
+            levelVal.innerText = currentLevel;
+            mario.x = 50; mario.y = 300;
+            mario.velX = 0; mario.velY = 0;
+            cameraX = 0;
+            fireballs = [];
+            levelWidth = 1800 + (lvl * 250);
+            platforms = [
+                { x: 0, y: 460, width: 700, height: 90 },
+                { x: 800, y: 460, width: 600, height: 90 },
+                { x: 1500, y: 460, width: levelWidth - 1500, height: 90 }
+            ];
+            skulls = [];
+            enemies = [];
+            for (let i = 0; i < 6 + lvl; i++) {
+                let px = 300 + (i * 210);
+                let py = 350 - ((i % 3) * 55);
+                platforms.push({ x: px, y: py, width: 100, height: 25 });
+                skulls.push({ x: px + 40, y: py - 30, collected: false });
+            }
+            for (let e = 0; e < 3 + lvl; e++) {
+                enemies.push({
+                    x: 600 + (e * 260),
+                    y: 425,
+                    width: 35, height: 35,
+                    speed: 1.5 + (lvl * 0.2),
+                    dir: -1,
+                    type: e % 2 === 0 ? 'zombie' : 'ghost',
+                    alive: true
+                });
+            }
+            flag = { x: levelWidth - 150, y: 220, width: 15, height: 240 };
+            overlay.style.display = 'none';
+            isRunning = true;
+            loop();
+        }
+        function showLevelSelect() {
+            frontPage.style.display = 'none';
+            overlay.style.display = 'flex';
+            overlayMsg.innerText = "SELECT NIGHTMARE";
+            restartBtn.style.display = 'none';
+            levelGrid.innerHTML = '';
+            for (let i = 1; i <= 10; i++) {
+                let btn = document.createElement('button');
+                btn.className = 'level-btn';
+                btn.innerText = i;
+                btn.onclick = () => loadLevel(i);
+                levelGrid.appendChild(btn);
+            }
+        }
+        window.addEventListener('keydown', e => {
+            keys[e.keyCode] = true;
+            if ((e.keyCode === 70 || e.keyCode === 16) && isRunning) {
+                let now = Date.now();
+                if (now - mario.lastShoot > 220) {
+                    fireballs.push({
+                        x: mario.x + (mario.dir === 1 ? mario.width : -10),
+                        y: mario.y + 15,
+                        vx: mario.dir * 9,
+                        vy: 1.5,
+                        active: true
+                    });
+                    mario.lastShoot = now;
+                    playSound('fire');
+                }
+            }
+        });
+        window.addEventListener('keyup', e => keys[e.keyCode] = false);
+        function loop() {
+            if (!isRunning) return;
+            update();
+            render();
+            requestAnimationFrame(loop);
+        }
+        function update() {
+            if ((keys[38] || keys[32] || keys[87]) && !mario.jumping && mario.grounded) {
+                mario.jumping = true;
+                mario.grounded = false;
+                mario.velY = -12.5;
+                playSound('jump');
+            }
+            if (keys[39] || keys[68]) { if (mario.velX < mario.speed) mario.velX++; mario.dir = 1; }
+            if (keys[37] || keys[65]) { if (mario.velX > -mario.speed) mario.velX--; mario.dir = -1; }
+            mario.velX *= friction;
+            mario.velY += gravity;
+            mario.grounded = false;
+            platforms.forEach(p => {
+                let dir = colCheck(mario, p);
+                if (dir === "l" || dir === "r") mario.velX = 0;
+                else if (dir === "b") { mario.grounded = true; mario.jumping = false; }
+                else if (dir === "t") mario.velY *= -1;
+            });
+            if (mario.grounded) mario.velY = 0;
+            mario.x += mario.velX;
+            mario.y += mario.velY;
+            cameraX = mario.x - 200;
+            if (cameraX < 0) cameraX = 0;
+            if (cameraX > levelWidth - 950) cameraX = levelWidth - 950;
+            if (mario.y > 550) handlePlayerDeath();
+            fireballs.forEach(fb => {
+                if (!fb.active) return;
+                fb.x += fb.vx;
+                fb.y += fb.vy;
+                enemies.forEach(e => {
+                    if (e.alive && isHit({x: fb.x, y: fb.y, width: 12, height: 12}, e)) {
+                        e.alive = false;
+                        fb.active = false;
+                        score += 30;
+                        coinVal.innerText = score;
+                        playSound('hit');
+                    }
+                });
+                if (fb.x < cameraX || fb.x > cameraX + 1000 || fb.y > 550) fb.active = false;
+            });
+            skulls.forEach(s => {
+                if (!s.collected && isHit(mario, { x: s.x, y: s.y, width: 20, height: 20 })) {
+                    s.collected = true;
+                    score += 10;
+                    coinVal.innerText = score;
+                }
+            });
+            enemies.forEach(e => {
+                if (!e.alive) return;
+                if (e.type === 'zombie') {
+                    e.x += e.speed * e.dir;
+                    if (e.x < 200 || e.x > levelWidth - 200) e.dir *= -1;
+                } else {
+                    if (e.x > mario.x) e.x -= e.speed * 0.5;
+                    else e.x += e.speed * 0.5;
+                }
+                if (isHit(mario, e)) {
+                    if (mario.velY > 0 && mario.y + mario.height - mario.velY <= e.y + 12) {
+                        e.alive = false;
+                        mario.velY = -8;
+                        score += 25;
+                        coinVal.innerText = score;
+                        playSound('hit');
+                    } else {
+                        handlePlayerDeath();
+                    }
+                }
+            });
+            raindrops.forEach(r => {
+                r.y += r.speed;
+                r.x -= 2;
+                if (r.y > 550) {
+                    r.y = -20;
+                    r.x = Math.random() * 950;
+                }
+            });
+            if (isHit(mario, flag)) {
+                isRunning = false;
+                if (currentLevel < 10) {
+                    overlayMsg.innerText = `STREET ${currentLevel} CLEARED! 🎃`;
+                    overlay.style.display = 'flex';
+                    levelGrid.innerHTML = '';
+                    restartBtn.style.display = 'block';
+                    restartBtn.innerText = "NEXT STREET ▶";
+                    restartBtn.onclick = () => loadLevel(currentLevel + 1);
+                } else {
+                    overlayMsg.innerText = "🏆 YOU ESCAPED THE DARK STREETS!";
+                    overlay.style.display = 'flex';
+                    restartBtn.style.display = 'block';
+                    restartBtn.innerText = "PLAY AGAIN 🔄";
+                    restartBtn.onclick = () => showLevelSelect();
+                }
+            }
+        }
+        function handlePlayerDeath() {
+            playSound('hit');
+            lives--;
+            lifeVal.innerText = lives;
+            if (lives <= 0) {
+                isRunning = false;
+                overlayMsg.innerText = "💀 YOU DIED!";
+                overlay.style.display = 'flex';
+                levelGrid.innerHTML = '';
+                restartBtn.style.display = 'block';
+                restartBtn.innerText = "RETRY LEVEL 🔄";
+                restartBtn.onclick = () => { lives = 3; lifeVal.innerText = lives; loadLevel(currentLevel); };
+            } else {
+                mario.x = 50; mario.y = 300; mario.velX = 0; mario.velY = 0;
+            }
+        }
+        function render() {
+            ctx.clearRect(0, 0, 950, 550);
+            ctx.fillStyle = '#05070a';
+            ctx.fillRect(0, 0, 950, 550);
+            ctx.strokeStyle = "rgba(148, 163, 184, 0.4)";
+            ctx.lineWidth = 1.5;
+            raindrops.forEach(r => {
+                ctx.beginPath();
+                ctx.moveTo(r.x, r.y);
+                ctx.lineTo(r.x - 2, r.y + r.length);
+                ctx.stroke();
+            });
+            ctx.save();
+            ctx.translate(-cameraX, 0);
+            ctx.fillStyle = "#111827";
+            platforms.forEach(p => {
+                ctx.fillRect(p.x, p.y, p.width, p.height);
+                ctx.strokeStyle = "#374151";
+                ctx.strokeRect(p.x, p.y, p.width, p.height);
+            });
+            ctx.fillStyle = "#f3f4f6";
+            skulls.forEach(s => {
+                if (!s.collected) {
+                    ctx.beginPath();
+                    ctx.arc(s.x + 10, s.y + 10, 8, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+            enemies.forEach(e => {
+                if (e.alive) {
+                    ctx.fillStyle = e.type === 'zombie' ? "#16a34a" : "#cbd5e1";
+                    ctx.fillRect(e.x, e.y, e.width, e.height);
+                }
+            });
+            ctx.fillStyle = "#f97316";
+            fireballs.forEach(fb => {
+                if (fb.active) {
+                    ctx.beginPath();
+                    ctx.arc(fb.x, fb.y, 7, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+            ctx.fillStyle = "#475569";
+            ctx.fillRect(flag.x, flag.y, flag.width, flag.height);
+            ctx.fillStyle = "#dc2626";
+            ctx.fillRect(flag.x + 15, flag.y, 45, 25);
+            ctx.fillStyle = "#dc2626";
+            ctx.fillRect(mario.x, mario.y, mario.width, mario.height);
+            ctx.restore();
+        }
+        function colCheck(shapeA, shapeB) {
+            let vX = (shapeA.x + (shapeA.width / 2)) - (shapeB.x + (shapeB.width / 2)),
+                vY = (shapeA.y + (shapeA.height / 2)) - (shapeB.y + (shapeB.height / 2)),
+                hWidths = (shapeA.width / 2) + (shapeB.width / 2),
+                hHeights = (shapeA.height / 2) + (shapeB.height / 2),
+                colDir = null;
+            if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
+                let oX = hWidths - Math.abs(vX), oY = hHeights - Math.abs(vY);
+                if (oX >= oY) {
+                    if (vY > 0) { colDir = "t"; shapeA.y += oY; }
+                    else { colDir = "b"; shapeA.y -= oY; }
+                } else {
+                    if (vX > 0) { colDir = "l"; shapeA.x += oX; }
+                    else { colDir = "r"; shapeA.x -= oX; }
+                }
+            }
+            return colDir;
+        }
+        function isHit(a, b) {
+            return a.x < b.x + b.width && a.x + a.width > b.x &&
+                   a.y < b.y + b.height && a.y + a.height > b.y;
+        }
+    </script>
+</body>
+</html>

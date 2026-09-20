@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - wintask.in</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+        }
+        body {
+            background: linear-gradient(rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.95)),
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 255, 204, 0.2);
+        }
+        .logo {
+            font-size: 30px;
+            font-weight: 800;
+            color: #00ffcc;
+            text-transform: lowercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px #00ffcc;
+            text-decoration: none;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            color: #ff007f;
+        }
+        .about-container {
+            max-width: 900px;
+            margin: 50px auto;
+            background: rgba(15, 17, 26, 0.85);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        .about-container h1 {
+            color: #00ffcc;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid rgba(0, 255, 204, 0.2);
+            padding-bottom: 10px;
+        }
+        .about-container h3 {
+            color: #ff007f;
+            font-size: 18px;
+            margin-top: 25px;
+            margin-bottom: 8px;
+        }
+        .about-container p {
+            color: #c0c5d0;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .back-home {
+            display: inline-block;
+            margin-top: 20px;
+            background: linear-gradient(45deg, #00ffcc, #0099ff);
+            color: #000;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+            transition: 0.3s;
+        }
+        .back-home:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #00ffcc;
+        }
+        .footer {
+            background: rgba(7, 8, 12, 0.75);
+            border-top: 1px solid rgba(0, 255, 204, 0.2);
+            padding: 20px;
+            text-align: center;
+            color: #888;
+            margin-top: auto;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="index.html" class="logo">🎮 wintask.in</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="games.html">Games</a></li>
+        </ul>
+    </header>
+
+    <div class="about-container">
+        <h1>About Us</h1>
+        <p>Welcome to <b>wintask.in</b>, your ultimate digital destination where high-octane gaming entertainment seamlessly merges with rewarding score systems. Our mission is to build a vibrant, engaging online platform that delivers non-stop interactive fun to users everywhere.</p>
+        
+        <h3>Our Vision & Mission</h3>
+        <p>We strive to provide a clean, futuristic, and immersive gaming hub. Whether you want to pass the time with quick browser-based games, participate in hourly check-in bonuses, or track your personal digital score wallet, wintask.in is engineered to deliver a top-tier user experience.</p>
+        
+        <h3>What We Offer</h3>
+        <p>Our platform features a diverse range of mini-games, interactive tasks, and automated score progression tools. Built using modern web technologies, responsive layouts, and secure local storage mechanisms, we ensure that every visitor enjoys a smooth, safe, and entertaining session.</p>
+
+        <h3>Get in Touch</h3>
+        <p>We are constantly improving and expanding our features based on community feedback. If you have any questions, suggestions, or technical queries, feel free to reach out to us via our contact section.</p>
+
+        <a href="index.html" class="back-home">← Back to Home</a>
+    </div>
+
+    <footer class="footer">
+        © 2026 wintask.in. All rights reserved.
+    </footer>
+
+</body>
+</html>
