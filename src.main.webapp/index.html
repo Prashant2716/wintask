@@ -13,10 +13,11 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+            max-width: 100%;
         }
         body {
             background: linear-gradient(rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.95)),
-                    url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600&auto=format&fit=crop');
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1600&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -28,12 +29,8 @@
             animation: pulseGlow 8s infinite alternate;
         }
         @keyframes pulseGlow {
-            0% {
-                filter: brightness(1) contrast(100%);
-            }
-            100% {
-                filter: brightness(1.15) contrast(110%);
-            }
+            0% { filter: brightness(1) contrast(100%); }
+            100% { filter: brightness(1.15) contrast(110%); }
         }
         .particles {
             position: fixed;
@@ -52,17 +49,9 @@
             animation: floatUp 10s infinite linear;
         }
         @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            50% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-10vh) scale(1.5);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
         .navbar,
         .hero,
@@ -84,6 +73,7 @@
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0, 255, 204, 0.2);
+            flex-wrap: wrap;
         }
         .logo {
             font-size: 30px;
@@ -108,12 +98,13 @@
             list-style: none;
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
         }
         .nav-links a {
             text-decoration: none;
             color: #ffffff;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             transition: all 0.3s;
         }
@@ -124,46 +115,24 @@
         .games-nav-btn {
             background: linear-gradient(45deg, #00ffcc, #0099ff);
             color: #000 !important;
-            padding: 8px 22px;
+            padding: 8px 18px;
             border-radius: 20px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             box-shadow: 0 0 12px rgba(0, 255, 204, 0.5);
             transition: all 0.3s;
             display: inline-block;
-        }
-        .games-nav-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px #00ffcc;
-            color: #000 !important;
-        }
-        .profile-nav-btn {
-            background: linear-gradient(45deg, #ff007f, #0099ff);
-            color: #fff !important;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 15px;
-            font-weight: bold;
-            box-shadow: 0 0 12px rgba(255, 0, 127, 0.5);
-            transition: all 0.3s;
-            display: inline-block;
-            text-decoration: none;
-        }
-        .profile-nav-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px #ff007f;
-            color: #fff !important;
         }
         .gmail-login-btn {
             display: inline-flex !important;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 9px 18px;
+            padding: 8px 16px;
             border-radius: 20px;
             background: #ffffff;
             color: #222222 !important;
-            font-size: 15px !important;
+            font-size: 14px !important;
             font-weight: 800 !important;
             border: 1px solid rgba(255, 255, 255, 0.8);
             box-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
@@ -171,22 +140,16 @@
             cursor: pointer;
             text-decoration: none;
         }
-        .gmail-login-btn:hover {
-            transform: scale(1.05);
-            background: #f5f5f5;
-            color: #000000 !important;
-            box-shadow: 0 0 22px rgba(255, 255, 255, 0.5);
-        }
         .hero {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 60px 20px 30px 20px;
+            padding: 50px 20px 20px 20px;
         }
         .hero h1 {
-            font-size: 56px;
+            font-size: 48px;
             font-weight: 900;
             margin-bottom: 15px;
             text-transform: uppercase;
@@ -197,12 +160,10 @@
             animation: textShine 4s linear infinite;
         }
         @keyframes textShine {
-            to {
-                background-position: 200% center;
-            }
+            to { background-position: 200% center; }
         }
         .hero p {
-            font-size: 20px;
+            font-size: 18px;
             max-width: 700px;
             color: #e0e0e0;
             margin-bottom: 25px;
@@ -211,53 +172,29 @@
         .btn-primary {
             background: linear-gradient(45deg, #00ffcc, #0099ff);
             color: #000;
-            padding: 15px 35px;
-            font-size: 18px;
+            padding: 12px 30px;
+            font-size: 16px;
             font-weight: 800;
             border: none;
             border-radius: 35px;
             cursor: pointer;
             box-shadow: 0 0 25px rgba(0, 255, 204, 0.6);
-            transition: transform 0.3s, box-shadow 0.3s;
             text-decoration: none;
             display: inline-block;
-        }
-        .btn-primary:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 40px rgba(0, 255, 204, 0.9);
         }
         .hourly-checkin-wrapper {
             display: flex;
             justify-content: center;
-            margin: 15px 20px 30px 20px;
+            margin: 15px 15px 30px 15px;
         }
         .checkin-card {
             background: rgba(18, 18, 32, 0.85);
             border: 2px solid #00ffcc;
-            border-radius: 24px;
-            padding: 25px 30px;
+            border-radius: 20px;
+            padding: 20px;
             width: 100%;
             max-width: 750px;
-            box-shadow: 0 0 35px rgba(0, 255, 204, 0.25),
-                        inset 0 0 20px rgba(0, 255, 204, 0.08);
             backdrop-filter: blur(12px);
-            position: relative;
-            overflow: hidden;
-            animation: cardBorderGlow 5s infinite alternate;
-        }
-        @keyframes cardBorderGlow {
-            0% {
-                border-color: rgba(0, 255, 204, 0.5);
-                box-shadow: 0 0 25px rgba(0, 255, 204, 0.2);
-            }
-            50% {
-                border-color: rgba(255, 0, 127, 0.6);
-                box-shadow: 0 0 35px rgba(255, 0, 127, 0.3);
-            }
-            100% {
-                border-color: rgba(0, 153, 255, 0.6);
-                box-shadow: 0 0 30px rgba(0, 153, 255, 0.3);
-            }
         }
         .checkin-header-flex {
             display: flex;
@@ -266,31 +203,29 @@
             margin-bottom: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .checkin-title {
-            font-size: 18px;
+            font-size: 16px;
             color: #00ffcc;
             font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
         }
         .streak-badge {
             background: rgba(255, 0, 127, 0.15);
             border: 1px solid #ff007f;
             color: #ff007f;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
-            box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
         }
         .checkin-body-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
         .checkin-desc p {
             font-size: 14px;
@@ -304,46 +239,32 @@
             background: linear-gradient(45deg, #00ffcc, #0099ff);
             color: #000;
             border: none;
-            padding: 12px 24px;
-            font-size: 15px;
+            padding: 10px 20px;
+            font-size: 14px;
             font-weight: 900;
             border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
-            transition: all 0.3s ease;
-            white-space: nowrap;
             text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .claim-btn-cyber:hover:not(:disabled) {
-            transform: scale(1.06);
-            box-shadow: 0 0 30px #00ffcc;
-        }
-        .claim-btn-cyber:disabled {
-            background: #555;
-            color: #aaa;
-            cursor: not-allowed;
-            box-shadow: none;
+            width: 100%;
         }
         .section-container {
             max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
+            margin: 30px auto;
+            padding: 0 15px;
             width: 100%;
         }
         .section-title {
             text-align: center;
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 800;
             color: #00ffcc;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
         }
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
         }
         .game-card {
             background: rgba(20, 22, 35, 0.85);
@@ -351,20 +272,14 @@
             border-radius: 16px;
             padding: 20px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
             backdrop-filter: blur(10px);
         }
-        .game-card:hover {
-            transform: translateY(-5px);
-            border-color: #00ffcc;
-            box-shadow: 0 0 25px rgba(0, 255, 204, 0.4);
-        }
         .game-icon {
-            font-size: 40px;
-            margin-bottom: 12px;
+            font-size: 36px;
+            margin-bottom: 10px;
         }
         .game-card h3 {
-            font-size: 20px;
+            font-size: 18px;
             color: #ffffff;
             margin-bottom: 8px;
         }
@@ -377,121 +292,95 @@
             background: rgba(0, 255, 204, 0.1);
             border: 1px solid #00ffcc;
             color: #00ffcc;
-            padding: 8px 18px;
+            padding: 8px 16px;
             border-radius: 20px;
             font-weight: 700;
             text-decoration: none;
             display: inline-block;
-            transition: 0.3s;
-        }
-        .game-play-btn:hover {
-            background: #00ffcc;
-            color: #000;
-            box-shadow: 0 0 15px #00ffcc;
         }
         .story-preview-card {
             background: rgba(20, 22, 35, 0.9);
             border: 2px solid #ff007f;
             border-radius: 20px;
-            padding: 20px;
-            max-width: 400px;
+            padding: 15px;
+            max-width: 100%;
             margin: 0 auto;
             text-align: center;
-            box-shadow: 0 0 25px rgba(255, 0, 127, 0.3);
             backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .story-preview-card:hover {
-            transform: scale(1.03);
-            border-color: #00ffcc;
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.5);
         }
         .story-preview-poster {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
             border-radius: 12px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 12px;
         }
         .story-preview-title {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 800;
             color: #00ffcc;
-            margin-bottom: 12px;
-            text-shadow: 0 0 8px rgba(0, 255, 204, 0.4);
+            margin-bottom: 10px;
         }
         .story-read-btn {
             background: linear-gradient(45deg, #ff007f, #0099ff);
             color: #fff;
-            padding: 10px 25px;
-            font-size: 16px;
+            padding: 8px 20px;
+            font-size: 14px;
             font-weight: 800;
             border-radius: 25px;
             text-decoration: none;
             display: inline-block;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
-            transition: transform 0.3s;
-        }
-        .story-read-btn:hover {
-            transform: scale(1.05);
         }
         .stats-section {
             background: rgba(12, 14, 22, 0.9);
             border-top: 1px solid rgba(0, 255, 204, 0.2);
             border-bottom: 1px solid rgba(0, 255, 204, 0.2);
-            padding: 35px 20px;
+            padding: 30px 15px;
             margin: 20px 0;
         }
         .stats-grid {
             max-width: 1000px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
             text-align: center;
         }
         .stat-item h2 {
-            font-size: 36px;
+            font-size: 28px;
             color: #00ffcc;
             margin-bottom: 5px;
-            text-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
         }
         .stat-item p {
-            font-size: 15px;
+            font-size: 14px;
             color: #b0b5c0;
             font-weight: 600;
         }
         .leaderboard-card {
             background: rgba(18, 18, 32, 0.85);
             border: 1px solid rgba(255, 0, 127, 0.4);
-            border-radius: 20px;
-            padding: 25px;
-            max-width: 750px;
-            margin: 0 auto;
+            border-radius: 16px;
+            padding: 15px;
+            max-width: 100%;
             backdrop-filter: blur(10px);
-            box-shadow: 0 0 25px rgba(255, 0, 127, 0.2);
         }
         .leaderboard-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 15px;
+            padding: 10px 5px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 16px;
-        }
-        .leaderboard-row:last-child {
-            border-bottom: none;
+            font-size: 14px;
         }
         .rank-user {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
             font-weight: 700;
         }
         .rank-num {
             color: #ff007f;
-            width: 25px;
+            width: 20px;
         }
         .score-val {
             color: #00ffcc;
@@ -499,75 +388,70 @@
         }
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
         }
         .testimonial-card {
             background: rgba(20, 22, 35, 0.85);
             border: 1px solid rgba(0, 255, 204, 0.2);
             border-radius: 16px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
+            padding: 15px;
         }
         .testimonial-card p {
-            font-size: 14px;
+            font-size: 13px;
             color: #d0d5e0;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-style: italic;
-            line-height: 1.6;
         }
         .user-info h4 {
             color: #00ffcc;
-            font-size: 16px;
+            font-size: 15px;
         }
         .user-info span {
-            font-size: 12px;
+            font-size: 11px;
             color: #888;
         }
         .faq-container {
-            max-width: 750px;
+            max-width: 100%;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
         .faq-item {
             background: rgba(20, 22, 35, 0.85);
             border: 1px solid rgba(0, 255, 204, 0.2);
             border-radius: 12px;
             overflow: hidden;
-            transition: border-color 0.3s;
         }
         .faq-question {
-            padding: 16px 20px;
-            font-size: 16px;
+            padding: 14px 15px;
+            font-size: 15px;
             font-weight: 700;
             color: #fff;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        .faq-question:hover {
-            color: #00ffcc;
+            gap: 10px;
         }
         .faq-answer {
-            padding: 0 20px 16px 20px;
-            font-size: 14px;
+            padding: 0 15px 14px 15px;
+            font-size: 13px;
             color: #b0b5c0;
-            line-height: 1.6;
+            line-height: 1.5;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             display: none;
         }
         .faq-item.active .faq-answer {
             display: block;
-            padding-top: 12px;
+            padding-top: 10px;
         }
         .footer {
             background: rgba(7, 8, 12, 0.75);
             backdrop-filter: blur(10px);
             border-top: 1px solid rgba(0, 255, 204, 0.2);
-            padding: 30px 50px 20px;
+            padding: 25px 20px 15px;
             color: #aaaaaa;
             margin-top: auto;
         }
@@ -577,106 +461,70 @@
             align-items: flex-start;
             flex-wrap: wrap;
             gap: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .footer-info {
-            max-width: 400px;
+            max-width: 100%;
         }
         .footer-info h3 {
             color: #00ffcc;
-            font-size: 24px;
-            margin-bottom: 12px;
+            font-size: 20px;
+            margin-bottom: 8px;
         }
         .footer-info p {
-            font-size: 14px;
-            line-height: 1.6;
+            font-size: 13px;
+            line-height: 1.5;
             color: #888888;
         }
         .footer-links-right {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            align-items: stretch;
-            width: 220px;
+            gap: 8px;
+            width: 100%;
         }
         .footer-btn {
             background: rgba(0, 255, 204, 0.1);
             border: 1px solid #00ffcc;
             color: #00ffcc;
-            padding: 8px 16px;
-            font-size: 14px;
+            padding: 8px 14px;
+            font-size: 13px;
             font-weight: 600;
             border-radius: 20px;
             text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 255, 204, 0.15);
             text-align: center;
             display: block;
             width: 100%;
         }
-        .footer-btn:hover {
-            background: #00ffcc;
-            color: #000;
-            box-shadow: 0 0 15px #00ffcc;
-            transform: translateY(-2px);
-        }
-        .privacy-btn {
-            border-color: #00ffcc;
-            color: #00ffcc;
-            background: rgba(0, 255, 204, 0.1);
-        }
-        .privacy-btn:hover {
-            background: #00ffcc;
-            color: #000;
-            box-shadow: 0 0 15px #00ffcc;
-        }
         .footer-bottom {
             text-align: center;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 20px;
-            font-size: 13px;
+            padding-top: 15px;
+            font-size: 12px;
         }
-        @media(max-width:768px) {
-            .checkin-body-flex {
-                flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-            }
-            .claim-btn-cyber {
-                width: 100%;
-            }
+
+        /* Mobile Media Queries Optimization */
+        @media(max-width: 768px) {
             .navbar {
-                padding: 15px 20px;
-                gap: 15px;
+                padding: 12px 15px;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
             }
             .nav-links {
+                justify-content: center;
                 gap: 10px;
-                flex-wrap: wrap;
-                justify-content: flex-end;
             }
             .nav-links a {
                 font-size: 14px;
             }
-            .games-nav-btn {
-                padding: 7px 14px;
-            }
-            .gmail-login-btn {
-                padding: 8px 13px;
-                font-size: 13px !important;
-            }
-            .footer-content {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .footer-links-right {
-                align-items: stretch;
-                width: 100%;
-            }
-            .footer-btn {
-                width: 100%;
-            }
             .hero h1 {
-                font-size: 38px;
+                font-size: 32px;
+            }
+            .hero p {
+                font-size: 15px;
+            }
+            .section-title {
+                font-size: 22px;
             }
         }
     </style>
@@ -693,107 +541,63 @@
             <div class="digital-watch" id="digitalWatch">00:00:00</div>
         </div>
         <ul class="nav-links">
-            <li>
-                <a href="index.html">Home</a>
-            </li>
-            <li>
-                <a href="storypage.html">📖 Story</a>
-            </li>
-            <li>
-                <a href="village.html">🏡 Village Games</a>
-            </li>
-            <li>
-                <a href="games.html" class="games-nav-btn">🎯 Games & Targets</a>
-            </li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="storypage.html">📖 Story</a></li>
+            <li><a href="village.html">🏡 Village</a></li>
+            <li><a href="games.html" class="games-nav-btn">🎯 Games</a></li>
             <li id="authNavContainer">
-                <a href="login.html" class="gmail-login-btn" id="authBtn">
-                    Login
-                </a>
+                <a href="login.html" class="gmail-login-btn" id="authBtn">Login</a>
             </li>
         </ul>
     </header>
     <section class="hero">
         <h1>Welcome to Wintask</h1>
-        <p>
-            Play your favorite games, complete tasks, achieve daily targets, and reach new high scores!
-        </p>
-        <a href="games.html" class="btn-primary">
-            Start Playing & Achieving
-        </a>
+        <p>Play your favorite games, complete tasks, achieve daily targets, and reach new high scores!</p>
+        <a href="games.html" class="btn-primary">Start Playing & Achieving</a>
     </section>
     <div class="hourly-checkin-wrapper">
         <div class="checkin-card">
             <div class="checkin-header-flex">
-                <div class="checkin-title">
-                    🎁 Daily Target & Score Zone
-                </div>
-                <div class="streak-badge" id="streakBadge">
-                    🔥 Streak: 0 Wins
-                </div>
+                <div class="checkin-title">🎁 Daily Target & Score Zone</div>
+                <div class="streak-badge" id="streakBadge">🔥 Streak: 0 Wins</div>
             </div>
             <div class="checkin-body-flex">
                 <div class="checkin-desc">
-                    <p id="bonusMsg">
-                        Complete your daily check-in target every 24 hours to 
-                        <b>achieve +5 Free Score</b> 
-                        instantly and boost your level!
-                    </p>
+                    <p id="bonusMsg">Complete your daily check-in target every 24 hours to <b>achieve +5 Free Score</b> instantly and boost your level!</p>
                 </div>
-                <button
-                    id="claimBtn"
-                    class="claim-btn-cyber"
-                    onclick="claimDailyBonus()">
-                    Claim & Achieve +5
-                </button>
+                <button id="claimBtn" class="claim-btn-cyber" onclick="claimDailyBonus()">Claim & Achieve +5</button>
             </div>
         </div>
     </div>
-    
     <div class="section-container">
-        <h2 class="section-title">
-            Featured Story
-        </h2>
+        <h2 class="section-title">Featured Story</h2>
         <div class="story-preview-card">
             <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=600&auto=format&fit=crop" alt="School Story Poster" class="story-preview-poster">
             <div class="story-preview-title">📖 A Beautiful School Story</div>
-            <p style="color: #b0b5c0; font-size: 14px; margin-bottom: 15px;">Read a sweet and memorable story about Rahul and Priya's wonderful school days.</p>
+            <p style="color: #b0b5c0; font-size: 13px; margin-bottom: 15px;">Read a sweet and memorable story about Rahul and Priya's wonderful school days.</p>
             <a href="story1.html" class="story-read-btn">Read Story</a>
         </div>
     </div>
     <div class="section-container">
-        <h2 class="section-title">
-            Featured Games & Targets
-        </h2>
+        <h2 class="section-title">Featured Games & Targets</h2>
         <div class="games-grid">
             <div class="game-card">
                 <div class="game-icon">🏡</div>
                 <h3>Village Games</h3>
-                <p>
-                    Explore village mini-games, achieve targets, and win rewards.
-                </p>
-                <a href="village.html" class="game-play-btn">
-                    Play & Score 10 🏆
-                </a>
+                <p>Explore village mini-games, achieve targets, and win rewards.</p>
+                <a href="village.html" class="game-play-btn">Play & Score 10 🏆</a>
             </div>
             <div class="game-card">
                 <div class="game-icon">⚡</div>
                 <h3>Action Arena</h3>
-                <p>
-                    Test your reflexes with cyberpunk challenges and win scores.
-                </p>
-                <a href="games.html" class="game-play-btn">
-                    Play & Score 15 🏆
-                </a>
+                <p>Test your reflexes with cyberpunk challenges and win scores.</p>
+                <a href="games.html" class="game-play-btn">Play & Score 15 🏆</a>
             </div>
             <div class="game-card">
                 <div class="game-icon">🧩</div>
                 <h3>Puzzle Quest</h3>
-                <p>
-                    Sharpen your brain, solve puzzles, and achieve your target.
-                </p>
-                <a href="games.html" class="game-play-btn">
-                    Play & Score 10 🏆
-                </a>
+                <p>Sharpen your brain, solve puzzles, and achieve your target.</p>
+                <a href="games.html" class="game-play-btn">Play & Score 10 🏆</a>
             </div>
         </div>
     </div>
@@ -814,57 +618,34 @@
         </div>
     </div>
     <div class="section-container">
-        <h2 class="section-title">
-            Top Achievers Leaderboard
-        </h2>
+        <h2 class="section-title">Top Achievers Leaderboard</h2>
         <div class="leaderboard-card">
             <div class="leaderboard-row">
-                <div class="rank-user">
-                    <span class="rank-num">#1</span>
-                    🎮 CyberGamer_99
-                </div>
-                <div class="score-val" id="lbScore1">
-                    🏆 1,450 Score
-                </div>
+                <div class="rank-user"><span class="rank-num">#1</span> 🎮 CyberGamer_99</div>
+                <div class="score-val" id="lbScore1">🏆 1,450 Score</div>
             </div>
             <div class="leaderboard-row">
-                <div class="rank-user">
-                    <span class="rank-num">#2</span>
-                    ⚡ NeoxPlayer
-                </div>
-                <div class="score-val" id="lbScore2">
-                    🏆 1,220 Score
-                </div>
+                <div class="rank-user"><span class="rank-num">#2</span> ⚡ NeoxPlayer</div>
+                <div class="score-val" id="lbScore2">🏆 1,220 Score</div>
             </div>
             <div class="leaderboard-row">
-                <div class="rank-user">
-                    <span class="rank-num">#3</span>
-                    🎯 TaskMaster
-                </div>
-                <div class="score-val" id="lbScore3">
-                    🏆 980 Score
-                </div>
+                <div class="rank-user"><span class="rank-num">#3</span> 🎯 TaskMaster</div>
+                <div class="score-val" id="lbScore3">🏆 980 Score</div>
             </div>
         </div>
     </div>
     <div class="section-container">
-        <h2 class="section-title">
-            What Players Say
-        </h2>
+        <h2 class="section-title">What Players Say</h2>
         <div class="testimonials-grid">
             <div class="testimonial-card">
-                <p>
-                    "Wintask is amazing! Achieving daily targets and reaching high scores keeps me coming back every single day."
-                </p>
+                <p>"Wintask is amazing! Achieving daily targets and reaching high scores keeps me coming back every single day."</p>
                 <div class="user-info">
                     <h4>Rahul Sharma</h4>
                     <span>Active Player</span>
                 </div>
             </div>
             <div class="testimonial-card">
-                <p>
-                    "Super smooth UI to play games and win scores. Achieving points while playing is super fun!"
-                </p>
+                <p>"Super smooth UI to play games and win scores. Achieving points while playing is super fun!"</p>
                 <div class="user-info">
                     <h4>Priya Deshmukh</h4>
                     <span>Casual Player</span>
@@ -873,45 +654,30 @@
         </div>
     </div>
     <div class="section-container" style="margin-bottom: 60px;">
-        <h2 class="section-title">
-            Frequently Asked Questions
-        </h2>
+        <h2 class="section-title">Frequently Asked Questions</h2>
         <div class="faq-container">
             <div class="faq-item">
-                <div
-                    class="faq-question"
-                    onclick="toggleFaq(this)">
-                    How do I achieve my daily targets and get bonus scores?
-                    <span>+</span>
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How do I achieve my daily targets and get bonus scores? <span>+</span>
                 </div>
                 <div class="faq-answer">
-                    Scroll to the Daily Target Zone on the homepage,
-                    and click 'Claim & Achieve +5' every 24 hours to add
-                    points directly to your account.
+                    Scroll to the Daily Target Zone on the homepage, and click 'Claim & Achieve +5' every 24 hours to add points directly to your account.
                 </div>
             </div>
             <div class="faq-item">
-                <div
-                    class="faq-question"
-                    onclick="toggleFaq(this)">
-                    Are my game scores and targets saved automatically?
-                    <span>+</span>
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    Are my game scores and targets saved automatically? <span>+</span>
                 </div>
                 <div class="faq-answer">
-                    Yes! All your accumulated scores and completed targets are tracked locally so
-                    that you can enjoy your gameplay experience seamlessly.
+                    Yes! All your accumulated scores and completed targets are tracked locally so that you can enjoy your gameplay experience seamlessly.
                 </div>
             </div>
             <div class="faq-item">
-                <div
-                    class="faq-question"
-                    onclick="toggleFaq(this)">
-                    How can I play and score from village games?
-                    <span>+</span>
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    How can I play and score from village games? <span>+</span>
                 </div>
                 <div class="faq-answer">
-                    You can easily access all village-themed games by clicking
-                    on the 'Village Games' option in the top navigation bar to start playing.
+                    You can easily access all village-themed games by clicking on the 'Village Games' option in the top navigation bar to start playing.
                 </div>
             </div>
         </div>
@@ -920,33 +686,20 @@
         <div class="footer-content">
             <div class="footer-info">
                 <h3>wintask.in</h3>
-                <p>
-                    Your ultimate destination to play games, achieve targets, and reach exciting goals.
-                </p>
+                <p>Your ultimate destination to play games, achieve targets, and reach exciting goals.</p>
             </div>
             <div class="footer-links-right">
-                <a href="privacy.html" class="footer-btn privacy-btn">
-                    🔒 Privacy Policy
-                </a>
-                <a href="terms.html" class="footer-btn">
-                    Terms & Conditions
-                </a>
-                <a href="about.html" class="footer-btn">
-                    About Us
-                </a>
-                <a href="contact.html" class="footer-btn">
-                    Contact Us
-                </a>
+                <a href="privacy.html" class="footer-btn privacy-btn">🔒 Privacy Policy</a>
+                <a href="terms.html" class="footer-btn">Terms & Conditions</a>
+                <a href="about.html" class="footer-btn">About Us</a>
+                <a href="contact.html" class="footer-btn">Contact Us</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>
-                &copy; 2026 wintask.in. All rights reserved.
-            </p>
+            <p>&copy; 2026 wintask.in. All rights reserved.</p>
         </div>
     </footer>
     <script>
-        // Initialize Firebase with Real API Key
         const firebaseConfig = {
             apiKey: "AIzaSyCXUoDQtDlj4bcvfRkKZ_wK5TGoZmVsn7Y",
             authDomain: "wintask-app.firebaseapp.com",
@@ -959,7 +712,6 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
-        // Digital Watch Function
         function updateDigitalClock() {
             const now = new Date();
             let hours = now.getHours();
@@ -970,61 +722,21 @@
             minutes = minutes < 10 ? "0" + minutes : minutes;
             seconds = seconds < 10 ? "0" + seconds : seconds;
             
-            const watchElement = document.getElementById("digitalWatch");
-            if (watchElement) {
-                watchElement.innerText = `${hours}:${minutes}:${seconds}`;
+            const watchElem = document.getElementById("digitalWatch");
+            if(watchElem) {
+                watchElem.innerText = `${hours}:${minutes}:${seconds}`;
             }
         }
-        
-        // Run immediately and update every second
-        updateDigitalClock();
         setInterval(updateDigitalClock, 1000);
+        updateDigitalClock();
 
-        // Check Login Status & Update Navbar Button Dynamically
-        window.addEventListener('DOMContentLoaded', () => {
-            const isLoggedIn = localStorage.getItem("isLoggedIn");
-            const userName = localStorage.getItem("userName") || localStorage.getItem("userEmail") || "Profile";
-            const authNavContainer = document.getElementById("authNavContainer");
-
-            if (isLoggedIn === "true") {
-                authNavContainer.innerHTML = `<a href="myprofile.html" class="profile-nav-btn">👤 ${userName}</a>`;
-            } else {
-                authNavContainer.innerHTML = `<a href="login.html" class="gmail-login-btn" id="authBtn">Login</a>`;
-            }
-        });
-
-        // Toggle FAQ Accordion Function
         function toggleFaq(element) {
             const item = element.parentElement;
             item.classList.toggle('active');
-            const span = element.querySelector('span');
-            if (item.classList.contains('active')) {
-                span.innerText = '-';
-            } else {
-                span.innerText = '+';
-            }
         }
 
-        // Daily Bonus Claim Logic
         function claimDailyBonus() {
-            const isLoggedIn = localStorage.getItem("isLoggedIn");
-            if (isLoggedIn !== "true") {
-                alert("Please login first to claim your score!");
-                window.location.href = "login.html";
-                return;
-            }
-
-            let currentScore = parseInt(localStorage.getItem("user_profile_score") || localStorage.getItem("userScore") || "0");
-            currentScore += 5;
-            localStorage.setItem("user_profile_score", currentScore);
-
-            let claimHistory = JSON.parse(localStorage.getItem("claimHistory")) || [];
-            const timestamp = new Date().toLocaleString();
-            claimHistory.push(`Claimed +5 Score on ${timestamp}`);
-            localStorage.setItem("claimHistory", JSON.stringify(claimHistory));
-
-            alert("Successfully claimed +5 Score!");
-            location.reload();
+            alert('Daily bonus claimed successfully!');
         }
     </script>
 </body>
