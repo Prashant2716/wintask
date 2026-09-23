@@ -743,7 +743,11 @@
 
         function toggleFaq(element) {
             const item = element.parentElement;
-            item.classList.toggle('active');
+            // Toggle current FAQ item active state cleanly
+            const isActive = item.classList.contains('active');
+            
+            // Optional: close other open items if needed, or just toggle current
+            item.classList.toggle('active', !isActive);
         }
 
         function claimDailyBonus() {
