@@ -5,6 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>wintask.in - Welcome to Wintask</title>
 
+    <!-- Firebase App & Auth Scripts (index.html साठी) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // तुझी खरीखुरी Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAsU1dnxwlJpWGjulVgAQAvxEvuKjeuatM",
+            authDomain: "wintask-3bc6b.firebaseapp.com",
+            databaseURL: "https://wintask-3bc6b-default-rtdb.firebaseio.com",
+            projectId: "wintask-3bc6b",
+            storageBucket: "wintask-3bc6b.firebasestorage.app",
+            messagingSenderId: "1088425180704",
+            appId: "1:1088425180704:web:47f1de8127b2a7aaf6c645",
+            measurementId: "G-JQCRVKKDEZ"
+        };
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const auth = firebase.auth();
+
+        // होम पेजवर लॉगिन चेक करणे
+        window.addEventListener('DOMContentLoaded', () => {
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // जर युजर लॉगिन असेल, तर काय करायचे?
+                    console.log("User is already logged in: ", user.displayName);
+                    
+                    // जर तुझ्या index.html वर 'Login' नावाचे बटन असेल, तर त्याचा आयडी इथे वापरून बदलता येईल
+                    let loginButton = document.getElementById("authBtn");
+                    if(loginButton) {
+                        loginButton.innerText = "My Profile";
+                        loginButton.href = "myprofile.html";
+                    }
+                } else {
+                    console.log("User is not logged in on home page.");
+                }
+            });
+        });
+    </script>
+
     <!-- Ad Scripts -->
     <script src="https://pl31470221.profitableratecpmnetwork.com/f0/5d/57/f05d571f50ee97a6ffa066b40b94ffc4.js"></script>
     <script src="https://pl31470223.profitableratecpmnetwork.com/39/83/f3/3983f3499c4dd7fde8fba971a7ab2d36.js"></script>
