@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - wintask.in</title>
+    <!-- Firebase App, Auth & Realtime Database Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', 'Segoe UI', sans-serif; }
         body { 
@@ -176,14 +180,71 @@
         <button class="logout-btn" onclick="logoutUser()">Logout</button>
         <a href="index.html" class="home-btn">← Back to Home</a>
     </div>
+
     <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD...", // tumchi API key ithe taka
+            authDomain: "wintask-3bc6b.firebaseapp.com",
+            databaseURL: "https://wintask-3bc6b-default-rtdb.firebaseio.com",
+            projectId: "wintask",
+            storageBucket: "wintask.appspot.com",
+            messagingSenderId: "TUMCHI_SENDER_ID",
+            appId: "TUMCHI_APP_ID"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const auth = firebase.auth();
+
         window.addEventListener('DOMContentLoaded', () => {
-            const savedName = localStorage.getItem("userName") || localStorage.getItem("userEmail") || "User";
-            document.getElementById("username").innerText = savedName;
-            const savedScore = localStorage.getItem("userScore") || localStorage.getItem("wintask_score") || "0";
-            document.getElementById("score").innerText = savedScore;
-            const savedWallet = localStorage.getItem("userWallet") || "0";
-            document.getElementById("wallet").innerText = savedWallet;
+            // Check Google Login State and sync with Firebase Realtime Database
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // User is signed in via Google
+                    const userId = user.uid;
+                    const userEmail = user.email;
+                    const userName = user.displayName || userEmail;
+
+                    document.getElementById("username").innerText = userName;
+
+                    // Local storage fallback values
+                    const localScore = parseInt(localStorage.getItem("userScore") || localStorage.getItem("wintask_score") || "0");
+                    const localWallet = localStorage.getItem("userWallet") || "0";
+
+                    // Fetch live score from Firebase Database for this specific user
+                    db.ref('users/' + userId).on('value', (snapshot) => {
+                        const data = snapshot.val();
+                        if (data && data.score !== undefined) {
+                            document.getElementById("score").innerText = data.score;
+                            document.getElementById("wallet").innerText = data.wallet || localWallet;
+                        } else {
+                            // If first time, push local/initial score to Firebase database
+                            db.ref('users/' + userId).set({
+                                email: userEmail,
+                                name: userName,
+                                score: localScore,
+                                wallet: localWallet,
+                                lastUpdated: Date.now()
+                            });
+                            document.getElementById("score").innerText = localScore;
+                            document.getElementById("wallet").innerText = localWallet;
+                        }
+                    });
+
+                } else {
+                    // Fallback to localStorage if not authenticated via Firebase Auth yet
+                    const savedName = localStorage.getItem("userName") || localStorage.getItem("userEmail") || "User";
+                    document.getElementById("username").innerText = savedName;
+                    const savedScore = localStorage.getItem("userScore") || localStorage.getItem("wintask_score") || "0";
+                    document.getElementById("score").innerText = savedScore;
+                    const savedWallet = localStorage.getItem("userWallet") || "0";
+                    document.getElementById("wallet").innerText = savedWallet;
+                }
+            });
+
+            // Claim history load
             const historyList = document.getElementById("historyList");
             const claimHistory = JSON.parse(localStorage.getItem("claimHistory")) || JSON.parse(localStorage.getItem("wintask_history")) || [];
             if (claimHistory.length > 0) {
@@ -195,11 +256,16 @@
                 });
             }
         });
+
         function logoutUser() {
-            localStorage.removeItem("isLoggedIn");
-            localStorage.removeItem("userName");
-            localStorage.removeItem("userEmail");
-            window.location.href = "login.html";
+            auth.signOut().then(() => {
+                localStorage.removeItem("isLoggedIn");
+                localStorage.removeItem("userName");
+                localStorage.removeItem("userEmail");
+                window.location.href = "login.html";
+            }).catch((error) => {
+                console.error("Logout error: ", error);
+            });
         }
     </script>
 </body>
