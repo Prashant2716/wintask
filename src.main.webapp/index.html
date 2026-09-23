@@ -723,6 +723,27 @@
     </footer>
 
     <script>
+        // Check Login State on Page Load & Update Navbar
+        window.addEventListener('DOMContentLoaded', () => {
+            const loggedUser = localStorage.getItem('wintask_logged_in_user');
+            const authContainer = document.getElementById('authNavContainer');
+            
+            if (loggedUser && authContainer) {
+                authContainer.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="color: #00ffcc; font-weight: 700; font-size: 14px;">👤 ${loggedUser}</span>
+                        <button onclick="logoutUser()" style="background: rgba(255,0,127,0.2); border: 1px solid #ff007f; color: #ff007f; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 12px; font-weight: bold;">Logout</button>
+                    </div>
+                `;
+            }
+        });
+
+        // Logout Function
+        function logoutUser() {
+            localStorage.removeItem('wintask_logged_in_user');
+            window.location.reload();
+        }
+
         function updateDigitalClock() {
             const now = new Date();
             let hours = now.getHours();
@@ -743,10 +764,7 @@
 
         function toggleFaq(element) {
             const item = element.parentElement;
-            // Toggle current FAQ item active state cleanly
             const isActive = item.classList.contains('active');
-            
-            // Optional: close other open items if needed, or just toggle current
             item.classList.toggle('active', !isActive);
         }
 
