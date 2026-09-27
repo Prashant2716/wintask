@@ -32,25 +32,6 @@
             firebase.initializeApp(firebaseConfig);
         }
         const auth = firebase.auth();
-
-        // होम पेजवर लॉगिन चेक करणे
-        window.addEventListener('DOMContentLoaded', () => {
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    // जर युजर लॉगिन असेल, तर काय करायचे?
-                    console.log("User is already logged in: ", user.displayName);
-                    
-                    // जर तुझ्या index.html वर 'Login' नावाचे बटन असेल, तर त्याचा आयडी इथे वापरून बदलता येईल
-                    let loginButton = document.getElementById("authBtn");
-                    if(loginButton) {
-                        loginButton.innerText = "My Profile";
-                        loginButton.href = "myprofile.html";
-                    }
-                } else {
-                    console.log("User is not logged in on home page.");
-                }
-            });
-        });
     </script>
 
     <!-- Ad Scripts -->
@@ -184,22 +165,27 @@
             transition: all 0.3s;
             display: inline-block;
         }
-        .gmail-login-btn {
+        .news-nav-btn {
             display: inline-flex !important;
             align-items: center;
             justify-content: center;
             gap: 8px;
             padding: 8px 16px;
             border-radius: 20px;
-            background: #ffffff;
-            color: #222222 !important;
+            background: linear-gradient(45deg, #ff007f, #ff8c00);
+            color: #ffffff !important;
             font-size: 14px !important;
             font-weight: 800 !important;
             border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 12px rgba(255, 0, 127, 0.4);
             transition: all 0.3s ease;
             cursor: pointer;
             text-decoration: none;
+        }
+        .news-nav-btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 18px rgba(255, 0, 127, 0.7);
+            color: #ffffff !important;
         }
         .hero {
             display: flex;
@@ -606,8 +592,8 @@
             <li><a href="storypage.html">📖 Story</a></li>
             <li><a href="village.html">🏡 Village</a></li>
             <li><a href="games.html" class="games-nav-btn">🎯 Games</a></li>
-            <li id="authNavContainer">
-                <a href="login.html" class="gmail-login-btn" id="authBtn">Login</a>
+            <li>
+                <a href="news.html" class="news-nav-btn" id="newsBtn">📰 News</a>
             </li>
         </ul>
     </header>
@@ -771,27 +757,6 @@
     </footer>
 
     <script>
-        // Check Login State on Page Load & Update Navbar
-        window.addEventListener('DOMContentLoaded', () => {
-            const loggedUser = localStorage.getItem('wintask_logged_in_user');
-            const authContainer = document.getElementById('authNavContainer');
-            
-            if (loggedUser && authContainer) {
-                authContainer.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="color: #00ffcc; font-weight: 700; font-size: 14px;">👤 ${loggedUser}</span>
-                        <button onclick="logoutUser()" style="background: rgba(255,0,127,0.2); border: 1px solid #ff007f; color: #ff007f; padding: 5px 12px; border-radius: 15px; cursor: pointer; font-size: 12px; font-weight: bold;">Logout</button>
-                    </div>
-                `;
-            }
-        });
-
-        // Logout Function
-        function logoutUser() {
-            localStorage.removeItem('wintask_logged_in_user');
-            window.location.reload();
-        }
-
         function updateDigitalClock() {
             const now = new Date();
             let hours = now.getHours();
