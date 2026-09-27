@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>England vs Spain: The Evolution of a Modern Footballing Epic</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #415a77 100%);
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: #334155;
+            font-size: 1.125rem;
+        }
+        .article-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-rose-500 selection:text-white">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="bg-rose-600 text-white text-xs font-black uppercase px-2.5 py-1.5 rounded-md tracking-wider">Tactical Hub</span>
+                <span class="text-xl font-black tracking-tight text-white">Global<span class="text-rose-500">Pitch</span></span>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-sm font-semibold text-slate-300">
+                <a href="#overview" class="hover:text-rose-400 transition-colors">Overview</a>
+                <a href="#euro2024" class="hover:text-rose-400 transition-colors">Euro 2024 Final</a>
+                <a href="#tactics" class="hover:text-rose-400 transition-colors">Tactical Breakdown</a>
+                <a href="#stats" class="hover:text-rose-400 transition-colors">H2H Stats</a>
+                <a href="#future" class="hover:text-rose-400 transition-colors">The 2026 Outlook</a>
+            </nav>
+            <div>
+                <button onclick="shareArticle()" class="bg-rose-600 hover:bg-rose-700 text-white font-medium px-4 py-2 rounded-xl text-sm transition-all shadow-md shadow-rose-600/30 flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                    <span>Share Article</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-gradient text-white py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center space-x-2 bg-slate-800/80 border border-slate-700 px-3.5 py-1.5 rounded-full text-xs font-semibold text-slate-300 mb-6 backdrop-blur-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>International Football Rivalry Analysis • Updated for 2026 Season</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mb-6 leading-tight">
+                England vs. Spain: <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300">Clash of Modern Titans</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
+                From historical heavyweight bouts to the dramatic Euro 2024 showdown and looking ahead toward the 2026 horizon, dissecting the chess match between the Three Lions and La Roja.
+            </p>
+            <div class="mt-8 flex items-center justify-center space-x-6 text-sm text-slate-400 font-medium">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span>6 min read</span>
+                </div>
+                <span>•</span>
+                <div>Published by Sports Editorial Board</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Layout -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            <!-- Article Body -->
+            <article class="lg:col-span-8 bg-white p-6 sm:p-10 rounded-3xl shadow-sm border border-slate-200 article-content">
+                
+                <div id="overview">
+                    <p class="text-xl font-medium text-slate-700 leading-relaxed border-l-4 border-rose-600 pl-4 my-6 bg-slate-50 py-3 rounded-r-xl">
+                        The footballing rivalry between the England National Team and the Spain National Team has evolved into one of the most compelling tactical narratives in modern international soccer, mirroring the ongoing battle of philosophies between direct, physical power and technical, position-based supremacy.
+                    </p>
+
+                    <p>
+                        Historically defined by sporadic friendlies and tense tournament encounters, the fixture has transformed into a high-stakes litmus test for European and global dominance. When the Three Lions lock horns with La Roja, fans are treated to a masterclass in contrasting styles. England, boasting an unprecedented assembly of world-class Premier League talent, champions athletic dynamism, direct transitions, and sheer individual brilliance. On the other side, Spain continues to refine its sacred inheritance of *tiki-taka*, blending relentless positional discipline with fearless, electrifying youth talent that dominates the flanks.
+                    </p>
+                </div>
+
+                <div id="euro2024" class="mt-12">
+                    <h2>The Watershed Moment: The Euro 2024 Final</h2>
+                    <p>
+                        No chapter in this modern rivalry holds more weight than the dramatic showdown at the Olympiastadion in Berlin during the Euro 2024 final. Spain entered the match as the tournament's most fluid and exciting side under Luis de la Fuente, while Gareth Southgate’s England had engineered another resilient, hard-fought campaign to reach the ultimate match.
+                    </p>
+                    <p>
+                        The first half proved to be a tense tactical chess match, with Spain controlling possession and probing for gaps in England's low block, while England sought to exploit transitions through Jude Bellingham and Phil Foden. The deadlock was broken shortly after halftime when Lamine Yamal—then just 16 years old—slid a brilliant ball across the box for Nico Williams to fire Spain into the lead. 
+                    </p>
+                    <p>
+                        True to their tournament character, England fought back. Substitute Cole Palmer delivered a brilliant, low-driven equalizer from outside the box in the 73rd minute, injecting frantic life into the game. However, Spain’s relentless engine room prevailed. In the 86th minute, Marc Cucurella delivered a pinpoint cross met by Mikel Oyarzabal, sealing a 2-1 victory and handing Spain their record-extending fourth European Championship title.
+                    </p>
+                </div>
+
+                <!-- Interactive Mini Quiz / Poll Widget -->
+                <div class="my-10 p-6 bg-gradient-to-br from-slate-900 to-indigo-950 rounded-2xl text-white shadow-xl">
+                    <h3 class="text-xl font-bold mb-2 flex items-center space-x-2">
+                        <svg class="w-6 h-6 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        <span>Interactive Fan Poll: Next Encounter Prediction</span>
+                    </h3>
+                    <p class="text-sm text-slate-300 mb-6">Who do you think will win the next competitive fixture between these two European giants?</p>
+                    <div id="poll-container" class="space-y-3">
+                        <button onclick="vote('England')" class="w-full text-left px-4 py-3 bg-slate-800/80 hover:bg-rose-600/30 border border-slate-700 rounded-xl font-medium transition-all flex justify-between items-center group">
+                            <span>England Victory (Revenge Tour)</span>
+                            <span id="eng-votes" class="text-xs bg-slate-700 group-hover:bg-rose-600 px-2.5 py-1 rounded-lg">42%</span>
+                        </button>
+                        <button onclick="vote('Spain')" class="w-full text-left px-4 py-3 bg-slate-800/80 hover:bg-rose-600/30 border border-slate-700 rounded-xl font-medium transition-all flex justify-between items-center group">
+                            <span>Spain Victory (Continuity of Tiki-Taka)</span>
+                            <span id="esp-votes" class="text-xs bg-slate-700 group-hover:bg-rose-600 px-2.5 py-1 rounded-lg">48%</span>
+                        </button>
+                        <button onclick="vote('Draw')" class="w-full text-left px-4 py-3 bg-slate-800/80 hover:bg-rose-600/30 border border-slate-700 rounded-xl font-medium transition-all flex justify-between items-center group">
+                            <span>Hard-fought Draw / Penalties</span>
+                            <span id="draw-votes" class="text-xs bg-slate-700 group-hover:bg-rose-600 px-2.5 py-1 rounded-lg">10%</span>
+                        </button>
+                    </div>
+                    <p id="poll-feedback" class="text-xs text-rose-400 mt-3 font-semibold h-4"></p>
+                </div>
+
+                <div id="tactics" class="mt-12">
+                    <h2>Tactical Analysis: Philosophy in Motion</h2>
+                    <p>
+                        The clash between England and Spain is ultimately a tactical laboratory. Spain’s system under De la Fuente relies heavily on wide-isolations. Wingers like Lamine Yamal and Nico Williams are given absolute freedom to attack full-backs 1v1, supported by the metronomic passing rhythm of Rodri in defensive midfield. Rodri’s ability to dictate tempo suffocates opponents, forcing teams into passive mid-blocks.
+                    </p>
+                    <p>
+                        England’s tactical identity has undergone significant modernization. Moving away from rigid caution, English managers have sought to harness elite box-crashing midfielders like Jude Bellingham and creative orchestrators like Cole Palmer. The primary tactical dilemma for England has always been finding balance: how to maintain defensive solidity without sacrificing the explosive attacking output of their generational forward line. When England press aggressively in coordinated packs, they can disrupt Spain's build-up; however, if the press is broken, Spain's midfielders quickly exploit the spaces between the lines.
+                    </p>
+                </div>
+
+                <div id="future" class="mt-12">
+                    <h2>Looking Forward to 2026 and Beyond</h2>
+                    <p>
+                        As world football marches toward the 2026 FIFA World Cup across North America, both squads stand at fascinating transitional yet peak developmental phases. Spain's youth academy pipeline continues to produce world-class technicians who understand positional play from a tender age. Meanwhile, England possesses an embarrassment of riches in attacking depth, with younger talents continuously emerging through the Premier League furnace.
+                    </p>
+                    <p>
+                        Whether they meet again in the knockout stages of the World Cup or another UEFA Nations League heavyweight fixture, England versus Spain has firmly cemented its status as international football's premier modern rivalry. It is a contest where legacy, tactical evolution, and raw national pride collide on the grandest stage.
+                    </p>
+                </div>
+
+            </article>
+
+            <!-- Sidebar / Stats Box -->
+            <aside class="lg:col-span-4 space-y-8">
+                
+                <!-- Quick Stats Box -->
+                <div id="stats" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-black text-slate-900 mb-4 pb-2 border-b border-slate-100 flex items-center justify-between">
+                        <span>Head-to-Head Record</span>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-md">All-Time</span>
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-semibold text-slate-600">Total Matches Played</span>
+                            <span class="font-bold text-slate-900">27</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-semibold text-slate-600">England Wins</span>
+                            <span class="font-bold text-emerald-600">14</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-semibold text-slate-600">Spain Wins</span>
+                            <span class="font-bold text-rose-600">10</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-semibold text-slate-600">Draws</span>
+                            <span class="font-bold text-amber-600">3</span>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 bg-slate-50 p-4 rounded-2xl">
+                        <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Most Recent Competitive Meeting</div>
+                        <div class="text-sm font-bold text-slate-900">Spain 2 - 1 England</div>
+                        <div class="text-xs text-slate-500">July 14, 2024 • Euro Final (Berlin)</div>
+                    </div>
+                </div>
+
+                <!-- Key Player Matchups -->
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-black text-slate-900 mb-4 pb-2 border-b border-slate-100">Key Battlegrounds</h3>
+                    <div class="space-y-4">
+                        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                            <div class="text-xs font-bold text-rose-600 mb-1">Midfield Control</div>
+                            <div class="text-sm font-semibold text-slate-800">Jude Bellingham vs. Rodri</div>
+                            <p class="text-xs text-slate-500 mt-1">The explosive box-cracking energy of Bellingham against the serene defensive shield and metronome of Rodri.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                            <div class="text-xs font-bold text-rose-600 mb-1">Flank Duel</div>
+                            <div class="text-sm font-semibold text-slate-800">Bukayo Saka vs. Nico Williams</div>
+                            <p class="text-xs text-slate-500 mt-1">Two electric wingers capable of shifting momentum with single moments of brilliance.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter / Update Signup -->
+                <div class="bg-gradient-to-br from-rose-600 to-rose-700 p-6 rounded-3xl text-white shadow-lg shadow-rose-600/20">
+                    <h3 class="text-lg font-bold mb-2">Get Tactical Briefs</h3>
+                    <p class="text-xs text-rose-100 mb-4">Receive expert tactical previews and post-match analysis directly in your inbox ahead of the 2026 World Cup qualifiers.</p>
+                    <form onsubmit="handleSubscribe(event)" class="space-y-3">
+                        <input type="email" id="subscriber-email" placeholder="Enter your email address" required class="w-full px-4 py-3 rounded-xl bg-rose-800/60 border border-rose-500 text-white placeholder-rose-300 text-sm focus:outline-none focus:ring-2 focus:ring-white">
+                        <button type="submit" class="w-full py-3 bg-white text-rose-600 font-bold rounded-xl text-sm shadow-md hover:bg-rose-50 transition-colors">Subscribe Free</button>
+                    </form>
+                    <div id="sub-feedback" class="text-xs text-rose-200 mt-2 font-medium"></div>
+                </div>
+
+            </aside>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between">
+            <div class="flex items-center space-x-3 mb-4 sm:mb-0">
+                <span class="text-lg font-black text-white tracking-tight">Global<span class="text-rose-500">Pitch</span></span>
+                <span class="text-xs text-slate-500">© 2026 Global Pitch Editorial. All rights reserved.</span>
+            </div>
+            <div class="flex space-x-6 text-sm">
+                <a href="#overview" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#overview" class="hover:text-white transition-colors">Terms of Service</a>
+                <a href="#overview" class="hover:text-white transition-colors">Contact Editorial</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        function vote(team) {
+            const feedback = document.getElementById('poll-feedback');
+            feedback.textContent = `Thank you for voting! Your pick (${team}) has been recorded.`;
+            // Subtle simulated vote update
+            if(team === 'England') {
+                document.getElementById('eng-votes').textContent = '43%';
+            } else if(team === 'Spain') {
+                document.getElementById('esp-votes').textContent = '49%';
+            } else {
+                document.getElementById('draw-votes').textContent = '11%`';
+            }
+        }
+
+        function handleSubscribe(e) {
+            e.preventDefault();
+            const email = document.getElementById('subscriber-email').value;
+            const feedback = document.getElementById('sub-feedback');
+            if(email) {
+                feedback.textContent = 'Successfully subscribed to tactical briefings!';
+                document.getElementById('subscriber-email').value = '';
+            }
+        }
+
+        function shareArticle() {
+            if(navigator.clipboard) {
+                document.execCommand('copy');
+                alertBox('Article link copied to clipboard!');
+            } else {
+                alertBox('Sharing feature ready.');
+            }
+        }
+
+        function alertBox(message) {
+            // Custom non-intrusive notification banner instead of alert()
+            const banner = document.createElement('div');
+            banner.className = 'fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 text-sm font-medium animate-bounce';
+            banner.textContent = message;
+            document.body.appendChild(banner);
+            setTimeout(() => {
+                banner.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
