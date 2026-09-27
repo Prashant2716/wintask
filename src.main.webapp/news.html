@@ -38,7 +38,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <span class="bg-rose-600 text-white text-xs font-black uppercase px-2.5 py-1.5 rounded-md tracking-wider">Tactical Hub</span>
-                <span class="text-xl font-black tracking-tight text-white">Global<span class="text-rose-500">Pitch</span></span>
+                <span class="text-xl font-black tracking-tight text-white">wintask<span class="text-rose-500">.in</span></span>
             </div>
             <nav class="hidden md:flex space-x-8 text-sm font-semibold text-slate-300">
                 <a href="#overview" class="hover:text-rose-400 transition-colors">Overview</a>
@@ -94,7 +94,7 @@
                     </p>
 
                     <p>
-                        Historically defined by sporadic friendlies and tense tournament encounters, the fixture has transformed into a high-stakes litmus test for European and global dominance. When the Three Lions lock horns with La Roja, fans are treated to a masterclass in contrasting styles. England, boasting an unprecedented assembly of world-class Premier League talent, champions athletic dynamism, direct transitions, and sheer individual brilliance. On the other side, Spain continues to refine its sacred inheritance of *tiki-taka*, blending relentless positional discipline with fearless, electrifying youth talent that dominates the flanks.
+                        Historically defined by sporadic friendlies and tense tournament encounters, the fixture has transformed into a high-stakes litmus test for European and global dominance. When the Three Lions lock horns with La Roja, fans are treated to a masterclass in contrasting styles. England, boasting an unprecedented assembly of world-class Premier League talent, champions athletic dynamism, direct transitions, and sheer individual brilliance. On the other side, Spain continues to refine its sacred inheritance of <em>tiki-taka</em>, blending relentless positional discipline with fearless, electrifying youth talent that dominates the flanks.
                     </p>
                 </div>
 
@@ -228,8 +228,8 @@
     <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between">
             <div class="flex items-center space-x-3 mb-4 sm:mb-0">
-                <span class="text-lg font-black text-white tracking-tight">Global<span class="text-rose-500">Pitch</span></span>
-                <span class="text-xs text-slate-500">© 2026 Global Pitch Editorial. All rights reserved.</span>
+                <span class="text-lg font-black text-white tracking-tight">wintask<span class="text-rose-500">.in</span></span>
+                <span class="text-xs text-slate-500">© 2026 wintask.in Editorial. All rights reserved.</span>
             </div>
             <div class="flex space-x-6 text-sm">
                 <a href="#overview" class="hover:text-white transition-colors">Privacy Policy</a>
@@ -250,7 +250,7 @@
             } else if(team === 'Spain') {
                 document.getElementById('esp-votes').textContent = '49%';
             } else {
-                document.getElementById('draw-votes').textContent = '11%`';
+                document.getElementById('draw-votes').textContent = '11%';
             }
         }
 
@@ -266,7 +266,7 @@
 
         function shareArticle() {
             if(navigator.clipboard) {
-                document.execCommand('copy');
+                navigator.clipboard.writeText(window.location.href);
                 alertBox('Article link copied to clipboard!');
             } else {
                 alertBox('Sharing feature ready.');
