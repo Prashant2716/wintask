@@ -6,7 +6,7 @@
     <title>3D City Bike Racing - wintask.in</title>
     <script src="https://pl31470221.profitableratecpmnetwork.com/f0/5d/57/f05d571f50ee97a6ffa066b40b94ffc4.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; user-select: none; }
         body { background: #0b091a; color: #fff; overflow: hidden; height: 100vh; }
         
         #canvas-container { width: 100vw; height: 100vh; display: block; }
@@ -17,12 +17,23 @@
         .home-btn { position: absolute; top: 20px; right: 20px; background: linear-gradient(45deg, #ff007f, #7928ca); color: #fff; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: bold; border: none; z-index: 10; transition: 0.3s; }
         .home-btn:hover { transform: scale(1.05); }
 
+        /* Mobile On-Screen Controls */
+        .mobile-controls { position: absolute; bottom: 80px; width: 100%; display: flex; justify-content: space-between; padding: 0 20px; z-index: 15; pointer-events: none; }
+        .control-group-left, .control-group-right { display: flex; gap: 15px; pointer-events: auto; }
+        .ctrl-btn { width: 65px; height: 65px; background: rgba(0, 255, 204, 0.2); border: 2px solid #00ffcc; color: #fff; font-size: 24px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; outline: none; touch-action: manipulation; transition: 0.1s; }
+        .ctrl-btn:active, .ctrl-btn.active { background: #00ffcc; color: #000; transform: scale(0.95); box-shadow: 0 0 15px #00ffcc; }
+
         /* Start / Game Over Screens */
         .screen-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 8, 25, 0.92); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 20; text-align: center; padding: 20px; }
         .screen-overlay h1 { font-size: 48px; color: #00ffcc; margin-bottom: 15px; text-shadow: 0 0 20px #00ffcc; }
         .screen-overlay p { font-size: 18px; color: #ccc; margin-bottom: 25px; max-width: 600px; line-height: 1.5; }
         .action-btn { background: linear-gradient(45deg, #ff007f, #7928ca); color: #fff; border: none; padding: 15px 40px; border-radius: 25px; font-size: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 0 15px rgba(255,0,127,0.5); }
         .action-btn:hover { transform: scale(1.08); box-shadow: 0 0 25px #ff007f; }
+
+        @media (max-width: 768px) {
+            .controls-info { display: none; } /* Hide PC keyboard instructions on mobile */
+            .screen-overlay h1 { font-size: 32px; }
+        }
     </style>
 </head>
 <body>
@@ -31,7 +42,19 @@
     <a href="games.html" class="home-btn">← Back to Games</a>
 
     <div class="controls-info">
-        Controls: <b>W / Up Arrow</b> (Accelerate) | <b>A / D / Left / Right</b> (Steer) | <b>S / Down</b> (Brake)
+        PC Controls: <b>W / Up</b> (Accelerate) | <b>A / D / Left / Right</b> (Steer) | <b>S / Down</b> (Brake)
+    </div>
+
+    <!-- Mobile On-Screen Buttons -->
+    <div class="mobile-controls">
+        <div class="control-group-left">
+            <button class="ctrl-btn" id="leftBtn">◀</button>
+            <button class="ctrl-btn" id="rightBtn">▶</button>
+        </div>
+        <div class="control-group-right">
+            <button class="ctrl-btn" id="brakeBtn">🔻</button>
+            <button class="ctrl-btn" id="accelBtn">🚀</button>
+        </div>
     </div>
 
     <!-- Start Screen -->
@@ -93,6 +116,8 @@
             window.addEventListener('resize', onWindowResize);
             window.addEventListener('keydown', (e) => handleKey(e, true));
             window.addEventListener('keyup', (e) => handleKey(e, false));
+
+            setupMobileControls();
         }
 
         // Build 3D City Environment with Detailed Buildings & Trees instead of blocks
@@ -191,6 +216,25 @@
             if (e.key === 's' || e.key === 'ArrowDown') keys.s = isDown;
             if (e.key === 'a' || e.key === 'ArrowLeft') keys.a = isDown;
             if (e.key === 'd' || e.key === 'ArrowRight') keys.d = isDown;
+        }
+
+        // Mobile Touch Controls Setup
+        function setupMobileControls() {
+            const bindTouch = (btnId, keyName) => {
+                const btn = document.getElementById(btnId);
+                const setKey = (val) => { keys[keyName] = val; if(val) btn.classList.add('active'); else btn.classList.remove('active'); };
+
+                btn.addEventListener('touchstart', (e) => { e.preventDefault(); setKey(true); });
+                btn.addEventListener('touchend', (e) => { e.preventDefault(); setKey(false); });
+                btn.addEventListener('mousedown', () => setKey(true));
+                btn.addEventListener('mouseup', () => setKey(false));
+                btn.addEventListener('mouseleave', () => setKey(false));
+            };
+
+            bindTouch('leftBtn', 'a');
+            bindTouch('rightBtn', 'd');
+            bindTouch('accelBtn', 'w');
+            bindTouch('brakeBtn', 's');
         }
 
         function startGame() {
