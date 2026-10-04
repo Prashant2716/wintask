@@ -535,6 +535,26 @@
     </div>
 
     <script>
+        // Digital Watch Functionality
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            const watchElement = document.getElementById('digitalWatch');
+            if (watchElement) {
+                watchElement.innerText = timeString;
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
         function toggleFaq(element) {
             element.parentElement.classList.toggle('active');
         }
