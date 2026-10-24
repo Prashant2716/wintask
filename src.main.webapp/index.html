@@ -145,6 +145,24 @@
             color: #ff007f;
             text-shadow: 0 0 10px #ff007f;
         }
+        .radha-jap-btn {
+            background: linear-gradient(45deg, #ff9900, #ff007f);
+            color: #ffffff !important;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px !important;
+            font-weight: 800 !important;
+            box-shadow: 0 0 12px rgba(255, 153, 0, 0.6);
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            border: 1px solid #ffd700;
+        }
+        .radha-jap-btn:hover {
+            opacity: 0.95;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.9);
+            transform: scale(1.05);
+        }
         .china-ai-btn {
             background: linear-gradient(45deg, #ff8c00, #ff007f);
             color: #ffffff !important;
@@ -633,6 +651,7 @@
         </div>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
+            <li><a href="Radhanaap.html" class="radha-jap-btn">🌸 Radha Jap</a></li>
             <li><a href="chinaai.html" class="china-ai-btn">🤖 Chinese AI</a></li>
             <li><a href="storypage.html">📖 Story</a></li>
             <li><a href="village.html">🏡 Village</a></li>
@@ -650,7 +669,7 @@
     </section>
 
     <!-- Side-by-Side Posters Section (एका बाजूला ३ पोस्टर्स पर्यंत बसेल अशी रचना) -->
- <div class="posters-wrapper">
+    <div class="posters-wrapper">
         
         <!-- Poster 1: Earn Money Online (Linked to online.html) -->
         <div style="background: rgba(20, 22, 35, 0.9); border: 2px solid #00ffcc; border-radius: 20px; padding: 15px; backdrop-filter: blur(10px); box-shadow: 0 0 20px rgba(0, 255, 204, 0.2); display: flex; flex-direction: column; justify-content: space-between;">
@@ -695,7 +714,7 @@
             </div>
         </div>
 
-        <!-- Poster 3 (Optional / 3rd Column ready for future use or can add here) -->
+        <!-- Poster 3 -->
         <div style="background: rgba(20, 22, 35, 0.9); border: 2px solid #00ffcc; border-radius: 20px; padding: 15px; backdrop-filter: blur(10px); display: flex; flex-direction: column; justify-content: space-between;">
             <div>
                 <a href="games.html" style="text-decoration: none;">
@@ -860,47 +879,39 @@
         <div class="footer-content">
             <div class="footer-info">
                 <h3>wintask.in</h3>
-                <p>Your ultimate destination to play games, achieve targets, and reach exciting goals.</p>
+                <p>Your ultimate gaming & task platform.</p>
             </div>
             <div class="footer-links-right">
-                <a href="privacy.html" class="footer-btn privacy-btn">🔒 Privacy Policy</a>
-                <a href="terms.html" class="footer-btn">Terms & Conditions</a>
-                <a href="about.html" class="footer-btn">About Us</a>
-                <a href="contact.html" class="footer-btn">Contact Us</a>
+                <a href="Radhanaap.html" class="footer-btn">🌸 Radha Naam Jaap</a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 wintask.in. All rights reserved.</p>
+            &copy; 2026 wintask.in - All Rights Reserved.
         </div>
     </footer>
 
     <script>
-        function updateDigitalClock() {
+        // Digital Watch Functionality
+        function updateWatch() {
             const now = new Date();
-            let hours = now.getHours();
-            let minutes = now.getMinutes();
-            let seconds = now.getSeconds();
-            
-            hours = hours < 10 ? "0" + hours : hours;
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-            
-            const watchElem = document.getElementById("digitalWatch");
-            if(watchElem) {
-                watchElem.innerText = `${hours}:${minutes}:${seconds}`;
+            const timeString = now.toLocaleTimeString();
+            const watchElem = document.getElementById('digitalWatch');
+            if (watchElem) {
+                watchElem.textContent = timeString;
             }
         }
-        setInterval(updateDigitalClock, 1000);
-        updateDigitalClock();
+        setInterval(updateWatch, 1000);
+        updateWatch();
 
+        // FAQ Toggle Functionality
         function toggleFaq(element) {
             const item = element.parentElement;
-            const isActive = item.classList.contains('active');
-            item.classList.toggle('active', !isActive);
+            item.classList.toggle('active');
         }
 
+        // Daily Bonus Claim Functionality
         function claimDailyBonus() {
-            alert('Daily bonus claimed successfully!');
+            alert("Congratulations! You claimed +5 Bonus Score.");
         }
     </script>
 </body>
