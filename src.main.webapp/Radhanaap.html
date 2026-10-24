@@ -428,7 +428,7 @@
       return `${year}-${month}-${day}`;
     }
 
-    // Helper: Get Offset Date Key (0 = today, -1 = yesterday, -2 = day before, etc.)
+    // Helper: Get Offset Date Key
     function getOffsetDateKey(offsetDays) {
       const d = new Date();
       d.setDate(d.getDate() + offsetDays);
@@ -445,7 +445,7 @@
       return num.toString().split('').map(digit => marathiNumbers[digit] || digit).join('');
     }
 
-    // Format Date Key to Marathi Display Date (e.g. 24 ऑक्टोबर 2026)
+    // Format Date Key to Marathi Display Date
     function formatMarathiDate(dateKey) {
       const months = ['जानेवारी', 'फेब्रुवारी', 'मार्च', 'एप्रिल', 'मे', 'जून', 'जुलै', 'ऑगस्ट', 'सप्टेंबर', 'ऑक्टोबर', 'नोव्हेंबर', 'डिसेंबर'];
       const parts = dateKey.split('-');
@@ -456,7 +456,7 @@
       return `${toMarathiDigits(dayNum)} ${months[monthNum] || ''} ${toMarathiDigits(yearNum)}`;
     }
 
-    // Audio Synthesis Initializer
+    // Audio Context Initializer
     function initAudioContext() {
       if (!audioCtx) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -467,43 +467,49 @@
       }
     }
 
-    // Play Bell Sound
-    function playBellSound() {
+    // ⭐ NEW: "Radha Radha" Voice Pronunciation using SpeechSynthesis (Fallback to Sweet Bell tone if speech synthesis isn't loaded)
+    function playRadhaVoice() {
       if (!isTapSoundOn) return;
+      try {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel(); // Stop previous overlap
+          const utterance = new SpeechSynthesisUtterance("राधा राधा");
+          utterance.lang = 'hi-IN'; // Hindi/Marathi compatible voice tone
+          utterance.rate = 1.1; // Smooth soothing speed
+          utterance.pitch = 1.2; // Soothing devotional high pitch
+          window.speechSynthesis.speak(utterance);
+        } else {
+          playBellSound(); // Fallback if browser doesn't support speech
+        }
+
+        if ('vibrate' in navigator) navigator.vibrate(15);
+      } catch (e) {
+        console.log("Voice play error:", e);
+      }
+    }
+
+    // Fallback Bell Sound
+    function playBellSound() {
       try {
         initAudioContext();
         const now = audioCtx.currentTime;
-
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        const oscHarmonic = audioCtx.createOscillator();
-        const gainHarmonic = audioCtx.createGain();
 
         osc.type = 'sine';
         osc.frequency.setValueAtTime(880, now);
-        osc.frequency.exponentialRampToValueAtTime(440, now + 1.2);
+        osc.frequency.exponentialRampToValueAtTime(440, now + 0.8);
 
-        gain.gain.setValueAtTime(0.35, now);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
-
-        oscHarmonic.type = 'sine';
-        oscHarmonic.frequency.setValueAtTime(1760, now);
-        gainHarmonic.gain.setValueAtTime(0.15, now);
-        gainHarmonic.gain.exponentialRampToValueAtTime(0.0001, now + 0.8);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.8);
 
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-        oscHarmonic.connect(gainHarmonic);
-        gainHarmonic.connect(audioCtx.destination);
 
         osc.start(now);
-        oscHarmonic.start(now);
-        osc.stop(now + 1.25);
-        oscHarmonic.stop(now + 0.85);
-
-        if ('vibrate' in navigator) navigator.vibrate(12);
+        osc.stop(now + 0.9);
       } catch (e) {
-        console.log("Audio play error:", e);
+        console.log("Bell audio error:", e);
       }
     }
 
@@ -584,7 +590,6 @@
     function loadSavedData() {
       try {
         const todayKey = getTodayKey();
-
         const savedCurrent = localStorage.getItem('radha_jaap_current');
         const savedMala = localStorage.getItem('radha_jaap_mala');
         const savedLifetime = localStorage.getItem('radha_jaap_lifetime');
@@ -600,9 +605,7 @@
           dailyHistory = {};
         }
 
-        // Check or initialize Today's count from history
         todayJaap = dailyHistory[todayKey] || 0;
-
       } catch (e) {
         console.log("LocalStorage load error:", e);
       }
@@ -683,7 +686,6 @@
       const todayKey = getTodayKey();
       document.getElementById('todayDateLabel').innerText = formatMarathiDate(todayKey);
 
-      // Counts
       document.getElementById('todayJaapCount').innerText = toMarathiDigits(todayJaap);
       document.getElementById('todayMalaCount').innerText = toMarathiDigits(Math.floor(todayJaap / 108));
       
@@ -691,7 +693,6 @@
       document.getElementById('totalMalaCount').innerText = toMarathiDigits(totalMala);
       document.getElementById('totalLifetimeCount').innerText = toMarathiDigits(totalLifetime);
 
-      // Progress Updates
       const percentage = Math.min(Math.round((currentBead / MALA_TARGET) * 100), 100);
       document.getElementById('progressPercentage').innerText = toMarathiDigits(percentage) + '%';
       document.getElementById('linearProgressBar').style.width = `${percentage}%`;
@@ -700,7 +701,6 @@
       const offset = CIRCLE_CIRCUMFERENCE - (currentBead / MALA_TARGET) * CIRCLE_CIRCUMFERENCE;
       ring.style.strokeDashoffset = offset;
 
-      // Quick Snippet Update
       const yesterdayKey = getOffsetDateKey(-1);
       const dayBeforeKey = getOffsetDateKey(-2);
 
@@ -717,10 +717,9 @@
       todayJaap++;
       totalLifetime++;
 
-      playBellSound();
+      playRadhaVoice(); // ⭐ Here we call the new "Radha Radha" voice function
       createVisualRipple(e);
 
-      // Mala Completion Check (108)
       if (currentBead >= MALA_TARGET) {
         totalMala++;
         currentBead = 0;
@@ -762,99 +761,23 @@
           particleCount: 80,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ['#FFD700', '#FF6F00', '#ffffff', '#FF4500']
+          colors: ['#FFD700', '#FF6F00', '#FFA500']
         });
-
-        setTimeout(() => {
-          confetti({
-            particleCount: 50,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0 },
-            colors: ['#FFD700', '#FFA500']
-          });
-          confetti({
-            particleCount: 50,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1 },
-            colors: ['#FFD700', '#FFA500']
-          });
-        }, 250);
       }
     }
 
-    // Reset Modal Dialog Handlers
-    function openResetModal() {
-      const modal = document.getElementById('resetModal');
-      const card = document.getElementById('resetModalCard');
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      card.classList.remove('scale-95');
-      card.classList.add('scale-100');
-    }
-
-    function closeResetModal() {
-      const modal = document.getElementById('resetModal');
-      const card = document.getElementById('resetModalCard');
-      modal.classList.add('opacity-0', 'pointer-events-none');
-      card.classList.remove('scale-100');
-      card.classList.add('scale-95');
-    }
-
-    // Reset Today Only
-    function resetTodayOnly() {
-      const todayKey = getTodayKey();
-      todayJaap = 0;
-      dailyHistory[todayKey] = 0;
-      saveData();
-      updateUI();
-      closeResetModal();
-    }
-
-    // Reset Entire App Data
-    function resetAllData() {
-      currentBead = 0;
-      totalMala = 0;
-      totalLifetime = 0;
-      todayJaap = 0;
-      dailyHistory = {};
-      saveData();
-      updateUI();
-      closeResetModal();
-    }
-
-    // History Modal Controls
-    function openHistoryModal() {
-      renderHistoryModal();
-      const modal = document.getElementById('historyModal');
-      const card = document.getElementById('historyModalCard');
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      card.classList.remove('scale-95');
-      card.classList.add('scale-100');
-    }
-
-    function closeHistoryModal() {
-      const modal = document.getElementById('historyModal');
-      const card = document.getElementById('historyModalCard');
-      modal.classList.add('opacity-0', 'pointer-events-none');
-      card.classList.remove('scale-100');
-      card.classList.add('scale-95');
-    }
-
-    // Event Listener Binding
-    window.addEventListener('DOMContentLoaded', () => {
+    // Event Listeners Setup
+    document.addEventListener('DOMContentLoaded', () => {
       loadSavedData();
       updateUI();
 
       const jaapBtn = document.getElementById('jaapButton');
+      jaapBtn.addEventListener('click', handleJaapTap);
+      jaapBtn.addEventListener('touchstart', handleJaapTap, { passive: false });
 
-      // Fast responsive touch interaction
-      jaapBtn.addEventListener('pointerdown', (e) => {
-        handleJaapTap(e);
-      });
-
-      // Sound Toggles
-      document.getElementById('toggleTapSoundBtn').addEventListener('click', () => {
+      // Sound Toggle
+      const soundBtn = document.getElementById('toggleTapSoundBtn');
+      soundBtn.addEventListener('click', () => {
         isTapSoundOn = !isTapSoundOn;
         const icon = document.getElementById('tapSoundIcon');
         const text = document.getElementById('tapSoundText');
@@ -862,30 +785,74 @@
           icon.className = "fa-solid fa-volume-high text-amber-400 text-xs";
           text.innerText = "ध्वनी: चालू";
         } else {
-          icon.className = "fa-solid fa-volume-xmark text-amber-400/50 text-xs";
+          icon.className = "fa-solid fa-volume-xmark text-red-400 text-xs";
           text.innerText = "ध्वनी: बंद";
         }
       });
 
+      // BGM Toggle
       document.getElementById('toggleBgmBtn').addEventListener('click', toggleBGM);
 
-      // History Modal Events
-      document.getElementById('openHistoryModalBtn').addEventListener('click', openHistoryModal);
+      // History Modal Elements
+      const historyModal = document.getElementById('historyModal');
+      const historyCard = document.getElementById('historyModalCard');
+
+      document.getElementById('openHistoryModalBtn').addEventListener('click', () => {
+        renderHistoryModal();
+        historyModal.classList.remove('opacity-0', 'pointer-events-none');
+        historyCard.classList.remove('scale-95');
+        historyCard.classList.add('scale-100');
+      });
+
+      const closeHistoryModal = () => {
+        historyCard.classList.remove('scale-100');
+        historyCard.classList.add('scale-95');
+        historyModal.classList.add('opacity-0', 'pointer-events-none');
+      };
+
       document.getElementById('closeHistoryModalBtn').addEventListener('click', closeHistoryModal);
       document.getElementById('closeHistoryModalFooterBtn').addEventListener('click', closeHistoryModal);
 
-      // Reset Modal Events
-      document.getElementById('resetBtn').addEventListener('click', openResetModal);
-      document.getElementById('cancelResetBtn').addEventListener('click', closeResetModal);
-      document.getElementById('resetTodayOnlyBtn').addEventListener('click', resetTodayOnly);
-      document.getElementById('confirmResetAllBtn').addEventListener('click', resetAllData);
+      // Reset Modal Elements
+      const resetModal = document.getElementById('resetModal');
+      const resetCard = document.getElementById('resetModalCard');
 
-      // Disable double tap zoom on mobile browsers
-      document.addEventListener('touchstart', (e) => {
-        if (e.touches.length > 1) {
-          e.preventDefault();
-        }
-      }, { passive: false });
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        resetModal.classList.remove('opacity-0', 'pointer-events-none');
+        resetCard.classList.remove('scale-95');
+        resetCard.classList.add('scale-100');
+      });
+
+      const closeResetModal = () => {
+        resetCard.classList.remove('scale-100');
+        resetCard.classList.add('scale-95');
+        resetModal.classList.add('opacity-0', 'pointer-events-none');
+      };
+
+      document.getElementById('cancelResetBtn').addEventListener('click', closeResetModal);
+
+      // Reset Today Only
+      document.getElementById('resetTodayOnlyBtn').addEventListener('click', () => {
+        const todayKey = getTodayKey();
+        todayJaap = 0;
+        currentBead = 0;
+        dailyHistory[todayKey] = 0;
+        saveData();
+        updateUI();
+        closeResetModal();
+      });
+
+      // Reset All Data
+      document.getElementById('confirmResetAllBtn').addEventListener('click', () => {
+        localStorage.clear();
+        currentBead = 0;
+        totalMala = 0;
+        totalLifetime = 0;
+        todayJaap = 0;
+        dailyHistory = {};
+        updateUI();
+        closeResetModal();
+      });
     });
   </script>
 </body>
