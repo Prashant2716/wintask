@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>॥ श्री राधा नाम जप ॥</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Rozha One & Tiro Devanagari Marathi -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Tiro+Devanagari+Marathi:ital@0;1&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti for Celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            saffron: {
+              50: '#fffbf0',
+              100: '#fef3c7',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              800: '#92400e',
+              900: '#78350f',
+            },
+            sacredGold: '#D4AF37',
+            deepSaffron: '#FF6F00',
+          },
+          fontFamily: {
+            marathiTitle: ['"Rozha One"', 'serif'],
+            marathiText: ['"Tiro Devanagari Marathi"', 'serif'],
+            sans: ['Poppins', 'sans-serif'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'spin-slow': 'spin 25s linear infinite',
+            'float': 'float 4s ease-in-out infinite',
+            'glow': 'glow 2s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-8px)' },
+            },
+            glow: {
+              '0%': { filter: 'drop-shadow(0 0 10px rgba(212, 175, 55, 0.4))' },
+              '100%': { filter: 'drop-shadow(0 0 25px rgba(255, 111, 0, 0.8))' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Global Styles & Touch Adjustments */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #2D0A00 0%, #1A0300 60%, #0D0000 100%);
+      font-family: 'Tiro Devanagari Marathi', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      touch-action: manipulation;
+    }
+
+    /* Sacred Mandala Rotator Background */
+    .mandala-bg {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cpath fill='%23D4AF37' fill-opacity='0.05' d='M100 0 L115 70 L185 30 L140 90 L200 100 L140 110 L185 170 L115 130 L100 200 L85 130 L15 170 L60 110 L0 100 L60 90 L15 30 L85 70 Z'/%3E%3C/svg%3E");
+    }
+
+    /* Glassmorphism Cards */
+    .devotional-card {
+      background: rgba(35, 12, 5, 0.78);
+      backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(212, 175, 55, 0.35);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 111, 0, 0.1);
+    }
+
+    /* Jaap Tap Button Glow & Pressed FX */
+    .jaap-btn {
+      background: radial-gradient(circle, #ff8c00 0%, #d97706 50%, #993d00 100%);
+      box-shadow: 0 0 35px rgba(255, 140, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.6), inset 0 -4px 8px rgba(0, 0, 0, 0.4);
+      transition: transform 0.08s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease;
+    }
+
+    .jaap-btn:active {
+      transform: scale(0.94);
+      box-shadow: 0 0 18px rgba(255, 140, 0, 0.8), inset 0 4px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Progress Ring Smoothness */
+    .progress-ring-circle {
+      transition: stroke-dashoffset 0.25s ease-in-out, stroke 0.3s;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+
+    /* Custom Scrollbar for Modal History */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(20, 5, 0, 0.5);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.4);
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="text-amber-100 flex flex-col justify-between items-center min-h-screen relative px-4 py-3 mandala-bg">
+
+  <!-- Background Decorative Ambient Lights -->
+  <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-600/20 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
+  <div class="fixed bottom-10 right-10 w-72 h-72 bg-orange-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+  <!-- Header Section -->
+  <header class="w-full max-w-md text-center pt-1 pb-1 relative z-10 flex flex-col items-center">
+    <div class="flex items-center justify-center gap-3 text-sacredGold text-sm mb-1 opacity-90">
+      <i class="fa-solid fa-om text-lg animate-spin-slow"></i>
+      <span class="tracking-widest text-xs font-semibold uppercase">नित्य राधा नाम साधना</span>
+      <i class="fa-solid fa-om text-lg animate-spin-slow"></i>
+    </div>
+
+    <h1 class="font-marathiTitle text-3xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-sacredGold to-yellow-400 drop-shadow-[0_2px_10px_rgba(212,175,55,0.5)] font-bold tracking-wide">
+      ॥ श्री राधा नाम जप ॥
+    </h1>
+
+    <p class="text-amber-200/80 text-xs sm:text-sm mt-0.5 font-light flex items-center gap-1">
+      <span class="inline-block w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+      राधा नाम संकीर्तन | १०८ मण्यांची जपमाला
+    </p>
+  </header>
+
+  <!-- Main Display & Controls -->
+  <main class="w-full max-w-md flex flex-col items-center my-auto py-2 z-10 gap-3">
+
+    <!-- Primary Daily Stat Banner (आजचा जप) -->
+    <div class="w-full devotional-card rounded-2xl p-3 flex items-center justify-between border border-amber-400/40 bg-gradient-to-r from-amber-950/60 via-amber-900/40 to-amber-950/60">
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 text-lg">
+          <i class="fa-solid fa-sun"></i>
+        </div>
+        <div>
+          <span class="text-xs text-amber-300/80 font-medium block">आजचा एकूण जप</span>
+          <span class="text-[11px] text-amber-200/60 font-sans" id="todayDateLabel">--</span>
+        </div>
+      </div>
+      <div class="text-right">
+        <span id="todayJaapCount" class="font-marathiTitle text-3xl text-amber-300 font-bold drop-shadow">०</span>
+        <span class="text-xs text-amber-400/90 block -mt-1 font-sans">जप (<span id="todayMalaCount">०</span> माळा)</span>
+      </div>
+    </div>
+
+    <!-- Secondary Lifetime Stat Cards Grid -->
+    <div class="w-full grid grid-cols-2 gap-3">
+      <!-- Total Lifetime Malas -->
+      <div class="devotional-card rounded-xl p-2.5 flex flex-col items-center justify-center text-center relative overflow-hidden border border-amber-500/30">
+        <span class="text-[11px] text-amber-300/80 font-medium mb-0.5">एकूण पूर्ण माला</span>
+        <div class="flex items-baseline gap-1">
+          <span id="totalMalaCount" class="font-marathiTitle text-2xl text-amber-300 font-bold drop-shadow">०</span>
+          <span class="text-xs text-amber-400/90">माला</span>
+        </div>
+      </div>
+
+      <!-- Lifetime Total Jaap -->
+      <div class="devotional-card rounded-xl p-2.5 flex flex-col items-center justify-center text-center relative overflow-hidden border border-amber-500/30">
+        <span class="text-[11px] text-amber-300/80 font-medium mb-0.5">सर्वकालीन एकूण जप</span>
+        <div class="flex items-baseline gap-1">
+          <span id="totalLifetimeCount" class="font-marathiTitle text-2xl text-yellow-400 font-bold drop-shadow">०</span>
+          <span class="text-xs text-amber-400/90">वेळा</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Central Interactive Bead Counter Circle -->
+    <div class="relative flex items-center justify-center my-1">
+      <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
+        <svg class="w-full h-full transform -rotate-90 filter drop-shadow-[0_0_12px_rgba(212,175,55,0.3)]" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="42" stroke="rgba(212, 175, 55, 0.15)" stroke-width="5" fill="transparent" />
+          <circle 
+            id="progressRing"
+            class="progress-ring-circle"
+            cx="50" cy="50" r="42" 
+            stroke="url(#goldGradient)" 
+            stroke-width="5.5" 
+            stroke-linecap="round"
+            fill="transparent" 
+            stroke-dasharray="263.89" 
+            stroke-dashoffset="263.89" 
+          />
+          <defs>
+            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFD700" />
+              <stop offset="50%" stop-color="#FF6F00" />
+              <stop offset="100%" stop-color="#D4AF37" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <!-- Tap Jaap Button -->
+        <button 
+          id="jaapButton" 
+          aria-label="राधा नाम जप करण्यासाठी येथे स्पर्श करा"
+          class="jaap-btn absolute w-52 h-52 sm:w-56 sm:h-56 rounded-full flex flex-col items-center justify-center cursor-pointer border-4 border-amber-300/80 outline-none select-none active:scale-95 transition-all shadow-2xl group overflow-hidden"
+        >
+          <div class="absolute inset-0 bg-radial from-amber-300/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity"></div>
+          <div class="absolute -top-12 -bottom-12 w-12 bg-white/20 rotate-12 blur-md transition-all duration-700 ease-in-out group-hover:translate-x-48 pointer-events-none"></div>
+
+          <span class="text-[11px] uppercase tracking-widest text-amber-100/90 font-medium mb-0.5 drop-shadow">स्पर्श करा</span>
+          
+          <span class="font-marathiTitle text-4xl sm:text-5xl text-white font-black tracking-wide drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)] my-0.5 animate-glow">
+            श्री राधा
+          </span>
+
+          <div class="mt-1.5 px-3 py-0.5 bg-black/40 backdrop-blur-md rounded-full border border-amber-400/40 text-amber-200 text-xs font-semibold flex items-center gap-1 shadow-inner">
+            <i class="fa-solid fa-dharmachakra text-amber-400 text-[10px]"></i>
+            <span id="currentBeadDisplay" class="font-marathiTitle text-base text-yellow-300">०</span> 
+            <span class="text-[10px] opacity-75">/ १०८ मणी</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Current Mala Progress Bar -->
+    <div class="w-full devotional-card rounded-xl p-3 flex flex-col gap-1.5 border border-amber-500/30">
+      <div class="flex justify-between items-center text-xs text-amber-200">
+        <span class="flex items-center gap-1.5 font-medium">
+          <i class="fa-solid fa-spinner text-amber-400"></i> चालू माला प्रगती
+        </span>
+        <span id="progressPercentage" class="font-bold text-amber-300">०%</span>
+      </div>
+
+      <div class="w-full h-2.5 bg-black/50 rounded-full overflow-hidden p-0.5 border border-amber-500/20">
+        <div 
+          id="linearProgressBar" 
+          class="h-full bg-gradient-to-r from-amber-500 via-sacredGold to-yellow-300 rounded-full transition-all duration-200 shadow-[0_0_10px_rgba(255,165,0,0.8)]"
+          style="width: 0%"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Daily Quick Summary Snippet (आज, काल, परवा) -->
+    <div class="w-full devotional-card rounded-xl p-3 border border-amber-500/30 flex flex-col gap-2">
+      <div class="flex items-center justify-between border-b border-amber-500/20 pb-1.5">
+        <span class="text-xs font-semibold text-amber-200 flex items-center gap-1.5">
+          <i class="fa-solid fa-calendar-days text-amber-400"></i> रोजचा जप इतिहास (थोडक्यात)
+        </span>
+        <button id="openHistoryModalBtn" class="text-[11px] text-amber-300 hover:text-yellow-200 underline flex items-center gap-1">
+          पूर्ण इतिहास पहा <i class="fa-solid fa-angle-right text-[10px]"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2 text-center text-xs pt-0.5">
+        <!-- Today -->
+        <div class="bg-black/30 rounded-lg p-1.5 border border-amber-500/20">
+          <span class="text-[10px] text-amber-300/70 block">आज</span>
+          <span id="snippetToday" class="font-marathiTitle font-bold text-amber-200 text-sm">०</span>
+        </div>
+        <!-- Yesterday -->
+        <div class="bg-black/30 rounded-lg p-1.5 border border-amber-500/20">
+          <span class="text-[10px] text-amber-300/70 block">काल</span>
+          <span id="snippetYesterday" class="font-marathiTitle font-bold text-amber-200/90 text-sm">०</span>
+        </div>
+        <!-- Day Before Yesterday -->
+        <div class="bg-black/30 rounded-lg p-1.5 border border-amber-500/20">
+          <span class="text-[10px] text-amber-300/70 block">परवा</span>
+          <span id="snippetDayBefore" class="font-marathiTitle font-bold text-amber-200/80 text-sm">०</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio & Control Buttons -->
+    <div class="w-full grid grid-cols-3 gap-2 pt-0.5">
+      <button 
+        id="toggleTapSoundBtn" 
+        class="devotional-card hover:bg-amber-900/40 py-2 px-2 rounded-xl border border-amber-500/40 flex items-center justify-center gap-1.5 text-xs font-medium text-amber-200 transition active:scale-95"
+      >
+        <i id="tapSoundIcon" class="fa-solid fa-volume-high text-amber-400 text-xs"></i>
+        <span id="tapSoundText">ध्वनी: चालू</span>
+      </button>
+
+      <button 
+        id="toggleBgmBtn" 
+        class="devotional-card hover:bg-amber-900/40 py-2 px-2 rounded-xl border border-amber-500/40 flex items-center justify-center gap-1.5 text-xs font-medium text-amber-200 transition active:scale-95"
+      >
+        <i id="bgmIcon" class="fa-solid fa-music text-amber-400/50 text-xs"></i>
+        <span id="bgmText">बासरी: बंद</span>
+      </button>
+
+      <button 
+        id="resetBtn" 
+        class="devotional-card hover:bg-red-950/50 py-2 px-2 rounded-xl border border-red-500/40 flex items-center justify-center gap-1.5 text-xs font-medium text-red-300 transition active:scale-95"
+      >
+        <i class="fa-solid fa-rotate-right text-xs"></i>
+        <span>रीसेट</span>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Devotional Quote Footer -->
+  <footer class="w-full max-w-md text-center py-1.5 z-10 border-t border-amber-500/20 mt-1">
+    <p class="text-xs text-amber-200/70 font-marathiText italic">
+      "राधा नाम की महिमा अपरंपार, जपे सो तरे संसार।"
+    </p>
+    <span class="text-[10px] text-amber-400/50 mt-0.5 block font-sans">
+      ॥ राधे राधे ॥
+    </span>
+  </footer>
+
+  <!-- FULL DAILY HISTORY MODAL -->
+  <div id="historyModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center px-4 opacity-0 pointer-events-none transition-opacity duration-200">
+    <div class="devotional-card max-w-sm w-full rounded-2xl p-4 border-2 border-sacredGold shadow-2xl transform scale-95 transition-transform duration-200 flex flex-col max-h-[85vh]" id="historyModalCard">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-amber-500/30 pb-2 mb-3">
+        <h3 class="font-marathiTitle text-xl text-amber-200 font-bold flex items-center gap-2">
+          <i class="fa-solid fa-book-bookmark text-amber-400 text-lg"></i> रोजचा जप नोंद इतिहास
+        </h3>
+        <button id="closeHistoryModalBtn" class="w-7 h-7 rounded-full bg-amber-900/50 border border-amber-500/40 text-amber-200 flex items-center justify-center text-sm hover:bg-amber-800 transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- History List Scroll Area -->
+      <div id="historyListContainer" class="flex-1 overflow-y-auto space-y-2 pr-1 my-1">
+        <!-- History items dynamically populated here -->
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="pt-3 border-t border-amber-500/30 mt-2 flex justify-between items-center text-xs">
+        <span class="text-amber-200/60 font-sans">स्वयंचलित नोंद जतन केली जाते</span>
+        <button id="closeHistoryModalFooterBtn" class="px-4 py-1.5 rounded-xl bg-amber-600/80 hover:bg-amber-600 text-white font-medium transition">
+          बंद करा
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESET CONFIRMATION MODAL -->
+  <div id="resetModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center px-4 opacity-0 pointer-events-none transition-opacity duration-200">
+    <div class="devotional-card max-w-xs w-full rounded-2xl p-5 text-center border-2 border-sacredGold shadow-2xl transform scale-95 transition-transform duration-200" id="resetModalCard">
+      <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto mb-3 border border-amber-400/40 text-xl">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <h3 class="font-marathiTitle text-xl text-amber-200 font-bold mb-1">रीसेट पर्याय</h3>
+      <p class="text-xs text-amber-100/80 mb-4 leading-relaxed">
+        तुम्हाला कोणता डेटा रीसेट करायचा आहे?
+      </p>
+      
+      <div class="flex flex-col gap-2">
+        <button id="resetTodayOnlyBtn" class="w-full py-2 rounded-xl bg-amber-900/80 border border-amber-500/50 text-amber-200 text-xs font-semibold hover:bg-amber-800 transition">
+          फक्त आजचा जप रीसेट करा
+        </button>
+        <button id="confirmResetAllBtn" class="w-full py-2 rounded-xl bg-gradient-to-r from-red-800 to-amber-800 text-white text-xs font-semibold shadow-lg hover:brightness-110 transition">
+          पूर्ण इतिहास व सर्व डेटा रीसेट करा
+        </button>
+        <button id="cancelResetBtn" class="w-full py-1.5 rounded-xl text-amber-300/70 text-xs hover:text-amber-200 mt-1">
+          रद्द करा
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Application Logic -->
+  <script>
+    // --- State Variables ---
+    let currentBead = 0;
+    let totalMala = 0;
+    let totalLifetime = 0;
+    let todayJaap = 0;
+    let isTapSoundOn = true;
+    let isBgmOn = false;
+
+    // Daily History Storage Object { "YYYY-MM-DD": count }
+    let dailyHistory = {};
+
+    const MALA_TARGET = 108;
+    const CIRCLE_RADIUS = 42;
+    const CIRCLE_CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS;
+
+    // Audio Context Setup
+    let audioCtx = null;
+    let bgmOscillator = null;
+    let bgmGain = null;
+
+    // Helper: Get Today's Date Key YYYY-MM-DD
+    function getTodayKey() {
+      const d = new Date();
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    // Helper: Get Offset Date Key (0 = today, -1 = yesterday, -2 = day before, etc.)
+    function getOffsetDateKey(offsetDays) {
+      const d = new Date();
+      d.setDate(d.getDate() + offsetDays);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    // Convert Western Digits to Devanagari / Marathi Digits
+    function toMarathiDigits(num) {
+      if (num === undefined || num === null) return '०';
+      const marathiNumbers = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
+      return num.toString().split('').map(digit => marathiNumbers[digit] || digit).join('');
+    }
+
+    // Format Date Key to Marathi Display Date (e.g. 24 ऑक्टोबर 2026)
+    function formatMarathiDate(dateKey) {
+      const months = ['जानेवारी', 'फेब्रुवारी', 'मार्च', 'एप्रिल', 'मे', 'जून', 'जुलै', 'ऑगस्ट', 'सप्टेंबर', 'ऑक्टोबर', 'नोव्हेंबर', 'डिसेंबर'];
+      const parts = dateKey.split('-');
+      if (parts.length !== 3) return dateKey;
+      const dayNum = parseInt(parts[2], 10);
+      const monthNum = parseInt(parts[1], 10) - 1;
+      const yearNum = parts[0];
+      return `${toMarathiDigits(dayNum)} ${months[monthNum] || ''} ${toMarathiDigits(yearNum)}`;
+    }
+
+    // Audio Synthesis Initializer
+    function initAudioContext() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    // Play Bell Sound
+    function playBellSound() {
+      if (!isTapSoundOn) return;
+      try {
+        initAudioContext();
+        const now = audioCtx.currentTime;
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        const oscHarmonic = audioCtx.createOscillator();
+        const gainHarmonic = audioCtx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, now);
+        osc.frequency.exponentialRampToValueAtTime(440, now + 1.2);
+
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+
+        oscHarmonic.type = 'sine';
+        oscHarmonic.frequency.setValueAtTime(1760, now);
+        gainHarmonic.gain.setValueAtTime(0.15, now);
+        gainHarmonic.gain.exponentialRampToValueAtTime(0.0001, now + 0.8);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        oscHarmonic.connect(gainHarmonic);
+        gainHarmonic.connect(audioCtx.destination);
+
+        osc.start(now);
+        oscHarmonic.start(now);
+        osc.stop(now + 1.25);
+        oscHarmonic.stop(now + 0.85);
+
+        if ('vibrate' in navigator) navigator.vibrate(12);
+      } catch (e) {
+        console.log("Audio play error:", e);
+      }
+    }
+
+    // Celebration Sound for Mala Completion
+    function playMalaCompleteSound() {
+      try {
+        initAudioContext();
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          const now = audioCtx.currentTime + (idx * 0.12);
+
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now);
+
+          gain.gain.setValueAtTime(0.4, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.0);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start(now);
+          osc.stop(now + 2.1);
+        });
+
+        if ('vibrate' in navigator) navigator.vibrate([100, 50, 100, 50, 200]);
+      } catch (e) {
+        console.log("Celebration sound error:", e);
+      }
+    }
+
+    // Flute Background Sound Toggle
+    function toggleBGM() {
+      initAudioContext();
+      isBgmOn = !isBgmOn;
+
+      const bgmBtn = document.getElementById('toggleBgmBtn');
+      const bgmIcon = document.getElementById('bgmIcon');
+      const bgmText = document.getElementById('bgmText');
+
+      if (isBgmOn) {
+        bgmIcon.className = "fa-solid fa-music text-amber-300 text-xs animate-pulse";
+        bgmText.innerText = "बासरी: चालू";
+        bgmBtn.classList.add("border-amber-400", "bg-amber-900/30");
+
+        bgmOscillator = audioCtx.createOscillator();
+        bgmGain = audioCtx.createGain();
+
+        bgmOscillator.type = 'triangle';
+        bgmOscillator.frequency.setValueAtTime(432, audioCtx.currentTime);
+
+        bgmGain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+        bgmGain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 2);
+
+        bgmOscillator.connect(bgmGain);
+        bgmGain.connect(audioCtx.destination);
+
+        bgmOscillator.start();
+      } else {
+        bgmIcon.className = "fa-solid fa-music text-amber-400/50 text-xs";
+        bgmText.innerText = "बासरी: बंद";
+        bgmBtn.classList.remove("border-amber-400", "bg-amber-900/30");
+
+        if (bgmGain) {
+          bgmGain.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 1);
+          setTimeout(() => {
+            if (bgmOscillator) {
+              bgmOscillator.stop();
+              bgmOscillator.disconnect();
+            }
+          }, 1000);
+        }
+      }
+    }
+
+    // Storage Management
+    function loadSavedData() {
+      try {
+        const todayKey = getTodayKey();
+
+        const savedCurrent = localStorage.getItem('radha_jaap_current');
+        const savedMala = localStorage.getItem('radha_jaap_mala');
+        const savedLifetime = localStorage.getItem('radha_jaap_lifetime');
+        const savedHistory = localStorage.getItem('radha_jaap_history');
+
+        if (savedCurrent !== null) currentBead = parseInt(savedCurrent, 10) || 0;
+        if (savedMala !== null) totalMala = parseInt(savedMala, 10) || 0;
+        if (savedLifetime !== null) totalLifetime = parseInt(savedLifetime, 10) || 0;
+
+        if (savedHistory) {
+          dailyHistory = JSON.parse(savedHistory);
+        } else {
+          dailyHistory = {};
+        }
+
+        // Check or initialize Today's count from history
+        todayJaap = dailyHistory[todayKey] || 0;
+
+      } catch (e) {
+        console.log("LocalStorage load error:", e);
+      }
+    }
+
+    function saveData() {
+      try {
+        const todayKey = getTodayKey();
+        dailyHistory[todayKey] = todayJaap;
+
+        localStorage.setItem('radha_jaap_current', currentBead);
+        localStorage.setItem('radha_jaap_mala', totalMala);
+        localStorage.setItem('radha_jaap_lifetime', totalLifetime);
+        localStorage.setItem('radha_jaap_history', JSON.stringify(dailyHistory));
+      } catch (e) {
+        console.log("LocalStorage save error:", e);
+      }
+    }
+
+    // Render Full History List in Modal
+    function renderHistoryModal() {
+      const container = document.getElementById('historyListContainer');
+      container.innerHTML = '';
+
+      const sortedDates = Object.keys(dailyHistory).sort().reverse();
+
+      if (sortedDates.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-8 text-amber-300/60 text-xs">
+            कोणतीही इतिहास नोंद उपलब्ध नाही.
+          </div>`;
+        return;
+      }
+
+      const todayKey = getTodayKey();
+      const yesterdayKey = getOffsetDateKey(-1);
+      const dayBeforeKey = getOffsetDateKey(-2);
+
+      sortedDates.forEach((dateKey) => {
+        const count = dailyHistory[dateKey] || 0;
+        const malas = Math.floor(count / 108);
+        const remainderBeads = count % 108;
+
+        let dateTag = formatMarathiDate(dateKey);
+        let badgeText = "";
+
+        if (dateKey === todayKey) {
+          badgeText = `<span class="bg-amber-500/30 text-amber-300 text-[10px] px-2 py-0.5 rounded-full border border-amber-400/30">आज</span>`;
+        } else if (dateKey === yesterdayKey) {
+          badgeText = `<span class="bg-amber-900/40 text-amber-300/80 text-[10px] px-2 py-0.5 rounded-full border border-amber-500/20">काल</span>`;
+        } else if (dateKey === dayBeforeKey) {
+          badgeText = `<span class="bg-amber-900/40 text-amber-300/70 text-[10px] px-2 py-0.5 rounded-full border border-amber-500/20">परवा</span>`;
+        }
+
+        const itemEl = document.createElement('div');
+        itemEl.className = "bg-black/40 border border-amber-500/20 rounded-xl p-3 flex justify-between items-center";
+        itemEl.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-amber-200 font-medium">${dateTag}</span>
+              ${badgeText}
+            </div>
+            <span class="text-[11px] text-amber-300/60 font-sans block mt-0.5">
+              ${toMarathiDigits(malas)} माळा ${remainderBeads > 0 ? `+ ${toMarathiDigits(remainderBeads)} मणी` : ''}
+            </span>
+          </div>
+          <div class="text-right">
+            <span class="font-marathiTitle text-xl text-yellow-300 font-bold">${toMarathiDigits(count)}</span>
+            <span class="text-[10px] text-amber-400/80 block -mt-1 font-sans">जप</span>
+          </div>
+        `;
+        container.appendChild(itemEl);
+      });
+    }
+
+    // UI Render Update
+    function updateUI() {
+      const todayKey = getTodayKey();
+      document.getElementById('todayDateLabel').innerText = formatMarathiDate(todayKey);
+
+      // Counts
+      document.getElementById('todayJaapCount').innerText = toMarathiDigits(todayJaap);
+      document.getElementById('todayMalaCount').innerText = toMarathiDigits(Math.floor(todayJaap / 108));
+      
+      document.getElementById('currentBeadDisplay').innerText = toMarathiDigits(currentBead);
+      document.getElementById('totalMalaCount').innerText = toMarathiDigits(totalMala);
+      document.getElementById('totalLifetimeCount').innerText = toMarathiDigits(totalLifetime);
+
+      // Progress Updates
+      const percentage = Math.min(Math.round((currentBead / MALA_TARGET) * 100), 100);
+      document.getElementById('progressPercentage').innerText = toMarathiDigits(percentage) + '%';
+      document.getElementById('linearProgressBar').style.width = `${percentage}%`;
+
+      const ring = document.getElementById('progressRing');
+      const offset = CIRCLE_CIRCUMFERENCE - (currentBead / MALA_TARGET) * CIRCLE_CIRCUMFERENCE;
+      ring.style.strokeDashoffset = offset;
+
+      // Quick Snippet Update
+      const yesterdayKey = getOffsetDateKey(-1);
+      const dayBeforeKey = getOffsetDateKey(-2);
+
+      document.getElementById('snippetToday').innerText = toMarathiDigits(dailyHistory[todayKey] || 0);
+      document.getElementById('snippetYesterday').innerText = toMarathiDigits(dailyHistory[yesterdayKey] || 0);
+      document.getElementById('snippetDayBefore').innerText = toMarathiDigits(dailyHistory[dayBeforeKey] || 0);
+    }
+
+    // Increment Action
+    function handleJaapTap(e) {
+      if (e) e.preventDefault();
+
+      currentBead++;
+      todayJaap++;
+      totalLifetime++;
+
+      playBellSound();
+      createVisualRipple(e);
+
+      // Mala Completion Check (108)
+      if (currentBead >= MALA_TARGET) {
+        totalMala++;
+        currentBead = 0;
+        triggerCelebration();
+      }
+
+      saveData();
+      updateUI();
+    }
+
+    // Visual Ripple FX
+    function createVisualRipple(e) {
+      const button = document.getElementById('jaapButton');
+      const ripple = document.createElement('span');
+      
+      const rect = button.getBoundingClientRect();
+      let x = rect.width / 2;
+      let y = rect.height / 2;
+
+      if (e && e.clientX) {
+        x = e.clientX - rect.left;
+        y = e.clientY - rect.top;
+      }
+
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      ripple.className = 'absolute w-12 h-12 bg-yellow-200/40 rounded-full -translate-x-1/2 -translate-y-1/2 animate-ping pointer-events-none';
+
+      button.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    }
+
+    // Celebration Burst
+    function triggerCelebration() {
+      playMalaCompleteSound();
+
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#FFD700', '#FF6F00', '#ffffff', '#FF4500']
+        });
+
+        setTimeout(() => {
+          confetti({
+            particleCount: 50,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: ['#FFD700', '#FFA500']
+          });
+          confetti({
+            particleCount: 50,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: ['#FFD700', '#FFA500']
+          });
+        }, 250);
+      }
+    }
+
+    // Reset Modal Dialog Handlers
+    function openResetModal() {
+      const modal = document.getElementById('resetModal');
+      const card = document.getElementById('resetModalCard');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-95');
+      card.classList.add('scale-100');
+    }
+
+    function closeResetModal() {
+      const modal = document.getElementById('resetModal');
+      const card = document.getElementById('resetModalCard');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-100');
+      card.classList.add('scale-95');
+    }
+
+    // Reset Today Only
+    function resetTodayOnly() {
+      const todayKey = getTodayKey();
+      todayJaap = 0;
+      dailyHistory[todayKey] = 0;
+      saveData();
+      updateUI();
+      closeResetModal();
+    }
+
+    // Reset Entire App Data
+    function resetAllData() {
+      currentBead = 0;
+      totalMala = 0;
+      totalLifetime = 0;
+      todayJaap = 0;
+      dailyHistory = {};
+      saveData();
+      updateUI();
+      closeResetModal();
+    }
+
+    // History Modal Controls
+    function openHistoryModal() {
+      renderHistoryModal();
+      const modal = document.getElementById('historyModal');
+      const card = document.getElementById('historyModalCard');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-95');
+      card.classList.add('scale-100');
+    }
+
+    function closeHistoryModal() {
+      const modal = document.getElementById('historyModal');
+      const card = document.getElementById('historyModalCard');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-100');
+      card.classList.add('scale-95');
+    }
+
+    // Event Listener Binding
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSavedData();
+      updateUI();
+
+      const jaapBtn = document.getElementById('jaapButton');
+
+      // Fast responsive touch interaction
+      jaapBtn.addEventListener('pointerdown', (e) => {
+        handleJaapTap(e);
+      });
+
+      // Sound Toggles
+      document.getElementById('toggleTapSoundBtn').addEventListener('click', () => {
+        isTapSoundOn = !isTapSoundOn;
+        const icon = document.getElementById('tapSoundIcon');
+        const text = document.getElementById('tapSoundText');
+        if (isTapSoundOn) {
+          icon.className = "fa-solid fa-volume-high text-amber-400 text-xs";
+          text.innerText = "ध्वनी: चालू";
+        } else {
+          icon.className = "fa-solid fa-volume-xmark text-amber-400/50 text-xs";
+          text.innerText = "ध्वनी: बंद";
+        }
+      });
+
+      document.getElementById('toggleBgmBtn').addEventListener('click', toggleBGM);
+
+      // History Modal Events
+      document.getElementById('openHistoryModalBtn').addEventListener('click', openHistoryModal);
+      document.getElementById('closeHistoryModalBtn').addEventListener('click', closeHistoryModal);
+      document.getElementById('closeHistoryModalFooterBtn').addEventListener('click', closeHistoryModal);
+
+      // Reset Modal Events
+      document.getElementById('resetBtn').addEventListener('click', openResetModal);
+      document.getElementById('cancelResetBtn').addEventListener('click', closeResetModal);
+      document.getElementById('resetTodayOnlyBtn').addEventListener('click', resetTodayOnly);
+      document.getElementById('confirmResetAllBtn').addEventListener('click', resetAllData);
+
+      // Disable double tap zoom on mobile browsers
+      document.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 1) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+    });
+  </script>
+</body>
+</html>
